@@ -9,14 +9,14 @@
 ```yml
 git clone https://github.com/BlackFox3000/M1-IHM-Project.git
 ```
-#Mettre à jour son projet (Checkout)
+# Mettre à jour son projet (Checkout)
 - Ouvrir Git Gui
 - Remote > Fecth From> Branche origin (par defaut main)
 - Merge>Local Merge> Tracking Branch > Selectionner la branche souhaité
 - Si erreur vérifier qu'il n'y a pas de fichier dans "Stager Changes" en attente de Comit
 - - Si l'erreur vien d'ici faire : Commit> Unstage From Commit (puis Merge)
 
-#Commit & Push
+# Commit & Push
 - [Mettre à jour son projet]
 - Rescan
 - Stage Changed
