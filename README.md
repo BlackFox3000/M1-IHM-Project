@@ -14,6 +14,14 @@ git clone https://github.com/BlackFox3000/M1-IHM-Project.git
 - Remote > Fecth From> Branche origin
 - Merge>Local Merge> Tracking Branch > Selectionner la branche souhaité
 - Si erreur vérifier qu'il n'y a pas de fichier dans "Stager Changes" en attente de Comit
-- - Si l'erreur vien d'ici faire : Comit> Unstage From Comit (puis Merge)
+- - Si l'erreur vien d'ici faire : Commit> Unstage From Commit (puis Merge)
 
+#Comit & Push
+- [Mettre à jour son projet]
+- Rescan
+- Stage Changed
+- Editer Commit Message
+- Commit
+
+- Push 
 
