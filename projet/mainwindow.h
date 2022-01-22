@@ -12,5 +12,11 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+public:
+    QTreeView* getTreeView();
+
+private:
+    Ui::MainWindow ui;
 };
 #endif // MAINWINDOW_H

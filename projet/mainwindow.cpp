@@ -6,7 +6,13 @@ MainWindow::MainWindow(QWidget *parent)
     setupUi(this);
 }
 
+QTreeView* MainWindow::getTreeView()
+{
+    return ui.treeView;
+}
+
 MainWindow::~MainWindow()
 {
+
 }
 
