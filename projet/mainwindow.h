@@ -16,7 +16,7 @@ public:
 public:
     QTreeView* getTreeView();
 
-private:
-    Ui::MainWindow ui;
+protected slots:
+        void actionFindFile();
 };
 #endif // MAINWINDOW_H

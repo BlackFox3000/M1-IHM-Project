@@ -14,10 +14,9 @@ static inline void openFile(const QString &fileName)
     QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
 }
 
-Window::Window(QWidget *parent, QTreeView *treeView)
-    : QWidget(parent)
+Window::Window(QWidget *parent)
+    : QDialog(parent)
 {
-    this->treeView = treeView;
 
     setWindowTitle(tr("Ajouter des fichiers"));
     QPushButton *browseButton = new QPushButton(tr("&Parcourir..."), this);
@@ -26,14 +25,13 @@ Window::Window(QWidget *parent, QTreeView *treeView)
     connect(findButton, &QAbstractButton::clicked, this, &Window::getTree);
 
     fileComboBox = createComboBox(tr("*"));
-    connect(fileComboBox->lineEdit(), &QLineEdit::returnPressed,
-            this, &Window::animateFindClick);
+    connect(fileComboBox->lineEdit(), &QLineEdit::returnPressed,this, &Window::animateFindClick);
+
     textComboBox = createComboBox();
-    connect(textComboBox->lineEdit(), &QLineEdit::returnPressed,
-            this, &Window::animateFindClick);
+    connect(textComboBox->lineEdit(), &QLineEdit::returnPressed,this, &Window::animateFindClick);
+
     directoryComboBox = createComboBox(QDir::toNativeSeparators(QDir::currentPath()));
-    connect(directoryComboBox->lineEdit(), &QLineEdit::returnPressed,
-            this, &Window::animateFindClick);
+    connect(directoryComboBox->lineEdit(), &QLineEdit::returnPressed,this, &Window::animateFindClick);
 
     filesFoundLabel = new QLabel;
 
@@ -97,7 +95,7 @@ void Window::find()
 
 void Window::getTree()
 {
-    tre
+
 }
 
 void Window::animateFindClick()

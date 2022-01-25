@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QDir>
 #include<QTreeView>
+#include <QDialog>
 
 class QComboBox;
 class QLabel;
@@ -12,13 +13,12 @@ class QTableWidget;
 class QTableWidgetItem;
 
 
-class Window : public QWidget
+class Window : public QDialog
 {
     Q_OBJECT
 
 public:
-    Window(QWidget *parent = 0,QTreeView *treeView = new QTreeView());
-    QTreeView *treeView;
+    Window(QWidget *parent = 0);
 
 private slots:
     void browse();
