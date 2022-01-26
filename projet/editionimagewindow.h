@@ -1,8 +1,9 @@
 #ifndef EDITIONIMAGEWINDOW_H
 #define EDITIONIMAGEWINDOW_H
 
-#include "ui_editionimagewindow.h"
 #include "qrubberband.h"
+#include "ui_editionimagewindow.h"
+
 class EditionImageWindow : public QDialog, private Ui::EditionImageWindow
 {
     Q_OBJECT
@@ -31,10 +32,14 @@ private slots:
     void mouseReleaseEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
 
+    void on_pivoter_btn_clicked();
+
 private:
     Ui::EditionImageWindow *ui_edit;
     QRubberBand* rubberBand = nullptr;
     QPoint origin;
+    QRect rect;
+
 
 };
 

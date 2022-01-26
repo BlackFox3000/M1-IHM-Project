@@ -4,6 +4,7 @@
 #include "resizerubberband.h"
 #include "QPushButton"
 #include "QMouseEvent"
+#include <QDebug>
 
 
 EditionImageWindow::EditionImageWindow(QWidget *parent) :
@@ -65,8 +66,6 @@ void EditionImageWindow::on_zoom_btn_clicked()
 }
 
 
-
-
 void EditionImageWindow::on_zoomSlider_valueChanged(int value)
 {
     QImage img_zoom = edit_image;
@@ -88,19 +87,18 @@ void EditionImageWindow::on_reset_btn_clicked()
     ui_edit->edit_label->setScaledContents(true);
 }
 
-
 void EditionImageWindow::mousePressEvent(QMouseEvent *event){
     origin = event->pos();
         if (!rubberBand)
             rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
-        rubberBand->setGeometry(QRect(origin, QSize()));
-        rubberBand->show();
 
 }
 void EditionImageWindow::mouseMoveEvent(QMouseEvent *event){
      rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
-     QRect rect = rubberBand->frameGeometry();
-     cropped = edit_image.copy(rect.x(), rect.y(), rect.width(), rect.height());
+     //QRect rect = rubberBand->frameGeometry();
+     //cropped = edit_image.copy(rect.x(), rect.y(), rect.width(), rect.height());
+     rubberBand->show();
+
 
 
 
@@ -108,13 +106,33 @@ void EditionImageWindow::mouseMoveEvent(QMouseEvent *event){
 
 
 }
-void EditionImageWindow::mouseReleaseEvent(QMouseEvent *event){}
+void EditionImageWindow::mouseReleaseEvent(QMouseEvent *event){
+    rect.setTopLeft(origin);
+    rect.setBottomRight(event->pos());
+
+
+}
 
 void EditionImageWindow::on_crop_btn_clicked()
 {
-    ui_edit->edit_label->setFixedSize(rubberBand->frameGeometry().width(), rubberBand->frameGeometry().height());
+  // ui_edit->edit_label->setFixedSize(rubberBand->frameGeometry().width(), rubberBand->frameGeometry().height());
+    cropped = edit_image.copy(rect.x(), rect.y(), rect.width(), rect.height());
     ui_edit->edit_label->setPixmap(QPixmap::fromImage(cropped));
     ui_edit->edit_label->setScaledContents(true);
     rubberBand->hide();
+}
+
+
+void EditionImageWindow::on_pivoter_btn_clicked()
+{
+
+    QImage img = edit_image.scaledToWidth(ui_edit->edit_label->width(), Qt::SmoothTransformation);
+    qDebug() <<"test";
+    QTransform t;
+    QImage piv_img;
+    piv_img = img.transformed(t.rotate(90));
+    ui_edit->edit_label->setPixmap(QPixmap::fromImage(piv_img));
+    ui_edit->edit_label->setScaledContents(true);
+
 }
 

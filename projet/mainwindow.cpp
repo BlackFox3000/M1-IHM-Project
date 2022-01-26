@@ -7,13 +7,14 @@
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent),
-      ui(new Ui::MainWindow)
+    : QMainWindow(parent)
 {
-    ui->setupUi(this);
+    setupUi(this);
+    connect(actionAjouter_Fichier, SIGNAL(triggered()), this, SLOT(actionFindFile()));
+    connect(actionEditer_l_image, SIGNAL(triggered()), this, SLOT(on_actionEditer_image_triggered()));
+    connect(actionCr_er_un_album, SIGNAL(triggered()), this, SLOT(on_actionCreer_nouvel_album_triggered()));
 
 
-     connect(actionAjouter_Fichier, SIGNAL(triggered()), this, SLOT(actionFindFile()));
 }
 
 QTreeView* MainWindow::getTreeView()
@@ -31,6 +32,10 @@ void MainWindow::actionFindFile()
 
 }
 
+
+
+
+
 void MainWindow::on_actionEditer_image_triggered()
 {
     EditionImageWindow e(this);
@@ -47,8 +52,10 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-MainWindow::~MainWindow()
-{
 
-}
+
+
+
+
+
 

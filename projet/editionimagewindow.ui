@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>764</width>
-    <height>652</height>
+    <width>806</width>
+    <height>681</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,17 +16,24 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>20</y>
-     <width>501</width>
-     <height>31</height>
+     <x>20</x>
+     <y>80</y>
+     <width>138</width>
+     <height>175</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="QPushButton" name="resize_btn">
+     <widget class="QPushButton" name="pivoter_btn">
       <property name="text">
-       <string>redimensionner</string>
+       <string>Pivoter</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="zoom_btn">
+      <property name="text">
+       <string>zoomer</string>
       </property>
      </widget>
     </item>
@@ -38,9 +45,9 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="zoom_btn">
+     <widget class="QPushButton" name="resize_btn">
       <property name="text">
-       <string>zoomer</string>
+       <string>redimensionner</string>
       </property>
      </widget>
     </item>
@@ -53,25 +60,12 @@
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="btn_img">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>580</y>
-     <width>161</width>
-     <height>29</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Importer une image</string>
-   </property>
-  </widget>
   <widget class="QSlider" name="zoomSlider">
    <property name="geometry">
     <rect>
-     <x>640</x>
-     <y>70</y>
-     <width>20</width>
+     <x>750</x>
+     <y>80</y>
+     <width>18</width>
      <height>501</height>
     </rect>
    </property>
@@ -82,21 +76,38 @@
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="edit_label">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>70</y>
-     <width>500</width>
-     <height>500</height>
+     <x>200</x>
+     <y>80</y>
+     <width>541</width>
+     <height>541</height>
     </rect>
    </property>
-   <property name="frameShape">
-    <enum>QFrame::Box</enum>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="edit_label">
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="btn_img">
+      <property name="text">
+       <string>Importer une image</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

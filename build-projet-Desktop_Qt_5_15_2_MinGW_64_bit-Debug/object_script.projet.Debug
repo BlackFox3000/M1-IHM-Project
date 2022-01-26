@@ -1,0 +1,11 @@
+debug/creationalbumwindow.o
+debug/editionimagewindow.o
+debug/main.o
+debug/mainwindow.o
+debug/resizewindow.o
+debug/window.o
+debug/moc_creationalbumwindow.o
+debug/moc_editionimagewindow.o
+debug/moc_mainwindow.o
+debug/moc_resizewindow.o
+debug/moc_window.o

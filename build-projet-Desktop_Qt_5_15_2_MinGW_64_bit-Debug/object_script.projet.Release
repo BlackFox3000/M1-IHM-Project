@@ -1,0 +1,11 @@
+release/creationalbumwindow.o
+release/editionimagewindow.o
+release/main.o
+release/mainwindow.o
+release/resizewindow.o
+release/window.o
+release/moc_creationalbumwindow.o
+release/moc_editionimagewindow.o
+release/moc_mainwindow.o
+release/moc_resizewindow.o
+release/moc_window.o
