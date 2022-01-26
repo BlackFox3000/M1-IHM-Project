@@ -10,6 +10,7 @@ CONFIG += c++11
 SOURCES += \
     creationalbumwindow.cpp \
     editionimagewindow.cpp \
+    image.cpp \
     main.cpp \
     mainwindow.cpp \
     resizewindow.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 HEADERS += \
     creationalbumwindow.h \
     editionimagewindow.h \
+    image.h \
     mainwindow.h \
     resizewindow.h \
     window.h

@@ -16,7 +16,6 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QTreeWidget>
@@ -44,7 +43,6 @@ public:
     QWidget *centralwidget;
     QTreeView *treeView;
     QTreeWidget *treeWidget;
-    QPushButton *pushButton;
     QMenuBar *menubar;
     QMenu *menuFichier;
     QMenu *menuOption;
@@ -96,9 +94,6 @@ public:
         treeWidget->setHeaderItem(__qtreewidgetitem);
         treeWidget->setObjectName(QString::fromUtf8("treeWidget"));
         treeWidget->setGeometry(QRect(995, 10, 271, 371));
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(370, 190, 441, 201));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -153,7 +148,6 @@ public:
         actionEditer_les_informations->setText(QCoreApplication::translate("MainWindow", "Editer les informations", nullptr));
         actionEditer_l_image->setText(QCoreApplication::translate("MainWindow", "Editer l'image", nullptr));
         action->setText(QCoreApplication::translate("MainWindow", "?", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "PushButton", nullptr));
         menuFichier->setTitle(QCoreApplication::translate("MainWindow", "Fichier", nullptr));
         menuOption->setTitle(QCoreApplication::translate("MainWindow", "Option", nullptr));
         menuAide->setTitle(QCoreApplication::translate("MainWindow", "Aide", nullptr));

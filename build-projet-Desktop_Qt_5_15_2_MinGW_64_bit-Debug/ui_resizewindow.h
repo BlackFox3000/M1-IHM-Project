@@ -13,7 +13,9 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -25,10 +27,11 @@ class Ui_ResizeWindow
 public:
     QDialogButtonBox *buttonBox;
     QWidget *widget;
+    QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout_2;
     QLabel *label;
     QLabel *label_2;
-    QWidget *widget1;
+    QSpacerItem *horizontalSpacer;
     QVBoxLayout *verticalLayout_3;
     QVBoxLayout *verticalLayout;
     QTextEdit *largeur_txt;
@@ -38,17 +41,19 @@ public:
     {
         if (ResizeWindow->objectName().isEmpty())
             ResizeWindow->setObjectName(QString::fromUtf8("ResizeWindow"));
-        ResizeWindow->resize(358, 231);
+        ResizeWindow->resize(323, 194);
         buttonBox = new QDialogButtonBox(ResizeWindow);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setGeometry(QRect(100, 120, 167, 29));
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         widget = new QWidget(ResizeWindow);
         widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(30, 30, 61, 71));
-        verticalLayout_2 = new QVBoxLayout(widget);
+        widget->setGeometry(QRect(40, 30, 231, 81));
+        horizontalLayout = new QHBoxLayout(widget);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
         label = new QLabel(widget);
         label->setObjectName(QString::fromUtf8("label"));
 
@@ -59,20 +64,23 @@ public:
 
         verticalLayout_2->addWidget(label_2);
 
-        widget1 = new QWidget(ResizeWindow);
-        widget1->setObjectName(QString::fromUtf8("widget1"));
-        widget1->setGeometry(QRect(90, 30, 171, 71));
-        verticalLayout_3 = new QVBoxLayout(widget1);
+
+        horizontalLayout->addLayout(verticalLayout_2);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer);
+
+        verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        largeur_txt = new QTextEdit(widget1);
+        largeur_txt = new QTextEdit(widget);
         largeur_txt->setObjectName(QString::fromUtf8("largeur_txt"));
 
         verticalLayout->addWidget(largeur_txt);
 
-        hauteur_txt = new QTextEdit(widget1);
+        hauteur_txt = new QTextEdit(widget);
         hauteur_txt->setObjectName(QString::fromUtf8("hauteur_txt"));
 
         verticalLayout->addWidget(hauteur_txt);
@@ -81,8 +89,12 @@ public:
         verticalLayout_3->addLayout(verticalLayout);
 
 
+        horizontalLayout->addLayout(verticalLayout_3);
+
+
         retranslateUi(ResizeWindow);
         QObject::connect(buttonBox, SIGNAL(accepted()), ResizeWindow, SLOT(accept()));
+        QObject::connect(buttonBox, SIGNAL(rejected()), ResizeWindow, SLOT(reject()));
 
         QMetaObject::connectSlotsByName(ResizeWindow);
     } // setupUi

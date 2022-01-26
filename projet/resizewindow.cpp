@@ -6,6 +6,8 @@ ResizeWindow::ResizeWindow(QWidget *parent) :
 {
     ui_resize->setupUi(this);
     this->setWindowTitle("Redimensionner");
+    this->setStyleSheet("QDialog {background : #5b0e2d;}  QTextEdit{border: 2px solid black; width : 16px; height: 12px;} QLabel{background: white; border: 2px solid black; border-radius: 5px} QPushButton{ background: white; border: 2px solid black; border-radius: 5px; height: 25px; width: 50px;color: black;font-size: 15px;} ");
+
 }
 
 int ResizeWindow::getL()

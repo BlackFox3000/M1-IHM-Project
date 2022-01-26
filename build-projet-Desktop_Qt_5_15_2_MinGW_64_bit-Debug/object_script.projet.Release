@@ -1,5 +1,6 @@
 release/creationalbumwindow.o
 release/editionimagewindow.o
+release/image.o
 release/main.o
 release/mainwindow.o
 release/resizewindow.o
