@@ -16,6 +16,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -26,16 +27,18 @@ class Ui_EditionImageWindow
 public:
     QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_2;
+    QPushButton *crop_btn;
     QPushButton *pivoter_btn;
     QPushButton *zoom_btn;
-    QPushButton *crop_btn;
     QPushButton *resize_btn;
     QPushButton *reset_btn;
     QSlider *zoomSlider;
     QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout;
+    QSpacerItem *verticalSpacer_2;
     QHBoxLayout *horizontalLayout_2;
     QLabel *edit_label;
+    QSpacerItem *verticalSpacer;
     QPushButton *btn_img;
 
     void setupUi(QDialog *EditionImageWindow)
@@ -45,7 +48,7 @@ public:
         EditionImageWindow->resize(1280, 720);
         layoutWidget = new QWidget(EditionImageWindow);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(190, 80, 151, 302));
+        layoutWidget->setGeometry(QRect(220, 140, 151, 302));
         layoutWidget->setCursor(QCursor(Qt::PointingHandCursor));
         layoutWidget->setFocusPolicy(Qt::StrongFocus);
         layoutWidget->setAutoFillBackground(false);
@@ -54,6 +57,15 @@ public:
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setSizeConstraint(QLayout::SetDefaultConstraint);
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        crop_btn = new QPushButton(layoutWidget);
+        crop_btn->setObjectName(QString::fromUtf8("crop_btn"));
+        crop_btn->setMinimumSize(QSize(0, 40));
+        crop_btn->setCursor(QCursor(Qt::PointingHandCursor));
+        crop_btn->setFocusPolicy(Qt::StrongFocus);
+        crop_btn->setAutoFillBackground(false);
+
+        verticalLayout_2->addWidget(crop_btn);
+
         pivoter_btn = new QPushButton(layoutWidget);
         pivoter_btn->setObjectName(QString::fromUtf8("pivoter_btn"));
         pivoter_btn->setEnabled(true);
@@ -72,15 +84,6 @@ public:
         zoom_btn->setAutoFillBackground(false);
 
         verticalLayout_2->addWidget(zoom_btn);
-
-        crop_btn = new QPushButton(layoutWidget);
-        crop_btn->setObjectName(QString::fromUtf8("crop_btn"));
-        crop_btn->setMinimumSize(QSize(0, 40));
-        crop_btn->setCursor(QCursor(Qt::PointingHandCursor));
-        crop_btn->setFocusPolicy(Qt::StrongFocus);
-        crop_btn->setAutoFillBackground(false);
-
-        verticalLayout_2->addWidget(crop_btn);
 
         resize_btn = new QPushButton(layoutWidget);
         resize_btn->setObjectName(QString::fromUtf8("resize_btn"));
@@ -102,19 +105,24 @@ public:
 
         zoomSlider = new QSlider(EditionImageWindow);
         zoomSlider->setObjectName(QString::fromUtf8("zoomSlider"));
-        zoomSlider->setGeometry(QRect(940, 80, 30, 501));
-        zoomSlider->setMaximum(600);
+        zoomSlider->setGeometry(QRect(980, 90, 30, 501));
+        zoomSlider->setMaximum(550);
         zoomSlider->setOrientation(Qt::Vertical);
         layoutWidget1 = new QWidget(EditionImageWindow);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(370, 80, 551, 561));
+        layoutWidget1->setGeometry(QRect(390, 60, 561, 651));
         verticalLayout = new QVBoxLayout(layoutWidget1);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer_2);
+
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         edit_label = new QLabel(layoutWidget1);
         edit_label->setObjectName(QString::fromUtf8("edit_label"));
+        edit_label->setMinimumSize(QSize(0, 450));
         edit_label->setCursor(QCursor(Qt::CrossCursor));
         edit_label->setFrameShape(QFrame::Box);
 
@@ -122,6 +130,10 @@ public:
 
 
         verticalLayout->addLayout(horizontalLayout_2);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer);
 
         btn_img = new QPushButton(layoutWidget1);
         btn_img->setObjectName(QString::fromUtf8("btn_img"));
@@ -138,9 +150,9 @@ public:
     void retranslateUi(QDialog *EditionImageWindow)
     {
         EditionImageWindow->setWindowTitle(QCoreApplication::translate("EditionImageWindow", "Dialog", nullptr));
+        crop_btn->setText(QCoreApplication::translate("EditionImageWindow", "Rogner", nullptr));
         pivoter_btn->setText(QCoreApplication::translate("EditionImageWindow", "Pivoter", nullptr));
         zoom_btn->setText(QCoreApplication::translate("EditionImageWindow", "Zoomer", nullptr));
-        crop_btn->setText(QCoreApplication::translate("EditionImageWindow", "Rogner", nullptr));
         resize_btn->setText(QCoreApplication::translate("EditionImageWindow", "Redimensionner", nullptr));
         reset_btn->setText(QCoreApplication::translate("EditionImageWindow", "Revenir \303\240 l'originale", nullptr));
         edit_label->setText(QString());

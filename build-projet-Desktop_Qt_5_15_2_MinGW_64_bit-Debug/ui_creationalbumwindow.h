@@ -28,6 +28,7 @@ class Ui_CreationAlbumWindow
 public:
     QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
+    QLabel *label;
     QComboBox *comboBox;
     QSpacerItem *verticalSpacer;
     QLabel *label_5;
@@ -44,10 +45,18 @@ public:
         CreationAlbumWindow->resize(1280, 720);
         layoutWidget = new QWidget(CreationAlbumWindow);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(230, 20, 781, 541));
+        layoutWidget->setGeometry(QRect(230, 20, 781, 565));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
+        label = new QLabel(layoutWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+        QFont font;
+        font.setBold(true);
+        label->setFont(font);
+
+        verticalLayout->addWidget(label);
+
         comboBox = new QComboBox(layoutWidget);
         comboBox->setObjectName(QString::fromUtf8("comboBox"));
         comboBox->setMinimumSize(QSize(0, 50));
@@ -67,15 +76,13 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
         label_5->setSizePolicy(sizePolicy);
-        QFont font;
-        font.setBold(true);
         label_5->setFont(font);
 
         verticalLayout->addWidget(label_5);
 
         listWidget = new QListWidget(layoutWidget);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
-        listWidget->setMinimumSize(QSize(0, 300));
+        listWidget->setMinimumSize(QSize(0, 380));
 
         verticalLayout->addWidget(listWidget);
 
@@ -108,6 +115,7 @@ public:
     void retranslateUi(QDialog *CreationAlbumWindow)
     {
         CreationAlbumWindow->setWindowTitle(QCoreApplication::translate("CreationAlbumWindow", "Dialog", nullptr));
+        label->setText(QCoreApplication::translate("CreationAlbumWindow", "Nom de l'album", nullptr));
         label_5->setText(QCoreApplication::translate("CreationAlbumWindow", "Images selectionn\303\251es", nullptr));
         pushButton_2->setText(QCoreApplication::translate("CreationAlbumWindow", "Cr\303\251er", nullptr));
         pushButton->setText(QCoreApplication::translate("CreationAlbumWindow", "Annuler", nullptr));

@@ -19,10 +19,22 @@
      <x>230</x>
      <y>20</y>
      <width>781</width>
-     <height>541</height>
+     <height>565</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Nom de l'album</string>
+      </property>
+     </widget>
+    </item>
     <item>
      <widget class="QComboBox" name="comboBox">
       <property name="minimumSize">
@@ -75,7 +87,7 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>300</height>
+        <height>380</height>
        </size>
       </property>
      </widget>

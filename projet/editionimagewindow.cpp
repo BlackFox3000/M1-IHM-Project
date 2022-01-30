@@ -115,7 +115,7 @@ void EditionImageWindow::on_crop_btn_clicked()
     rubberBand->hide();
     ui_edit->edit_label->setPixmap(grab(rect));
     ui_edit->edit_label->setScaledContents(true); 
-    ui_edit->crop_btn->setVisible(true);
+    ui_edit->crop_btn->setVisible(false);
 }
 
 /* ================ Pivoter une image ================== */
