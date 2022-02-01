@@ -18,8 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setupUi(this);
     connect(actionAjouter_Fichier, SIGNAL(triggered()), this, SLOT(actionFindFile()));
-    connect(button_modif_infos, &QPushButton::clicked,this, &MainWindow::on_button_modif_infos_clicked);
-    connect(button_ouvrir_album, &QPushButton::clicked,this, &MainWindow::on_button_ouvrir_album_clicked);
     connect(actionEditer_l_image, SIGNAL(triggered()), this, SLOT(on_actionEditer_image_triggered()));
     connect(actionCr_er_un_album, SIGNAL(triggered()), this, SLOT(on_actionCreer_nouvel_album_triggered()));
 
