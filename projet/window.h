@@ -11,6 +11,7 @@ class QLabel;
 class QPushButton;
 class QTableWidget;
 class QTableWidgetItem;
+class QDialogButtonBox;
 
 
 class Window : public QDialog
@@ -19,12 +20,12 @@ class Window : public QDialog
 
 public:
     Window(QWidget *parent = 0);
+    QStringList getFiles();
+    QString getFolder();
 
 private slots:
     void browse();
     void find();
-    void getTree();
-    void animateFindClick();
     void openFileOfItem(int row, int column);
     void contextMenu(const QPoint &pos);
 
@@ -38,8 +39,11 @@ private:
     QComboBox *textComboBox;
     QComboBox *directoryComboBox;
     QLabel *filesFoundLabel;
-    QPushButton *findButton;
+    QDialogButtonBox *findButton;
     QTableWidget *filesTable;
+
+    QStringList files;
+    QString folder;
 
     QDir currentDir;
 };

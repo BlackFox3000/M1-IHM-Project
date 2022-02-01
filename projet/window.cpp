@@ -21,18 +21,15 @@ Window::Window(QWidget *parent)
     setWindowTitle(tr("Ajouter des fichiers"));
     QPushButton *browseButton = new QPushButton(tr("&Parcourir..."), this);
     connect(browseButton, &QAbstractButton::clicked, this, &Window::browse);
-    findButton = new QPushButton(tr("&Ajouter"), this);
-    connect(findButton, &QAbstractButton::clicked, this, &Window::getTree);
 
-    fileComboBox = createComboBox(tr("*"));
-    connect(fileComboBox->lineEdit(), &QLineEdit::returnPressed,this, &Window::animateFindClick);
+    findButton = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    connect(findButton, &QDialogButtonBox::accepted, this, &QDialog::accept);
+    connect(findButton, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
+    fileComboBox = createComboBox();
     textComboBox = createComboBox();
-    connect(textComboBox->lineEdit(), &QLineEdit::returnPressed,this, &Window::animateFindClick);
-
-    directoryComboBox = createComboBox(QDir::toNativeSeparators(QDir::currentPath()));
-    connect(directoryComboBox->lineEdit(), &QLineEdit::returnPressed,this, &Window::animateFindClick);
-
+    directoryComboBox = createComboBox(QDir::toNativeSeparators("")); //QDir::currentPath()
+    directoryComboBox->setMinimumWidth(600);
     filesFoundLabel = new QLabel;
 
     createFilesTable();
@@ -51,7 +48,19 @@ Window::Window(QWidget *parent)
 
 void Window::browse()
 {
-    QString directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des fichiers"), directoryComboBox->currentText()));
+    QString directory;
+    if(directoryComboBox->currentText().isEmpty()){
+        directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des fichiers"), QDir::drives().at(0).absoluteFilePath()));
+    }
+    else{
+        QDir pathDir(directoryComboBox->currentText());
+        if(!pathDir.exists()){
+            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des fichiers"), QDir::drives().at(0).absoluteFilePath()));
+        }
+        else{
+            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des fichiers"), directoryComboBox->currentText()));
+        }
+    }
 
     if (!directory.isEmpty()) {
         if (directoryComboBox->findText(directory) == -1)
@@ -71,18 +80,16 @@ void Window::find()
 {
     filesTable->setRowCount(0);
 
-    QString fileName = fileComboBox->currentText();
     QString text = textComboBox->currentText();
     QString path = QDir::cleanPath(directoryComboBox->currentText());
     currentDir = QDir(path);
 
-    updateComboBox(fileComboBox);
-    updateComboBox(textComboBox);
-    updateComboBox(directoryComboBox);
+    //updateComboBox(fileComboBox);
+    //updateComboBox(textComboBox);
+    //updateComboBox(directoryComboBox);
 
-    QStringList filter;
-    if (!fileName.isEmpty())
-        filter << fileName;
+    QStringList filter = {"*.JPG","*.APNG","*.AVIF","*.GIF","*.PNG","*.SVG","*.WebP"};
+
     QDirIterator it(path, filter, QDir::AllEntries | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
     QStringList files;
     while (it.hasNext())
@@ -90,17 +97,18 @@ void Window::find()
     if (!text.isEmpty())
         files = findFiles(files, text);
     files.sort();
+    this->files = files;
+    this->folder = path;
     showFiles(files);
 }
 
-void Window::getTree()
+QStringList Window::getFiles()
 {
-
+    return files;
 }
 
-void Window::animateFindClick()
-{
-    findButton->animateClick();
+QString Window::getFolder(){
+    return folder;
 }
 
 QStringList Window::findFiles(const QStringList &files, const QString &text)
@@ -213,19 +221,24 @@ void Window::contextMenu(const QPoint &pos)
     const QTableWidgetItem *item = filesTable->itemAt(pos);
     if (!item)
         return;
+
     QMenu menu;
-#ifndef QT_NO_CLIPBOARD
+
+    #ifndef QT_NO_CLIPBOARD
     QAction *copyAction = menu.addAction("Copier le nom");
-#endif
+    #endif
+
     QAction *openAction = menu.addAction("Ouvrir");
     QAction *action = menu.exec(filesTable->mapToGlobal(pos));
+
     if (!action)
         return;
     const QString fileName = fileNameOfItem(item);
     if (action == openAction)
         openFile(fileName);
-#ifndef QT_NO_CLIPBOARD
+
+    #ifndef QT_NO_CLIPBOARD
     else if (action == copyAction)
         QGuiApplication::clipboard()->setText(QDir::toNativeSeparators(fileName));
-#endif
+    #endif
 }

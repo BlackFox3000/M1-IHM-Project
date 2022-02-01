@@ -4,6 +4,9 @@
 #include "ui_mainwindow.h"
 
 #include <QMainWindow>
+#include <QFileSystemModel>
+#include <QDirModel>
+#include <QStandardItemModel>
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -14,9 +17,19 @@ public:
     ~MainWindow();
 
 public:
-    QTreeView* getTreeView();
+    QList<QStandardItem*> findItemsRecurse( QStandardItemModel* model, const QString &text, int column, const QModelIndex& modelIndex = QModelIndex());
+
+private:
+    void updateTreeView(QString root,QStringList filesFind);
+    int getIndexItemTreeViewModel(std::vector<QStandardItem*> items,QString file);
+    void updateFilesFind(QStringList filesFind);
+    void updateFolderRoot(QString folderRoot);
+
+    QString folderRoot;
+    QStringList filesFind;
 
 protected slots:
-        void actionFindFile();
+    void actionFindFile();
+
 };
 #endif // MAINWINDOW_H
