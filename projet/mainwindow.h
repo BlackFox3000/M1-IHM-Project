@@ -36,5 +36,6 @@ protected slots:
 
 private slots:
     void on_button_ouvrir_album_clicked();
+    void on_button_creer_album_clicked();
 };
 #endif // MAINWINDOW_H
