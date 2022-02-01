@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "WindowFiles.h"
+#include "modifinformations.h"
+#include "ouvriralbum.h"
 #include <QDebug>
 #include <QDirModel>
 #include <vector>
@@ -9,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setupUi(this);
     connect(actionAjouter_Fichier, SIGNAL(triggered()), this, SLOT(actionFindFile()));
+    connect(button_modif_infos, &QPushButton::clicked,this, &MainWindow::on_button_modif_infos_clicked);
+    connect(button_ouvrir_album, &QPushButton::clicked,this, &MainWindow::on_button_ouvrir_album_clicked);
 }
 
 
@@ -166,5 +170,18 @@ int MainWindow::getIndexItemTreeViewModel(std::vector<QStandardItem*> items,QStr
 MainWindow::~MainWindow()
 {
 
+}
+
+void MainWindow::on_button_modif_infos_clicked()
+{
+    ModifInformations m;
+    m.exec();
+}
+
+
+void MainWindow::on_button_ouvrir_album_clicked()
+{
+    OuvrirAlbum o;
+    o.exec();
 }
 

@@ -11,15 +11,22 @@ CONFIG += c++11
 SOURCES += \
     WindowFiles.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    ouvriralbum.cpp \
+    modifinformations.cpp
 
 HEADERS += \
     WindowFiles.h \
-    mainwindow.h
+    mainwindow.h \
+    ouvriralbum.h \
+    modifinformations.h
 
 FORMS += \
     WindowFiles.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    ouvriralbum.ui \
+    modifinformations.ui
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
