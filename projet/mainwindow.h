@@ -18,5 +18,9 @@ public:
 
 protected slots:
         void actionFindFile();
+
+private slots:
+        void on_modifier_infos_clicked();
+        void on_ouvrir_album_clicked();
 };
 #endif // MAINWINDOW_H

@@ -39,6 +39,32 @@
      </property>
     </column>
    </widget>
+   <widget class="QPushButton" name="modifier_infos">
+    <property name="geometry">
+     <rect>
+      <x>1060</x>
+      <y>500</y>
+      <width>191</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Modifier Informations</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ouvrir_album">
+    <property name="geometry">
+     <rect>
+      <x>900</x>
+      <y>530</y>
+      <width>111</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ouvrir album</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -46,7 +72,7 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
