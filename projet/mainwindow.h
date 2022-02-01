@@ -31,6 +31,8 @@ private:
 protected slots:
     void actionFindFile();
     void on_button_modif_infos_clicked();
+    void on_actionEditer_image_triggered();
+    void on_actionCreer_nouvel_album_triggered();
 
 private slots:
     void on_button_ouvrir_album_clicked();
