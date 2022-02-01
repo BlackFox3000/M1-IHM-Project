@@ -1,6 +1,6 @@
 #include <QtWidgets>
 
-#include "window.h"
+#include "WindowFiles.h"
 
 enum { absoluteFileNameRole = Qt::UserRole + 1 };
 

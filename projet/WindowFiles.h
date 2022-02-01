@@ -1,5 +1,5 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef WINDOWFILES_H
+#define WINDOWFILES_H
 
 #include <QWidget>
 #include <QDir>
@@ -48,4 +48,4 @@ private:
     QDir currentDir;
 };
 
-#endif // WINDOW_H
+#endif // WINDOWFILES_H

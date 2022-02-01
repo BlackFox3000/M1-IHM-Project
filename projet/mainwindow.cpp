@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "window.h"
+#include "WindowFiles.h"
 #include <QDebug>
 #include <QDirModel>
 #include <vector>
