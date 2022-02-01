@@ -28,7 +28,7 @@ Window::Window(QWidget *parent)
 
     fileComboBox = createComboBox();
     textComboBox = createComboBox();
-    directoryComboBox = createComboBox(QDir::toNativeSeparators("")); //QDir::currentPath()
+    directoryComboBox = createComboBox(QDir::toNativeSeparators(""));
     directoryComboBox->setMinimumWidth(600);
     filesFoundLabel = new QLabel;
 
@@ -172,14 +172,13 @@ void Window::showFiles(const QStringList &paths)
         fileNameItem->setFlags(fileNameItem->flags() ^ Qt::ItemIsEditable);
 
         if(QString::compare(sizeItem->text().split(" ")[0],"0") != 0){
-            //qDebug() <<"test : " << sizeItem->text();
             int row = filesTable->rowCount();
             filesTable->insertRow(row);
             filesTable->setItem(row, 0, fileNameItem);
             filesTable->setItem(row, 1, sizeItem);
         }
     }
-    filesFoundLabel->setText(tr("%n Fichier(s) trouvé (CLiquez deux fois sur un fichier pour l'ouvrir)", 0, paths.size()));
+    filesFoundLabel->setText(tr("%n Fichier(s) trouvé (Cliquez deux fois sur un fichier pour l'ouvrir)", 0, paths.size()));
     filesFoundLabel->setWordWrap(true);
 }
 
