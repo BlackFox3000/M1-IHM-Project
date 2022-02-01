@@ -9,23 +9,33 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    creationalbumwindow.cpp \
+    editionimagewindow.cpp \
     WindowFiles.cpp \
     main.cpp \
     mainwindow.cpp \
     ouvriralbum.cpp \
+    resizewindow.cpp \
     modifinformations.cpp
 
 HEADERS += \
+    creationalbumwindow.h \
+    editionimagewindow.h \
     WindowFiles.h \
     mainwindow.h \
     ouvriralbum.h \
+    resizewindow.h \
     modifinformations.h
 
 FORMS += \
+    creationalbumwindow.ui \
+    editionimagewindow.ui \
     WindowFiles.ui \
     mainwindow.ui \
     ouvriralbum.ui \
+    resizewindow.ui \
     modifinformations.ui
+
 
 
 # Default rules for deployment.
