@@ -33,6 +33,7 @@ protected slots:
     void on_button_modif_infos_clicked();
     void on_actionEditer_image_triggered();
     void on_actionCreer_nouvel_album_triggered();
+    void on_button_creer_album_clicked();
 
 private slots:
     void on_button_ouvrir_album_clicked();
