@@ -206,3 +206,10 @@ void MainWindow::on_actionCreer_nouvel_album_triggered()
     CreationAlbumWindow c;
     c.exec();
 }
+
+void MainWindow::on_button_creer_album_clicked()
+{
+    CreationAlbumWindow c;
+    c.exec();
+}
+
