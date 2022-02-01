@@ -33,8 +33,6 @@ protected slots:
     void on_button_modif_infos_clicked();
 
 private slots:
-    void on_button_modif_infos2_clicked();
-    void on_button_modifier_infos_clicked();
     void on_button_ouvrir_album_clicked();
 };
 #endif // MAINWINDOW_H

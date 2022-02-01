@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(actionAjouter_Fichier, SIGNAL(triggered()), this, SLOT(actionFindFile()));
     connect(button_modif_infos, &QPushButton::clicked,this, &MainWindow::on_button_modif_infos_clicked);
     connect(button_ouvrir_album, &QPushButton::clicked,this, &MainWindow::on_button_ouvrir_album_clicked);
+    treeWidget->setHeaderHidden(true);
 }
 
 
@@ -145,7 +146,7 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
     for(int i = 0; i < items.size(); i++){
         QModelIndex index = model->indexFromItem(items.at(i));
         QIcon icon = items.at(i)->icon();
-        icon.paint()
+        //icon.paint()
     }
 
     const QModelIndex index = model->indexFromItem(items.at(0));
