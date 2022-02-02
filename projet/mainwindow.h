@@ -37,5 +37,7 @@ protected slots:
 
 private slots:
     void on_button_ouvrir_album_clicked();
+    void viewAbumsFunctionSQL();
+    void insertAlbumFunctionSQL();
 };
 #endif // MAINWINDOW_H
