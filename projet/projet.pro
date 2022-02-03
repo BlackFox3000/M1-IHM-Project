@@ -1,5 +1,5 @@
 QT       += core gui
-
+QT += sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -16,7 +16,8 @@ SOURCES += \
     mainwindow.cpp \
     ouvriralbum.cpp \
     resizewindow.cpp \
-    modifinformations.cpp
+    modifinformations.cpp \
+    database.cpp
 
 HEADERS += \
     creationalbumwindow.h \
@@ -25,7 +26,9 @@ HEADERS += \
     mainwindow.h \
     ouvriralbum.h \
     resizewindow.h \
-    modifinformations.h
+    modifinformations.h \
+    database.h
+
 
 FORMS += \
     creationalbumwindow.ui \

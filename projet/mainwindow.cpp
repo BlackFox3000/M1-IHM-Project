@@ -12,6 +12,7 @@
 #include <QDebug>
 #include <QDirModel>
 #include <vector>
+#include "database.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -22,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(button_ouvrir_album, &QPushButton::clicked,this, &MainWindow::on_button_ouvrir_album_clicked);
     connect(actionEditer_l_image, SIGNAL(triggered()), this, SLOT(on_actionEditer_image_triggered()));
     connect(actionCr_er_un_album, SIGNAL(triggered()), this, SLOT(on_actionCreer_nouvel_album_triggered()));
+    connect(ViewAlbums,&QPushButton::clicked, this, &MainWindow::viewAbumsFunctionSQL);
+    connect(insertAlbumSQL,&QPushButton::clicked, this, &MainWindow::insertAlbumFunctionSQL);
+
 
     treeWidget->setHeaderHidden(true);
 }
@@ -270,3 +274,12 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
     qDebug() << path;
 }
 
+//SQL
+void MainWindow::viewAbumsFunctionSQL(){
+    //createImage(1, "premiere image", "c/path","descrrription", 1, 0,0, 0, 0);
+    view();
+}
+
+void MainWindow::insertAlbumFunctionSQL(){
+    createAlbum("monsecond albumm");
+}

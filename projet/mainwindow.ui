@@ -91,6 +91,32 @@
      </item>
     </layout>
    </widget>
+   <widget class="QPushButton" name="ViewAlbums">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>10</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ViewAlbums</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="insertAlbumSQL">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>10</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add New Album</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

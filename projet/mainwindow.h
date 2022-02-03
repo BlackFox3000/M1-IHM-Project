@@ -45,5 +45,7 @@ private slots:
     void on_button_creer_album_clicked();
     void on_treeView_doubleClicked(const QModelIndex &index);
     void on_treeView_clicked(const QModelIndex &index);
+    void viewAbumsFunctionSQL();
+    void insertAlbumFunctionSQL();
 };
 #endif // MAINWINDOW_H
