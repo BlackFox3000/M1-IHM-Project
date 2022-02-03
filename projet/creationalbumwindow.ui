@@ -83,7 +83,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QListWidget" name="listWidget">
+     <widget class="QListWidget" name="images_list">
       <property name="minimumSize">
        <size>
         <width>0</width>
@@ -108,7 +108,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="create_album_btn">
         <property name="text">
          <string>Créer</string>
         </property>

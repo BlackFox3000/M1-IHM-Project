@@ -94,7 +94,7 @@
    <widget class="QPushButton" name="ViewAlbums">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>300</x>
       <y>10</y>
       <width>91</width>
       <height>31</height>
@@ -107,7 +107,7 @@
    <widget class="QPushButton" name="insertAlbumSQL">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>400</x>
       <y>10</y>
       <width>111</width>
       <height>31</height>
@@ -124,7 +124,7 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">

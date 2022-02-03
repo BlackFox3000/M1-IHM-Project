@@ -9,6 +9,10 @@ class CreationAlbumWindow : public QDialog, private Ui::CreationAlbumWindow
 
 public:
     explicit CreationAlbumWindow(QWidget *parent = nullptr);
+    Ui::CreationAlbumWindow *ui_creationAlbum;
+    QImage selectedImg;
+private slots:
+    void on_create_album_btn_clicked();
 };
 
 #endif // CREATIONALBUMWINDOW_H

@@ -165,6 +165,9 @@
      <height>481</height>
     </rect>
    </property>
+   <property name="minimum">
+    <number>100</number>
+   </property>
    <property name="maximum">
     <number>550</number>
    </property>

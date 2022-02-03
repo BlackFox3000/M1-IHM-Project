@@ -3,6 +3,7 @@
 
 #include "qrubberband.h"
 #include "ui_editionimagewindow.h"
+#include "mainwindow.h"
 #include <QFileDialog>
 
 
@@ -13,7 +14,10 @@ class EditionImageWindow : public QDialog, private Ui::EditionImageWindow
 public:
     //add an argument *image
     explicit EditionImageWindow(QWidget *parent = nullptr);
-    QImage cropped;
+    QImage edit_image;
+    QString img_path;
+    Ui::EditionImageWindow *ui_edit;
+
 
 private slots:
     void on_btn_img_clicked();
@@ -28,7 +32,6 @@ private slots:
     void on_pivoter_btn_clicked();
 
 private:
-    Ui::EditionImageWindow *ui_edit;
     QRubberBand* rubberBand = nullptr;
     QPoint origin;
     QRect rect;

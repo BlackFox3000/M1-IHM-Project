@@ -19,10 +19,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setupUi(this);
     connect(actionAjouter_Fichier, SIGNAL(triggered()), this, SLOT(actionFindFile()));
+    connect(button_modif_infos, &QPushButton::clicked,this, &MainWindow::on_button_modif_infos_clicked);
+    connect(button_ouvrir_album, &QPushButton::clicked,this, &MainWindow::on_button_ouvrir_album_clicked);
     connect(actionEditer_l_image, SIGNAL(triggered()), this, SLOT(on_actionEditer_image_triggered()));
     connect(actionCr_er_un_album, SIGNAL(triggered()), this, SLOT(on_actionCreer_nouvel_album_triggered()));
     connect(ViewAlbums,&QPushButton::clicked, this, &MainWindow::viewAbumsFunctionSQL);
     connect(insertAlbumSQL,&QPushButton::clicked, this, &MainWindow::insertAlbumFunctionSQL);
+
 
     treeWidget->setHeaderHidden(true);
 }
@@ -104,10 +107,10 @@ void MainWindow::updateFolderRoot(QString folderRoot)
         }
     }
 }
-
+QStandardItemModel * model;
 void MainWindow::updateTreeView(QString root,QStringList filesFind)
 {
-    QStandardItemModel * model = new QStandardItemModel();
+    model = new QStandardItemModel();
 
     std::vector<QStandardItem*> items;
 
@@ -190,28 +193,85 @@ void MainWindow::on_button_modif_infos_clicked()
     m.exec();
 }
 
+
 void MainWindow::on_button_ouvrir_album_clicked()
 {
     OuvrirAlbum o;
     o.exec();
 }
 
+
 void MainWindow::on_actionEditer_image_triggered()
 {
     EditionImageWindow e(this);
+    e.img_path = path;
+    qDebug() << "img : "+e.img_path;
+    if(QString::compare(e.img_path, QString()) != 0){
+        bool valid = e.edit_image.load(e.img_path);
+        if(valid){
+            e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
+            e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
+            e.ui_edit->edit_label->setScaledContents(true);
+
+        }else{
+        }
+    }
     e.exec();
 
 }
 void MainWindow::on_actionCreer_nouvel_album_triggered()
 {
-    CreationAlbumWindow c;
+
+    for(int i=0; i<filesFind.size(); i++){
+       // c.ui_creationAlbum->images_list->addItem(filesFind.at(i));
+        itm = new QListWidgetItem();
+        QPushButton *supp = new QPushButton("supp");
+        itm->setIcon(QIcon(filesFind.at(i)));
+        supp->setFixedSize(55,35);
+        c.ui_creationAlbum->images_list->setIconSize(QSize(500,500));
+        c.ui_creationAlbum->images_list->addItem(itm);
+        c.ui_creationAlbum->images_list->setItemWidget(itm,supp);
+        connect(supp,SIGNAL(clicked()),this,SLOT(supprimer()));
+    }
     c.exec();
 }
+void MainWindow::supprimer(){
+    qDebug() << "supp test";
+    int itmIndex = c.ui_creationAlbum->images_list->selectionModel()->currentIndex().row();
+    c.ui_creationAlbum->images_list->model()->removeRow(itmIndex);
 
+}
 void MainWindow::on_button_creer_album_clicked()
 {
     CreationAlbumWindow c;
     c.exec();
+}
+void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
+{
+    path = filesFind.at(index.row());
+    qDebug() << path;
+    EditionImageWindow e;
+    e.img_path = path;
+    qDebug() << "img : "+e.img_path;
+    if(QString::compare(e.img_path, QString()) != 0){
+        bool valid = e.edit_image.load(e.img_path);
+        if(valid){
+            e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
+            e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
+            e.ui_edit->edit_label->setScaledContents(true);
+
+        }else{
+        }
+    }
+    if(e.exec()){}
+}
+
+
+
+void MainWindow::on_treeView_clicked(const QModelIndex &index)
+{
+    path = filesFind.at(index.row());
+    qDebug() << path;
 }
 
 //SQL
