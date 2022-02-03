@@ -14,6 +14,7 @@ EditionImageWindow::EditionImageWindow(QWidget *parent) :
 
     ui_edit->setupUi(this);
     this->setWindowTitle("Edit image");
+
     ui_edit->zoomSlider->setVisible(false);
     ui_edit->crop_btn->setVisible(false);
     ui_edit->zoom_prc->setVisible(false);
@@ -25,10 +26,11 @@ EditionImageWindow::EditionImageWindow(QWidget *parent) :
 
 /* ================ Importer une image ================== */
 
-QImage edit_image;
 void EditionImageWindow::on_btn_img_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this,tr("Choose"), "", tr("Images(*.png *.jpg *.jpeg)"));
+    qDebug() << filename;
+
     if(QString::compare(filename, QString()) != 0){
         bool valid = edit_image.load(filename);
         if(valid){
