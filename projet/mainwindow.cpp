@@ -187,7 +187,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_button_modif_infos_clicked()
 {
-    ModifInformations m;
+    QStringList etiquettes;
+    for(int i=0; i<comboBox_listeTags->count(); i++){
+        etiquettes.append(comboBox_listeTags->itemText(i));
+    }
+    ModifInformations m(this,label_titre->text(),label_extension->text(),label_dimensions->text(),
+                        label_creation->text(),label_modif->text(),etiquettes);
     m.exec();
 }
 

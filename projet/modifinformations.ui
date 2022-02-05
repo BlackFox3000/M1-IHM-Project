@@ -90,14 +90,14 @@ p, li { white-space: pre-wrap; }
      <item row="0" column="1">
       <widget class="QLabel" name="label_titre">
        <property name="text">
-        <string>Mon chat</string>
+        <string>placeholder</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
       <widget class="QLabel" name="label_dimensions">
        <property name="text">
-        <string>1980x1080</string>
+        <string>placeholder</string>
        </property>
       </widget>
      </item>
@@ -161,7 +161,7 @@ p, li { white-space: pre-wrap; }
      <item row="1" column="1">
       <widget class="QLabel" name="label_extension">
        <property name="text">
-        <string>PNG</string>
+        <string>placeholder</string>
        </property>
       </widget>
      </item>
@@ -173,16 +173,16 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLabel" name="label_10">
+      <widget class="QLabel" name="label_creation">
        <property name="text">
-        <string>23/01/22</string>
+        <string>placeholder</string>
        </property>
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLabel" name="label_11">
+      <widget class="QLabel" name="label_modif">
        <property name="text">
-        <string>26/01/22</string>
+        <string>placeholder</string>
        </property>
       </widget>
      </item>

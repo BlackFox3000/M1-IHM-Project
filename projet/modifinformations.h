@@ -8,7 +8,8 @@ class ModifInformations : public QDialog, private Ui::ModifInformations
     Q_OBJECT
 
 public:
-    explicit ModifInformations(QWidget *parent = nullptr);
+    explicit ModifInformations(QWidget *parent = nullptr,QString titre = nullptr,QString extension = nullptr,QString dimensions = nullptr,
+                               QString creation = nullptr,QString modification = nullptr,QStringList etiquettes = {""});
 private slots:
     void on_button_valider_Tag_clicked();
     void on_button_validerTitre_clicked();
