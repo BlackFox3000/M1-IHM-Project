@@ -249,32 +249,45 @@ void MainWindow::on_button_creer_album_clicked()
     CreationAlbumWindow c;
     c.exec();
 }
-void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
+QString MainWindow::getElementTreeViewClicked()
 {
-    path = filesFind.at(index.row());
-    qDebug() << path;
-    EditionImageWindow e;
-    e.img_path = path;
-    qDebug() << "img : "+e.img_path;
-    if(QString::compare(e.img_path, QString()) != 0){
-        bool valid = e.edit_image.load(e.img_path);
-        if(valid){
-            e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
-            e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
-            e.ui_edit->edit_label->setScaledContents(true);
+    QString element = model->itemFromIndex(treeView->selectionModel()->selectedIndexes().at(0))->accessibleDescription();
+         if(element.split('.').size() > 1){
+             return element;
+         }
+   return NULL;
+}
 
-        }else{
+void MainWindow::on_treeView_doubleClicked()
+{
+    path = getElementTreeViewClicked();
+    if(path != NULL){
+        qDebug() << path;
+        EditionImageWindow e;
+        e.img_path = path;
+        qDebug() << "img : "+e.img_path;
+        if(QString::compare(e.img_path, QString()) != 0){
+            bool valid = e.edit_image.load(e.img_path);
+            if(valid){
+                e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
+                e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
+                e.ui_edit->edit_label->setScaledContents(true);
+            }
+            else{
+            }
         }
+        if(e.exec()){}
     }
-    if(e.exec()){}
 }
 
 
 
-void MainWindow::on_treeView_clicked(const QModelIndex &index)
+void MainWindow::on_treeView_clicked()
 {
-    path = filesFind.at(index.row());
-    qDebug() << path;
+    QString element = getElementTreeViewClicked();
+    if(element != NULL){
+        qDebug() << "file cliked : " << element;
+    }
 }
 
 //SQL

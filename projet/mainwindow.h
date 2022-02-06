@@ -39,12 +39,13 @@ protected slots:
     void on_actionEditer_image_triggered();
     void on_actionCreer_nouvel_album_triggered();
     void supprimer();
+    QString getElementTreeViewClicked();
 
 private slots:
     void on_button_ouvrir_album_clicked();
     void on_button_creer_album_clicked();
-    void on_treeView_doubleClicked(const QModelIndex &index);
-    void on_treeView_clicked(const QModelIndex &index);
+    void on_treeView_doubleClicked();
+    void on_treeView_clicked();
     void viewAbumsFunctionSQL();
     void insertAlbumFunctionSQL();
 };
