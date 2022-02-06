@@ -21,8 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(actionAjouter_Fichier, SIGNAL(triggered()), this, SLOT(actionFindFile()));
     connect(actionEditer_l_image, SIGNAL(triggered()), this, SLOT(on_actionEditer_image_triggered()));
     connect(actionCr_er_un_album, SIGNAL(triggered()), this, SLOT(on_actionCreer_nouvel_album_triggered()));
-    connect(ViewAlbums,&QPushButton::clicked, this, &MainWindow::viewAbumsFunctionSQL);
-    connect(insertAlbumSQL,&QPushButton::clicked, this, &MainWindow::insertAlbumFunctionSQL);
+    connect(actionOuvrir_un_album,SIGNAL(triggered()), this, SLOT(viewAbumsFunctionSQL));
+    connect(actionCr_er_un_album,SIGNAL(triggered()), this, SLOT(insertAlbumFunctionSQL));
 
 
     treeWidget->setHeaderHidden(true);
