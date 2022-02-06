@@ -14,6 +14,7 @@ SOURCES += \
     WindowFiles.cpp \
     main.cpp \
     mainwindow.cpp \
+    navigation.cpp \
     ouvriralbum.cpp \
     resizewindow.cpp \
     modifinformations.cpp \
@@ -24,6 +25,7 @@ HEADERS += \
     editionimagewindow.h \
     WindowFiles.h \
     mainwindow.h \
+    navigation.h \
     ouvriralbum.h \
     resizewindow.h \
     modifinformations.h \
@@ -35,6 +37,7 @@ FORMS += \
     editionimagewindow.ui \
     WindowFiles.ui \
     mainwindow.ui \
+    navigation.ui \
     ouvriralbum.ui \
     resizewindow.ui \
     modifinformations.ui

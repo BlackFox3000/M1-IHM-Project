@@ -124,12 +124,17 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
         QString rootLoop = root;
          bool condition = false;
          int index = 0;
+         int maxSize = 0;
+         QString maxSizeValue;
         while(!condition){
             if(splitList.length() == 1){
                 QStandardItem* item = new QStandardItem(QIcon("icon_file.ico"),splitList[0]);
                 item->setEditable(false);
                 item->setAccessibleDescription(rootLoop + splitList[0]);
                 items.at(index)->appendRow(item);
+                if(maxSizeValue.length() > maxSize){
+                    maxSize = maxSizeValue.length();
+                }
                 condition = true;
             }
             else{
@@ -162,11 +167,14 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
     }
 
     const QModelIndex index = model->indexFromItem(items.at(0));
+
     treeView->expand(index);
     treeView->scrollTo(index);
     treeView->setCurrentIndex(index);
     treeView->resizeColumnToContents(0);
     treeView->setHeaderHidden(true);
+    treeView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    treeView->setColumnWidth(0, 200);
 }
 
 
