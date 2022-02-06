@@ -1,3 +1,7 @@
+TARGET = your_app
+TEMPLATE = app
+QT += widgets
+RESOURCES += ressources.qrc
 QT       += core gui
 QT += sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets

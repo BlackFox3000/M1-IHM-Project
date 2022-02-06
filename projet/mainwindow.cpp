@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setupUi(this);
+    setWindowIcon(QIcon(":icon/album.png"));
     connect(actionAjouter_Fichier, SIGNAL(triggered()), this, SLOT(actionFindFile()));
     connect(actionEditer_l_image, SIGNAL(triggered()), this, SLOT(on_actionEditer_image_triggered()));
     connect(actionCr_er_un_album, SIGNAL(triggered()), this, SLOT(on_actionCreer_nouvel_album_triggered()));

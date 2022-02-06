@@ -6,6 +6,7 @@ ModifInformations::ModifInformations(QWidget *parent,QString titre,QString exten
     QDialog(parent)
 {
     setupUi(this);
+    setWindowIcon(QIcon(":icon/option-album.png"));
     this->label_titre->setText(titre);
     this->label_extension->setText(extension);
     this->label_dimensions->setText(dimensions);

@@ -14,6 +14,7 @@ EditionImageWindow::EditionImageWindow(QWidget *parent) :
 
     ui_edit->setupUi(this);
     this->setWindowTitle("Edit image");
+    setWindowIcon(QIcon(":icon/edit-album.png"));
 
     ui_edit->zoomSlider->setVisible(false);
     ui_edit->crop_btn->setVisible(false);
