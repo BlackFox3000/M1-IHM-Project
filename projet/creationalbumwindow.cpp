@@ -1,4 +1,6 @@
 #include "creationalbumwindow.h"
+#include "database.h"
+#include <QDebug>
 
 CreationAlbumWindow::CreationAlbumWindow(QWidget *parent) :
     QDialog(parent), ui_creationAlbum(new Ui::CreationAlbumWindow)
@@ -14,6 +16,15 @@ CreationAlbumWindow::CreationAlbumWindow(QWidget *parent) :
 
 void CreationAlbumWindow::on_create_album_btn_clicked()
 {
+   QString name = ui_creationAlbum->album_name->toPlainText();
+   int nbrOfItems = ui_creationAlbum->images_list->count();
+   qDebug() << name;
+   qDebug() << nbrOfItems;
+   for(int i=0; i<nbrOfItems; i++){
+        img_paths.append(ui_creationAlbum->images_list->item(i)->text());
+   }
+   qDebug() << img_paths;
+   //createAlbum(name.toStdString());
 
 }
 

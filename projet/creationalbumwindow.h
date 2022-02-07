@@ -11,6 +11,8 @@ public:
     explicit CreationAlbumWindow(QWidget *parent = nullptr);
     Ui::CreationAlbumWindow *ui_creationAlbum;
     QImage selectedImg;
+    QList<QString> img_paths;
+
 private slots:
     void on_create_album_btn_clicked();
 };

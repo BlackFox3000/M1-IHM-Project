@@ -23,9 +23,11 @@ public:
     QString path;
     CreationAlbumWindow c;
     QListWidgetItem *itm;
+    Ui::MainWindow ui;
 
 private:
     void updateTreeView(QString root,QStringList filesFind);
+    void updateListWidget();
     int getIndexItemTreeViewModel(std::vector<QStandardItem*> items,QString file);
     void updateFilesFind(QStringList filesFind);
     void updateFolderRoot(QString folderRoot);
@@ -39,6 +41,7 @@ protected slots:
     void on_actionEditer_image_triggered();
     void on_actionCreer_nouvel_album_triggered();
     void supprimer();
+    void ajouter();
     void viewAbumsFunctionSQL();
     void insertAlbumFunctionSQL();
     QString getElementTreeViewClicked();

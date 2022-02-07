@@ -16,8 +16,9 @@ EditionImageWindow::EditionImageWindow(QWidget *parent) :
     this->setWindowTitle("Edit image");
     setWindowIcon(QIcon(":icon/edit-album.png"));
 
+
     ui_edit->zoomSlider->setVisible(false);
-    ui_edit->crop_btn->setVisible(false);
+    ui_edit->crop_btn->setEnabled(false);
     ui_edit->zoom_prc->setVisible(false);
     ui_edit->size_img->setText("taille de l'image "+QString::number(ui_edit->edit_label->width())+"x"+QString::number(ui_edit->edit_label->height()));
     //QPushButton{ background: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;color: black;font-size: 15px;}
@@ -35,7 +36,7 @@ void EditionImageWindow::on_btn_img_clicked()
     if(QString::compare(filename, QString()) != 0){
         bool valid = edit_image.load(filename);
         if(valid){
-            edit_image = edit_image.scaledToWidth(ui_edit->edit_label->width(), Qt::SmoothTransformation);            
+            edit_image = edit_image.scaledToWidth(ui_edit->edit_label->width(), Qt::SmoothTransformation);
             ui_edit->edit_label->setPixmap(QPixmap::fromImage(edit_image));
             ui_edit->edit_label->setScaledContents(true);
 
@@ -119,7 +120,7 @@ void EditionImageWindow::mousePressEvent(QMouseEvent *event){
 }
 void EditionImageWindow::mouseMoveEvent(QMouseEvent *event){
      rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
-     ui_edit->crop_btn->setVisible(true);
+     ui_edit->crop_btn->setEnabled(true);
      rubberBand->show();
 }
 void EditionImageWindow::mouseReleaseEvent(QMouseEvent *event){
@@ -129,10 +130,13 @@ void EditionImageWindow::mouseReleaseEvent(QMouseEvent *event){
 
 void EditionImageWindow::on_crop_btn_clicked()
 {
-    rubberBand->hide();
-    ui_edit->edit_label->setPixmap(grab(rect));
-    ui_edit->edit_label->setScaledContents(true); 
-    ui_edit->crop_btn->setVisible(false);
+
+      rubberBand->hide();
+      ui_edit->edit_label->setPixmap(grab(rect));
+      ui_edit->edit_label->setScaledContents(true);
+      ui_edit->crop_btn->setEnabled(false);
+
+
 }
 
 /* ================ Pivoter une image ================== */

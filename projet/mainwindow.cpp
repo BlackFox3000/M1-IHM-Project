@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(actionCr_er_un_album,SIGNAL(triggered()), this, SLOT(insertAlbumFunctionSQL));
 
 
-    treeWidget->setHeaderHidden(true);
+    //treeWidget->setHeaderHidden(true);
 }
 
 
@@ -231,21 +231,54 @@ void MainWindow::on_actionEditer_image_triggered()
     e.exec();
 
 }
+
+void MainWindow::updateListWidget(){
+    qDebug() << c.img_paths;
+    for(int i=0; i< c.img_paths.size(); i++){
+        itm = new QListWidgetItem();
+        itm->setIcon(QIcon(c.img_paths.at(i)));
+        album_img->setIconSize(QSize(100,100));
+        album_img->addItem(itm);
+    }
+}
 void MainWindow::on_actionCreer_nouvel_album_triggered()
 {
-
     for(int i=0; i<filesFind.size(); i++){
-       // c.ui_creationAlbum->images_list->addItem(filesFind.at(i));
         itm = new QListWidgetItem();
-        QPushButton *supp = new QPushButton("supp");
+        QString itmPath = filesFind.at(i);
+        itm->setText(itmPath);
+        itm->setTextColor(QColor(255,255,255));
+        QPushButton *ajouter = new QPushButton("ajouter");
         itm->setIcon(QIcon(filesFind.at(i)));
-        supp->setFixedSize(55,35);
-        c.ui_creationAlbum->images_list->setIconSize(QSize(500,500));
-        c.ui_creationAlbum->images_list->addItem(itm);
-        c.ui_creationAlbum->images_list->setItemWidget(itm,supp);
-        connect(supp,SIGNAL(clicked()),this,SLOT(supprimer()));
-    }
-    c.exec();
+        ajouter->setFixedSize(55,35);
+        c.ui_creationAlbum->img_show->setIconSize(QSize(200,200));
+        c.ui_creationAlbum->img_show->addItem(itm);
+        c.ui_creationAlbum->img_show->setItemWidget(itm,ajouter);
+        connect(ajouter,SIGNAL(clicked()),this,SLOT(ajouter()));}
+        if(c.exec()){
+            updateListWidget();
+            c.ui_creationAlbum->img_show->clear();
+
+        }
+}
+void MainWindow::ajouter(){
+    qDebug() << "ajouter test";
+    int itmIndex = c.ui_creationAlbum->img_show->selectionModel()->currentIndex().row();
+    qDebug() << itmIndex;
+    qDebug() << c.ui_creationAlbum->img_show->item(itmIndex);
+    QListWidgetItem *itm = new QListWidgetItem();
+    QString itmPath = filesFind.at(itmIndex);
+    itm->setText(itmPath);
+    itm->setTextColor(QColor(255,255,255));
+    QPushButton *supprimer = new QPushButton("supprimer");
+    supprimer->setFixedSize(80,35);
+    itm->setIcon(c.ui_creationAlbum->img_show->item(itmIndex)->icon());
+    c.ui_creationAlbum->images_list->setIconSize(QSize(400,200));
+    c.ui_creationAlbum->images_list->addItem(itm);
+    c.ui_creationAlbum->images_list->setItemWidget(itm,supprimer);
+    connect(supprimer,SIGNAL(clicked()),this,SLOT(supprimer()));
+
+
 }
 void MainWindow::supprimer(){
     qDebug() << "supp test";

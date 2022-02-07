@@ -16,10 +16,10 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>230</x>
+     <x>470</x>
      <y>20</y>
-     <width>781</width>
-     <height>565</height>
+     <width>511</width>
+     <height>621</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -36,18 +36,18 @@
      </widget>
     </item>
     <item>
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QTextEdit" name="album_name">
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>50</height>
+        <height>0</height>
        </size>
       </property>
-      <property name="acceptDrops">
-       <bool>true</bool>
-      </property>
-      <property name="editable">
-       <bool>true</bool>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>50</height>
+       </size>
       </property>
      </widget>
     </item>
@@ -125,9 +125,35 @@
     </item>
    </layout>
   </widget>
+  <widget class="QListWidget" name="img_show">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>291</width>
+     <height>621</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>
+  <connection>
+   <sender>create_album_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>CreationAlbumWindow</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>291</x>
+     <y>595</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>129</x>
+     <y>597</y>
+    </hint>
+   </hints>
+  </connection>
   <connection>
    <sender>pushButton</sender>
    <signal>clicked()</signal>
@@ -135,12 +161,12 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>799</x>
-     <y>554</y>
+     <x>832</x>
+     <y>593</y>
     </hint>
     <hint type="destinationlabel">
-     <x>825</x>
-     <y>566</y>
+     <x>848</x>
+     <y>615</y>
     </hint>
    </hints>
   </connection>
