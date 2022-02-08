@@ -58,5 +58,6 @@ private slots:
     void on_treeView_clicked();
     void on_Next_clicked();
     void on_Prec_clicked();
+    void on_addBtn_clicked();
 };
 #endif // MAINWINDOW_H

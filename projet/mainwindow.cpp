@@ -38,6 +38,13 @@ MainWindow::MainWindow(QWidget *parent)
     album_img->setDropIndicatorShown(true);
     album_img->setDragDropMode(QAbstractItemView::InternalMove);
 
+    //btn slider
+    this->Next->setEnabled(false);
+    this->Prec->setEnabled(false);
+
+    //btn add to album
+    this->addBtn->setVisible(false);
+
 
 }
 
@@ -242,13 +249,25 @@ void MainWindow::on_actionEditer_image_triggered()
 
         }else{
         }
+    }else{
+        e.edit_image.load(path_img->text());
+        qDebug() << "=>"+path_img->text();
+        e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
+        e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
+        e.ui_edit->edit_label->setScaledContents(true);
+
     }
     e.exec();
-
 }
+
+
 void MainWindow::deletePictureGalerie()
 {
     album_img->takeItem(album_img->currentRow());
+    if(album_img->count() <= 1){
+        Next->setEnabled(false);
+        Prec->setEnabled(false);
+    }
 }
 void MainWindow::updateListWidget(){
     qDebug() << c.img_paths;
@@ -275,14 +294,23 @@ void MainWindow::updateListWidget(){
 
 void MainWindow::updateNavigation()
 {
+    //btn slider
+    if(album_img->count() == 0){
+        this->Next->setEnabled(false);
+        this->Prec->setEnabled(false);
+    }else{
+    this->Next->setEnabled(true);
+    this->Prec->setEnabled(true);
     QListWidgetItem *firstItem = album_img->item(0);
     qDebug() << firstItem->text();
     qDebug() << "affichage des info sur navigation";
     qDebug() << n.listpix;
+    path_img->setText(album_img->item(0)->text());
     n.pix.load(firstItem->text());
     n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
     apercu_img->setPixmap(QPixmap::fromImage(n.pix));
     apercu_img->setScaledContents(true);
+    }
 }
 
 void MainWindow::on_actionCreer_nouvel_album_triggered()
@@ -370,13 +398,15 @@ void MainWindow::on_treeView_doubleClicked()
         if(QString::compare(e.img_path, QString()) != 0){
             bool valid = e.edit_image.load(e.img_path);
             if(valid){
+
                 e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
                 e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
                 e.ui_edit->edit_label->setScaledContents(true);
+
             }
-            else{
-            }
+
         }
+
         if(e.exec()){}
     }
 }
@@ -386,11 +416,43 @@ void MainWindow::on_treeView_doubleClicked()
 void MainWindow::on_treeView_clicked()
 {
     QString element = getElementTreeViewClicked();
+
     if(element != NULL){
+
         qDebug() << "file cliked : " << element;
+        n.pix.load(element);
+        n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
+        apercu_img->setText(element);
+        apercu_img->setPixmap(QPixmap::fromImage(n.pix));
+        apercu_img->setScaledContents(true);
+        Next->setEnabled(false);
+        Prec->setEnabled(false);
+        addBtn->setVisible(true);
+
     }
 }
 
+
+void MainWindow::on_addBtn_clicked()
+{
+    QString element = getElementTreeViewClicked();
+    QListWidgetItem *itm = new QListWidgetItem();
+    itm->setIcon(QIcon(element));
+    QPushButton * button = new QPushButton("X");
+    connect(button, &QPushButton::clicked, this, &MainWindow::deletePictureGalerie);
+    button->setMinimumSize(QSize(22, 22));
+    button->setMaximumSize(QSize(22,22));
+    QString itmPath = element;
+    itm->setText(itmPath);
+    itm->setTextColor(QColor(255,255,255));
+    album_img->setIconSize(QSize(200,200));
+    album_img->addItem(itm);
+    album_img->setItemWidget(itm,button);
+    addBtn->setVisible(false);
+    Next->setEnabled(true);
+    Prec->setEnabled(true);
+
+}
 //SQL
 void MainWindow::viewAbumsFunctionSQL(){
     //createImage(1, "premiere image", "c/path","descrrription", 1, 0,0, 0, 0);
@@ -411,6 +473,8 @@ void MainWindow::on_Next_clicked()
         num=0;
     }
     n.pix.load(album_img->item(num)->text());
+    qDebug() << album_img->item(num)->text();
+    path_img->setText(album_img->item(num)->text());
     n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
     apercu_img->setPixmap(QPixmap::fromImage(n.pix));
     apercu_img->setScaledContents(true);
@@ -425,8 +489,13 @@ void MainWindow::on_Prec_clicked()
         num=album_img->count()-1;
     }
     n.pix.load(album_img->item(num)->text());
+    path_img->setText(album_img->item(num)->text());
     n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
     apercu_img->setPixmap(QPixmap::fromImage(n.pix));
     apercu_img->setScaledContents(true);
+
 }
+
+
+
 
