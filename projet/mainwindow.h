@@ -22,7 +22,6 @@ public:
     QList<QStandardItem*> findItemsRecurse( QStandardItemModel* model, const QString &text, int column, const QModelIndex& modelIndex = QModelIndex());
     QString path;
     CreationAlbumWindow c;
-    QListWidgetItem *itm;
     Ui::MainWindow ui;
 
 private:
@@ -34,6 +33,7 @@ private:
 
     QString folderRoot;
     QStringList filesFind;
+    QStandardItemModel * model;
 
 protected slots:
     void actionFindFile();
