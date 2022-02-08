@@ -30,6 +30,8 @@ MainWindow::MainWindow(QWidget *parent)
     model->appendRow(new QStandardItem("Arborescence vide"));
     treeView->setModel(model);
 
+    album_img->addItem(new QListWidgetItem("Galerie vide"));    
+        
     album_img->setSelectionMode(QAbstractItemView::SingleSelection);
     album_img->setDragEnabled(true);
     album_img->viewport()->setAcceptDrops(true);
@@ -252,6 +254,7 @@ void MainWindow::updateListWidget(){
     for(int i=0; i< c.img_paths.size(); i++){
         itm = new QListWidgetItem();
         QPushButton * button = new QPushButton("X");
+        connect(button, &QPushButton::clicked, this, &MainWindow::deletePictureGalerie);
         button->setMinimumSize(QSize(22, 22));
         button->setMaximumSize(QSize(22,22));
         itm->setIcon(QIcon(c.img_paths.at(i)));
@@ -259,6 +262,11 @@ void MainWindow::updateListWidget(){
         album_img->addItem(itm);
         album_img->setItemWidget(itm,button);
     }
+}
+
+void MainWindow::deletePictureGalerie()
+{
+    album_img->takeItem(album_img->currentRow());
 }
 
 void MainWindow::on_actionCreer_nouvel_album_triggered()
