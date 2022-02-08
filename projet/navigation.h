@@ -1,7 +1,7 @@
- #ifndef NAVIGATION_H
+#ifndef NAVIGATION_H
 #define NAVIGATION_H
 
- #include <QWidget>
+#include <QWidget>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QLabel>
 #include "ui_navigation.h"
@@ -10,25 +10,24 @@
 //QT_END_NAMESPACE
 class navigation : public QWidget ,private Ui::Navigation
 {
-    Q_OBJECT
+   Q_OBJECT
 
 signals:
-    void  putImage(QPixmap);
+   void  putImage(QImage);
 public:
-    navigation(QWidget *parent = nullptr);
-    ~navigation();
+   navigation(QWidget *parent = nullptr);
+   ~navigation();
+   QImage pix;
+   QList<QImage> listpix;
+   QList<QString> nomImage;
+   QString nomImagetest;
 
 private slots:
-    void on_butonD_clicked();
-    void on_butonG_clicked();
-    void on_Go_clicked();
+   void on_butonD_clicked();
+   void on_butonG_clicked();
+   void on_Go_clicked();
 
-private:
 
-    QPixmap pix;
-    QList<QPixmap> listpix;
-    QList<QString> nomImage;
-    QString nomImagetest;
 };
 
 #endif // NAVIGATION_H

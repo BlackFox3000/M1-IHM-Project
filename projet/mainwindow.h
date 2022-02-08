@@ -8,6 +8,7 @@
 #include <QDirModel>
 #include <QStandardItemModel>
 #include "creationalbumwindow.h"
+#include "navigation.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -23,10 +24,13 @@ public:
     QString path;
     CreationAlbumWindow c;
     Ui::MainWindow ui;
+    navigation n;
+
 
 private:
     void updateTreeView(QString root,QStringList filesFind);
     void updateListWidget();
+    void updateNavigation();
     int getIndexItemTreeViewModel(std::vector<QStandardItem*> items,QString file);
     void updateFilesFind(QStringList filesFind);
     void updateFolderRoot(QString folderRoot);
@@ -52,5 +56,7 @@ private slots:
     void on_button_creer_album_clicked();
     void on_treeView_doubleClicked();
     void on_treeView_clicked();
+    void on_Next_clicked();
+    void on_Prec_clicked();
 };
 #endif // MAINWINDOW_H

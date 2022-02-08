@@ -12,6 +12,7 @@ public:
     Ui::CreationAlbumWindow *ui_creationAlbum;
     QImage selectedImg;
     QList<QString> img_paths;
+    QString name;
 
 private slots:
     void on_create_album_btn_clicked();

@@ -13,6 +13,8 @@
 #include <QDirModel>
 #include <vector>
 #include "database.h"
+#include "navigation.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -30,13 +32,13 @@ MainWindow::MainWindow(QWidget *parent)
     model->appendRow(new QStandardItem("Arborescence vide"));
     treeView->setModel(model);
 
-    album_img->addItem(new QListWidgetItem("Galerie vide"));    
-        
     album_img->setSelectionMode(QAbstractItemView::SingleSelection);
     album_img->setDragEnabled(true);
     album_img->viewport()->setAcceptDrops(true);
     album_img->setDropIndicatorShown(true);
     album_img->setDragDropMode(QAbstractItemView::InternalMove);
+
+
 }
 
 
@@ -244,12 +246,15 @@ void MainWindow::on_actionEditer_image_triggered()
     e.exec();
 
 }
-
+void MainWindow::deletePictureGalerie()
+{
+    album_img->takeItem(album_img->currentRow());
+}
 void MainWindow::updateListWidget(){
     qDebug() << c.img_paths;
     album_img->clear();
     album_img->setIconSize(QSize(150,150));
-    album_img->addItem(new QListWidgetItem("Titre album"));
+    //album_img->addItem(new QListWidgetItem("Titre album"));
     QListWidgetItem *itm;
     for(int i=0; i< c.img_paths.size(); i++){
         itm = new QListWidgetItem();
@@ -257,20 +262,33 @@ void MainWindow::updateListWidget(){
         connect(button, &QPushButton::clicked, this, &MainWindow::deletePictureGalerie);
         button->setMinimumSize(QSize(22, 22));
         button->setMaximumSize(QSize(22,22));
+        QString itmPath = c.img_paths.at(i);
+        itm->setText(itmPath);
+        itm->setTextColor(QColor(255,255,255));
         itm->setIcon(QIcon(c.img_paths.at(i)));
-
         album_img->addItem(itm);
         album_img->setItemWidget(itm,button);
     }
+    titreAlbum->setText("Titre album : "+c.name);
+
 }
 
-void MainWindow::deletePictureGalerie()
+void MainWindow::updateNavigation()
 {
-    album_img->takeItem(album_img->currentRow());
+    QListWidgetItem *firstItem = album_img->item(0);
+    qDebug() << firstItem->text();
+    qDebug() << "affichage des info sur navigation";
+    qDebug() << n.listpix;
+    n.pix.load(firstItem->text());
+    n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
+    apercu_img->setPixmap(QPixmap::fromImage(n.pix));
+    apercu_img->setScaledContents(true);
 }
 
 void MainWindow::on_actionCreer_nouvel_album_triggered()
 {
+
+
     for(int i=0; i<filesFind.size(); i++){
         QListWidgetItem * itm = new QListWidgetItem();
         QString itmPath = filesFind.at(i);
@@ -286,6 +304,9 @@ void MainWindow::on_actionCreer_nouvel_album_triggered()
     }
         if(c.exec()){
             updateListWidget();
+            // add to navigation
+            updateNavigation();
+
         }
         c.ui_creationAlbum->img_show->clear();
 
@@ -378,5 +399,34 @@ void MainWindow::viewAbumsFunctionSQL(){
 
 void MainWindow::insertAlbumFunctionSQL(){
     createAlbum("monsecond albumm");
+}
+
+
+//======== navigation =========
+int num=0;
+void MainWindow::on_Next_clicked()
+{
+    num++;
+    if(num >= album_img->count()){
+        num=0;
+    }
+    n.pix.load(album_img->item(num)->text());
+    n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
+    apercu_img->setPixmap(QPixmap::fromImage(n.pix));
+    apercu_img->setScaledContents(true);
+
+}
+
+
+void MainWindow::on_Prec_clicked()
+{
+    num--;
+    if(num < 0){
+        num=album_img->count()-1;
+    }
+    n.pix.load(album_img->item(num)->text());
+    n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
+    apercu_img->setPixmap(QPixmap::fromImage(n.pix));
+    apercu_img->setScaledContents(true);
 }
 

@@ -16,7 +16,7 @@ CreationAlbumWindow::CreationAlbumWindow(QWidget *parent) :
 
 void CreationAlbumWindow::on_create_album_btn_clicked()
 {
-   QString name = ui_creationAlbum->album_name->toPlainText();
+   name = ui_creationAlbum->album_name->toPlainText();
    int nbrOfItems = ui_creationAlbum->images_list->count();
    qDebug() << name;
    qDebug() << nbrOfItems;
