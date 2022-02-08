@@ -25,8 +25,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(actionOuvrir_un_album,SIGNAL(triggered()), this, SLOT(viewAbumsFunctionSQL));
     connect(actionCr_er_un_album,SIGNAL(triggered()), this, SLOT(insertAlbumFunctionSQL));
 
+    treeView->setHeaderHidden(true);
+    QStandardItemModel* model = new QStandardItemModel();
+    model->appendRow(new QStandardItem("Arborescence vide"));
+    treeView->setModel(model);
 
-    //treeWidget->setHeaderHidden(true);
+    album_img->setSelectionMode(QAbstractItemView::SingleSelection);
+    album_img->setDragEnabled(true);
+    album_img->viewport()->setAcceptDrops(true);
+    album_img->setDropIndicatorShown(true);
+    album_img->setDragDropMode(QAbstractItemView::InternalMove);
 }
 
 
@@ -106,7 +114,7 @@ void MainWindow::updateFolderRoot(QString folderRoot)
         }
     }
 }
-QStandardItemModel * model;
+
 void MainWindow::updateTreeView(QString root,QStringList filesFind)
 {
     model = new QStandardItemModel();
@@ -119,22 +127,22 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
     itemRoot->setEditable(false);
     model->appendRow(itemRoot);
 
+    int maxSize = 0;
+    int indent = 0;
 
     for(QString file : filesFind){
         QStringList splitList = file.split(root)[1].split('/');
         QString rootLoop = root;
-         bool condition = false;
-         int index = 0;
-         int maxSize = 0;
-         QString maxSizeValue;
+        bool condition = false;
+        int index = 0;
         while(!condition){
             if(splitList.length() == 1){
                 QStandardItem* item = new QStandardItem(QIcon("icon_file.ico"),splitList[0]);
                 item->setEditable(false);
                 item->setAccessibleDescription(rootLoop + splitList[0]);
                 items.at(index)->appendRow(item);
-                if(maxSizeValue.length() > maxSize){
-                    maxSize = maxSizeValue.length();
+                if(((rootLoop + splitList[0]).length() + (indent * 4)) > maxSize){
+                    maxSize = (rootLoop + splitList[0]).length() + (indent * 4);
                 }
                 condition = true;
             }
@@ -142,7 +150,7 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
                 int secondIndex = getIndexItemTreeViewModel(items,rootLoop + splitList[0]);
                 if(secondIndex == -1){
                     QStandardItem* item = new QStandardItem(QIcon("icon_folder.ico"),splitList[0]);
-;                    item->setAccessibleDescription(rootLoop + splitList[0]);
+                    item->setAccessibleDescription(rootLoop + splitList[0]);
                     item->setEditable(false);
                     items.push_back(item);
                     items.at(index)->appendRow(item);
@@ -153,6 +161,7 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
                 }
                 rootLoop = rootLoop + splitList[0] + "/";
                 splitList = file.split(rootLoop)[1].split('/');
+                indent ++;
             }
         }
     }
@@ -161,11 +170,11 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
     treeView->header()->setSortIndicator(0,Qt::AscendingOrder);
     treeView->header()->setSortIndicatorShown(true);
 
-    for(int i = 0; i < items.size(); i++){
+    /*for(int i = 0; i < items.size(); i++){
         QModelIndex index = model->indexFromItem(items.at(i));
         QIcon icon = items.at(i)->icon();
         //icon.paint()
-    }
+    }*/
 
     const QModelIndex index = model->indexFromItem(items.at(0));
 
@@ -175,7 +184,9 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
     treeView->resizeColumnToContents(0);
     treeView->setHeaderHidden(true);
     treeView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    treeView->setColumnWidth(0, 200);
+    treeView->setColumnWidth(0, maxSize);
+
+    qDebug() << "max size = " << maxSize;
 }
 
 
@@ -234,17 +245,26 @@ void MainWindow::on_actionEditer_image_triggered()
 
 void MainWindow::updateListWidget(){
     qDebug() << c.img_paths;
+    album_img->clear();
+    album_img->setIconSize(QSize(150,150));
+    album_img->addItem(new QListWidgetItem("Titre album"));
+    QListWidgetItem *itm;
     for(int i=0; i< c.img_paths.size(); i++){
         itm = new QListWidgetItem();
+        QPushButton * button = new QPushButton("X");
+        button->setMinimumSize(QSize(22, 22));
+        button->setMaximumSize(QSize(22,22));
         itm->setIcon(QIcon(c.img_paths.at(i)));
-        album_img->setIconSize(QSize(100,100));
+
         album_img->addItem(itm);
+        album_img->setItemWidget(itm,button);
     }
 }
+
 void MainWindow::on_actionCreer_nouvel_album_triggered()
 {
     for(int i=0; i<filesFind.size(); i++){
-        itm = new QListWidgetItem();
+        QListWidgetItem * itm = new QListWidgetItem();
         QString itmPath = filesFind.at(i);
         itm->setText(itmPath);
         itm->setTextColor(QColor(255,255,255));
@@ -341,3 +361,4 @@ void MainWindow::viewAbumsFunctionSQL(){
 void MainWindow::insertAlbumFunctionSQL(){
     createAlbum("monsecond albumm");
 }
+
