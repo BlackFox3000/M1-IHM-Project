@@ -418,7 +418,16 @@ void MainWindow::on_treeView_clicked()
     QString element = getElementTreeViewClicked();
 
     if(element != NULL){
+        QList<QString> paths;
+        for(int i=0; i <album_img->count(); i++){
+            paths.append(album_img->model()->index(i,0).data(Qt::DisplayRole).toString());
+        }
 
+        if(paths.contains(element)){
+            addBtn->setVisible(false);
+            Next->setEnabled(true);
+            Prec->setEnabled(true);
+        }else{
         qDebug() << "file cliked : " << element;
         n.pix.load(element);
         n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
@@ -428,7 +437,7 @@ void MainWindow::on_treeView_clicked()
         Next->setEnabled(false);
         Prec->setEnabled(false);
         addBtn->setVisible(true);
-
+        }
     }
 }
 
@@ -451,6 +460,7 @@ void MainWindow::on_addBtn_clicked()
     addBtn->setVisible(false);
     Next->setEnabled(true);
     Prec->setEnabled(true);
+
 
 }
 //SQL
