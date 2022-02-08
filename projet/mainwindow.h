@@ -30,6 +30,7 @@ private:
     int getIndexItemTreeViewModel(std::vector<QStandardItem*> items,QString file);
     void updateFilesFind(QStringList filesFind);
     void updateFolderRoot(QString folderRoot);
+    void deletePictureGalerie();
 
     QString folderRoot;
     QStringList filesFind;
