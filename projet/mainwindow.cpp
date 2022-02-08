@@ -274,29 +274,39 @@ void MainWindow::on_actionCreer_nouvel_album_triggered()
         c.ui_creationAlbum->img_show->setIconSize(QSize(200,200));
         c.ui_creationAlbum->img_show->addItem(itm);
         c.ui_creationAlbum->img_show->setItemWidget(itm,ajouter);
-        connect(ajouter,SIGNAL(clicked()),this,SLOT(ajouter()));}
+        connect(ajouter,SIGNAL(clicked()),this,SLOT(ajouter()));
+    }
         if(c.exec()){
             updateListWidget();
-            c.ui_creationAlbum->img_show->clear();
-
         }
+        c.ui_creationAlbum->img_show->clear();
+
 }
 void MainWindow::ajouter(){
     qDebug() << "ajouter test";
     int itmIndex = c.ui_creationAlbum->img_show->selectionModel()->currentIndex().row();
+    QList<QString> texts;
+    for(int i=0; i < c.ui_creationAlbum->images_list->count(); i++){
+        texts.append(c.ui_creationAlbum->images_list->model()->index(i,0).data(Qt::DisplayRole).toString());
+    }
+    qDebug() << texts;
     qDebug() << itmIndex;
-    qDebug() << c.ui_creationAlbum->img_show->item(itmIndex);
-    QListWidgetItem *itm = new QListWidgetItem();
-    QString itmPath = filesFind.at(itmIndex);
-    itm->setText(itmPath);
-    itm->setTextColor(QColor(255,255,255));
-    QPushButton *supprimer = new QPushButton("supprimer");
-    supprimer->setFixedSize(80,35);
-    itm->setIcon(c.ui_creationAlbum->img_show->item(itmIndex)->icon());
-    c.ui_creationAlbum->images_list->setIconSize(QSize(400,200));
-    c.ui_creationAlbum->images_list->addItem(itm);
-    c.ui_creationAlbum->images_list->setItemWidget(itm,supprimer);
-    connect(supprimer,SIGNAL(clicked()),this,SLOT(supprimer()));
+    if(texts.contains(filesFind.at(itmIndex))){
+        qDebug() << "item exist déja";
+    }else{
+        QListWidgetItem *itm = new QListWidgetItem();
+        QString itmPath = filesFind.at(itmIndex);
+        itm->setText(itmPath);
+        itm->setTextColor(QColor(255,255,255));
+        QPushButton *supprimer = new QPushButton("supprimer");
+        supprimer->setFixedSize(80,35);
+        itm->setIcon(c.ui_creationAlbum->img_show->item(itmIndex)->icon());
+        c.ui_creationAlbum->images_list->setIconSize(QSize(400,200));
+        c.ui_creationAlbum->images_list->addItem(itm);
+        c.ui_creationAlbum->images_list->setItemWidget(itm,supprimer);
+        connect(supprimer,SIGNAL(clicked()),this,SLOT(supprimer()));
+    }
+
 
 
 }
