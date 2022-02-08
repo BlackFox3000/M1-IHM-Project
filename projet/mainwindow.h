@@ -59,5 +59,6 @@ private slots:
     void on_Next_clicked();
     void on_Prec_clicked();
     void on_addBtn_clicked();
+    void on_editBtn_clicked();
 };
 #endif // MAINWINDOW_H

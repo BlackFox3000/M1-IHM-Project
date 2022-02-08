@@ -44,7 +44,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     //btn add to album
     this->addBtn->setVisible(false);
-
+    //btn edit image
+    this->editBtn->setVisible(false);
 
 }
 
@@ -288,6 +289,8 @@ void MainWindow::updateListWidget(){
         album_img->addItem(itm);
         album_img->setItemWidget(itm,button);
     }
+    this->editBtn->setVisible(true);
+
     titreAlbum->setText("Titre album : "+c.name);
 
 }
@@ -301,6 +304,8 @@ void MainWindow::updateNavigation()
     }else{
     this->Next->setEnabled(true);
     this->Prec->setEnabled(true);
+    this->editBtn->setVisible(true);
+
     QListWidgetItem *firstItem = album_img->item(0);
     qDebug() << firstItem->text();
     qDebug() << "affichage des info sur navigation";
@@ -416,7 +421,7 @@ void MainWindow::on_treeView_doubleClicked()
 void MainWindow::on_treeView_clicked()
 {
     QString element = getElementTreeViewClicked();
-
+    editBtn->setVisible(true);
     if(element != NULL){
         QList<QString> paths;
         for(int i=0; i <album_img->count(); i++){
@@ -432,6 +437,7 @@ void MainWindow::on_treeView_clicked()
         n.pix.load(element);
         n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
         apercu_img->setText(element);
+        path_img->setText(element);
         apercu_img->setPixmap(QPixmap::fromImage(n.pix));
         apercu_img->setScaledContents(true);
         Next->setEnabled(false);
@@ -508,4 +514,21 @@ void MainWindow::on_Prec_clicked()
 
 
 
+
+
+
+
+void MainWindow::on_editBtn_clicked()
+{
+    EditionImageWindow e(this);
+
+        e.edit_image.load(path_img->text());
+        qDebug() << "=>"+path_img->text();
+        e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
+        e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
+        e.ui_edit->edit_label->setScaledContents(true);
+
+
+    e.exec();
+}
 
