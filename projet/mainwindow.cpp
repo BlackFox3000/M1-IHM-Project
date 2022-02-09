@@ -535,16 +535,22 @@ void MainWindow::on_editBtn_clicked()
 void MainWindow::on_actionClassique_triggered()
 {
     qDebug() << "classique";
+    this->setStyleSheet("");
+    c.setStyleSheet(this->styleSheet());
 }
 
 void MainWindow::on_actionSombre_triggered()
 {
     qDebug() << "sombre";
+    this->setStyleSheet("QMainWindow {background : #202124;} QDialog{background : #202124;} QPushButton{ background: black; color: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;font-size: 15px; } QPushButton:hover{ background: #3A3A3A;} QLabel{color: white;} ");
+    c.setStyleSheet(this->styleSheet());
 }
 
 void MainWindow::on_actionBordeaux_triggered()
 {
     qDebug() << "bordeaux";
     this->setStyleSheet("QMainWindow {background : #5b0e2d;} QDialog{background : #5b0e2d;} QPushButton{ background: black; color: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;font-size: 15px; } QPushButton:hover{ background: #3A3A3A;} QLabel{color: white;} ");
+    c.setStyleSheet(this->styleSheet());
+
 }
 
