@@ -6,8 +6,8 @@ ResizeWindow::ResizeWindow(QWidget *parent) :
 {
     ui_resize->setupUi(this);
     this->setWindowTitle("Redimensionner l'image");
-    this->setStyleSheet("QDialog {background : #5b0e2d;}  QSpinBox{width : 15px; height: 50px;} QLabel{background: white; border: 2px solid black; border-radius: 5px} QPushButton{ background: black; color: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;font-size: 15px; } QPushButton:hover{background: #3A3A3A;} ");
-
+    //this->setStyleSheet("QDialog {background : #5b0e2d;}  QSpinBox{width : 15px; height: 50px;} QLabel{background: white; border: 2px solid black; border-radius: 5px} QPushButton{ background: black; color: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;font-size: 15px; } QPushButton:hover{background: #3A3A3A;} ");
+    this->styleSheet() = parent->styleSheet();
 }
 
 int ResizeWindow::getL()

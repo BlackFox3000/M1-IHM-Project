@@ -50,6 +50,9 @@ protected slots:
     void viewAbumsFunctionSQL();
     void insertAlbumFunctionSQL();
     QString getElementTreeViewClicked();
+    void on_actionClassique_triggered();
+    void on_actionSombre_triggered();
+    void on_actionBordeaux_triggered();
 
 private slots:
     void on_button_ouvrir_album_clicked();

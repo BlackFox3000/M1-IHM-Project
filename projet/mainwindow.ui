@@ -174,19 +174,6 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
        <widget class="QPushButton" name="button_modif_infos">
         <property name="text">
          <string>Modifier informations</string>
@@ -232,7 +219,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>220</x>
@@ -355,6 +342,48 @@
      </item>
     </layout>
    </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>580</y>
+      <width>191</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>191</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QPushButton" name="button_creer_album">
+        <property name="text">
+         <string>Créer un Album</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="button_ouvrir_album">
+        <property name="text">
+         <string>Ouvrir un Album</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -373,7 +402,7 @@
    </widget>
    <widget class="QMenu" name="menuOption">
     <property name="title">
-     <string>Option</string>
+     <string>Options</string>
     </property>
     <addaction name="separator"/>
     <addaction name="separator"/>
@@ -395,9 +424,18 @@
     <addaction name="actionOuvrir_un_album"/>
     <addaction name="actionCr_er_un_album"/>
    </widget>
+   <widget class="QMenu" name="menuTh_mes">
+    <property name="title">
+     <string>Thèmes</string>
+    </property>
+    <addaction name="actionClassique"/>
+    <addaction name="actionSombre"/>
+    <addaction name="actionBordeaux"/>
+   </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuAlbum"/>
    <addaction name="menuOption"/>
+   <addaction name="menuTh_mes"/>
    <addaction name="menuAide"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -458,17 +496,42 @@
   </action>
   <action name="actionEditer_les_informations">
    <property name="text">
-    <string>Editer les informations</string>
+    <string>Modifier les informations</string>
    </property>
   </action>
   <action name="actionEditer_l_image">
    <property name="text">
-    <string>Editer l'image</string>
+    <string>Modifier l'image</string>
    </property>
   </action>
   <action name="action">
    <property name="text">
     <string>?</string>
+   </property>
+  </action>
+  <action name="actionChanger_de_th_me">
+   <property name="text">
+    <string>Changer de thème</string>
+   </property>
+  </action>
+  <action name="actionClassique">
+   <property name="text">
+    <string>Classique</string>
+   </property>
+  </action>
+  <action name="actionSombre">
+   <property name="text">
+    <string>Sombre</string>
+   </property>
+  </action>
+  <action name="actionBordeaux">
+   <property name="text">
+    <string>Bordeaux</string>
+   </property>
+  </action>
+  <action name="actionTest">
+   <property name="text">
+    <string>Test</string>
    </property>
   </action>
  </widget>

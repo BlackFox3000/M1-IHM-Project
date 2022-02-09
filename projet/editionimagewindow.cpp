@@ -22,8 +22,8 @@ EditionImageWindow::EditionImageWindow(QWidget *parent) :
     ui_edit->zoom_prc->setVisible(false);
     ui_edit->size_img->setText("taille de l'image "+QString::number(ui_edit->edit_label->width())+"x"+QString::number(ui_edit->edit_label->height()));
     //QPushButton{ background: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;color: black;font-size: 15px;}
-    this->setStyleSheet("QDialog {background : #5b0e2d;}  QLabel#size_img{padding-left: 200px;} QLabel#edit_label{ border: 2px solid white;} QPushButton{ background: black; color: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;font-size: 15px;} QPushButton:hover{background: #3A3A3A;}  ");
-
+    //this->setStyleSheet("QDialog {background : #5b0e2d;}  QLabel#size_img{padding-left: 200px;} QLabel#edit_label{ border: 2px solid white;} QPushButton{ background: black; color: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;font-size: 15px;} QPushButton:hover{background: #3A3A3A;}  ");
+    this->styleSheet() = parent->styleSheet();
 }
 
 /* ================ Importer une image ================== */

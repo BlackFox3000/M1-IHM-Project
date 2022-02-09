@@ -14,6 +14,7 @@ navigation::navigation(QWidget *parent)
  //  listpix.append(pix);
 
 
+
 }
 
    void navigation::on_butonD_clicked() {

@@ -44,6 +44,8 @@ Window::Window(QWidget *parent)
 
     connect(new QShortcut(QKeySequence::Quit, this), &QShortcut::activated,
         qApp, &QApplication::quit);
+
+    this->styleSheet() = parent->styleSheet();
 }
 
 void Window::browse()

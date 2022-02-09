@@ -1,18 +1,21 @@
 #include "modifinformations.h"
+#include "database.h"
 #include <QDebug>
 
 ModifInformations::ModifInformations(QWidget *parent,QString titre,QString extension,QString dimensions,
-                                     QString creation,QString modification,QStringList etiquettes) :
+                                     QString creation,QString modification,QStringList etiquettes, int idImage) :
     QDialog(parent)
 {
     setupUi(this);
-    setWindowIcon(QIcon(":icon/option-album.png"));
+    this->idImage = idImage;
     this->label_titre->setText(titre);
     this->label_extension->setText(extension);
     this->label_dimensions->setText(dimensions);
     this->label_creation->setText(creation);
     this->label_modif->setText(modification);
     this->comboBox_listeTags->addItems(etiquettes);
+    this->edit_newTitre->setText(titre);
+    //this->label_feedback->setText("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
     for(int i=0; i<etiquettes.count(); i++){
         //etiquettes.append(comboBox_listeTags->itemText(i));
@@ -20,7 +23,8 @@ ModifInformations::ModifInformations(QWidget *parent,QString titre,QString exten
             comboBox_Tags->addItem(etiquettes[i]);
         }
     }
-    this->setStyleSheet("QDialog {background : #5b0e2d;}  QTextEdit{border: 2px solid black; width : 16px; height: 12px;} QLabel{color: white;} QPushButton{ background: white; border: 2px solid black; border-radius: 5px; height: 25px; width: 50px;color: black;font-size: 15px;} ");
+    this->styleSheet() = parent->styleSheet();
+    //this->setStyleSheet("QDialog {background : #5b0e2d;}  QTextEdit{border: 2px solid black; width : 16px; height: 12px;} QLabel{color: white;} QPushButton{ background: white; border: 2px solid black; border-radius: 5px; height: 25px; width: 50px;color: black;font-size: 15px;} ");
 }
 
 void ModifInformations::on_button_valider_Tag_clicked()
@@ -39,7 +43,8 @@ void ModifInformations::on_button_valider_Tag_clicked()
     }
 }
 
-
+//INUTILE
+/*
 void ModifInformations::on_button_validerTitre_clicked()
 {
     if(edit_newTitre->text().trimmed() == ""){
@@ -49,7 +54,7 @@ void ModifInformations::on_button_validerTitre_clicked()
         label_titre->setText(edit_newTitre->text());
         qDebug() << "changement de titre";
     }
-}
+}*/
 
 
 void ModifInformations::on_button_ajouterTag_clicked()
@@ -76,5 +81,30 @@ void ModifInformations::on_button_retirerTag_clicked()
         qDebug() << "tag non present sur la photo";
     }
 
+}
+
+
+void ModifInformations::on_button_valider_clicked()
+{
+    //createImage(1, "proust", "c/moi/bureau", "c'est mon chat en gros la", 1, 100, 100, 0, 0);
+    if(edit_newTitre->text().trimmed() == ""){
+        label_feedback->setText("Nouveau titre invalide, impossible de valider");
+    }
+    else{
+        //label_titre->setText(edit_newTitre->text());
+        setTitle(idImage,edit_newTitre->text().toStdString());
+        setDescriptionImage(idImage,textEdit_description->toPlainText().toStdString());
+        qDebug() << "cool";
+    }
+
+
+    //accept();
+}
+
+
+
+void ModifInformations::on_button_annuler_clicked()
+{
+    reject();
 }
 

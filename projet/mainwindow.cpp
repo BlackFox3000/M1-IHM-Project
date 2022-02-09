@@ -26,6 +26,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(actionCr_er_un_album, SIGNAL(triggered()), this, SLOT(on_actionCreer_nouvel_album_triggered()));
     connect(actionOuvrir_un_album,SIGNAL(triggered()), this, SLOT(viewAbumsFunctionSQL));
     connect(actionCr_er_un_album,SIGNAL(triggered()), this, SLOT(insertAlbumFunctionSQL));
+    //connect(actionClassique,SIGNAL(triggered()),this,SLOT(on_actionClassiquetriggered));
+    //connect(actionSombre,SIGNAL(triggered()),this,SLOT(on_actionSombretriggered));
+    //connect(actionBordeaux,SIGNAL(triggered()),this,SLOT(on_actionBordeauxtriggered));
+
+
+
 
     treeView->setHeaderHidden(true);
     QStandardItemModel* model = new QStandardItemModel();
@@ -47,12 +53,14 @@ MainWindow::MainWindow(QWidget *parent)
     //btn edit image
     this->editBtn->setVisible(false);
 
+    //this->setStyleSheet("QMainWindow {background : #5b0e2d;} QDialog {background : #5b0e2d;}  QTextEdit{border: 2px solid black; width : 16px; height: 12px;} QLabel{color: white;} ");
+    //this->setStyleSheet("QMainWindow {background : #5b0e2d;} QDialog{background : #5b0e2d;} QPushButton{ background: black; color: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;font-size: 15px; } QPushButton:hover{ background: #3A3A3A;} QLabel{color: white;} ");
 }
 
 
 void MainWindow::actionFindFile()
 {
-    Window window;
+    Window window(this);
     if(window.exec()){
         if(filesFind.size() == 0){
             filesFind = window.getFiles();
@@ -217,21 +225,23 @@ MainWindow::~MainWindow()
 
 }
 
+//======== modifier informations =========
 void MainWindow::on_button_modif_infos_clicked()
 {
+    createImage(1, "proust", "c/moi/bureau", "c'est mon chat en gros la", 1, 100, 100, 0, 0);
     QStringList etiquettes;
     for(int i=0; i<comboBox_listeTags->count(); i++){
         etiquettes.append(comboBox_listeTags->itemText(i));
     }
     ModifInformations m(this,label_titre->text(),label_extension->text(),label_dimensions->text(),
-                        label_creation->text(),label_modif->text(),etiquettes);
+                        label_creation->text(),label_modif->text(),etiquettes,2);
     m.exec();
 }
 
 
 void MainWindow::on_button_ouvrir_album_clicked()
 {
-    OuvrirAlbum o;
+    OuvrirAlbum o(this);
     o.exec();
 }
 
@@ -334,6 +344,7 @@ void MainWindow::on_actionCreer_nouvel_album_triggered()
         c.ui_creationAlbum->img_show->setIconSize(QSize(200,200));
         c.ui_creationAlbum->img_show->addItem(itm);
         c.ui_creationAlbum->img_show->setItemWidget(itm,ajouter);
+
         connect(ajouter,SIGNAL(clicked()),this,SLOT(ajouter()));
     }
         if(c.exec()){
@@ -381,8 +392,9 @@ void MainWindow::supprimer(){
 }
 void MainWindow::on_button_creer_album_clicked()
 {
-    CreationAlbumWindow c;
-    c.exec();
+    on_actionCreer_nouvel_album_triggered();
+    //CreationAlbumWindow c;
+    //c.exec();
 }
 QString MainWindow::getElementTreeViewClicked()
 {
@@ -514,11 +526,6 @@ void MainWindow::on_Prec_clicked()
 }
 
 
-
-
-
-
-
 void MainWindow::on_editBtn_clicked()
 {
     EditionImageWindow e(this);
@@ -531,5 +538,21 @@ void MainWindow::on_editBtn_clicked()
 
 
     e.exec();
+}
+
+void MainWindow::on_actionClassique_triggered()
+{
+    qDebug() << "classique";
+}
+
+void MainWindow::on_actionSombre_triggered()
+{
+    qDebug() << "sombre";
+}
+
+void MainWindow::on_actionBordeaux_triggered()
+{
+    qDebug() << "bordeaux";
+    this->setStyleSheet("QMainWindow {background : #5b0e2d;} QDialog{background : #5b0e2d;} QPushButton{ background: black; color: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;font-size: 15px; } QPushButton:hover{ background: #3A3A3A;} QLabel{color: white;} ");
 }
 

@@ -42,7 +42,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QTextEdit" name="textEdit">
+  <widget class="QTextEdit" name="textEdit_description">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -215,31 +215,6 @@ p, li { white-space: pre-wrap; }
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>Creer etiquette :</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="editNewTag">
-         <property name="text">
-          <string>nouveau tag</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="button_valider_Tag">
-         <property name="text">
-          <string>Valider</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0">
        <item>
         <widget class="QLabel" name="label_3">
@@ -327,6 +302,31 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Creer etiquette :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="editNewTag">
+         <property name="text">
+          <string>nouveau tag</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="button_valider_Tag">
+         <property name="text">
+          <string>Créer</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -358,21 +358,14 @@ p, li { white-space: pre-wrap; }
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Titre :</string>
+        <string>Nouveau titre :</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLineEdit" name="edit_newTitre">
        <property name="text">
-        <string>Nouveau titre</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="button_validerTitre">
-       <property name="text">
-        <string>Valider</string>
+        <string>placeholder</string>
        </property>
       </widget>
      </item>
@@ -390,7 +383,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_4">
     <item>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="button_valider">
       <property name="text">
        <string>Valider</string>
       </property>
@@ -410,7 +403,27 @@ p, li { white-space: pre-wrap; }
      </spacer>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="QLabel" name="label_feedback">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="button_annuler">
       <property name="text">
        <string>Annuler</string>
       </property>
@@ -422,46 +435,13 @@ p, li { white-space: pre-wrap; }
  <tabstops>
   <tabstop>comboBox_Tags</tabstop>
   <tabstop>button_valider_Tag</tabstop>
-  <tabstop>pushButton_3</tabstop>
-  <tabstop>pushButton_4</tabstop>
+  <tabstop>button_valider</tabstop>
+  <tabstop>button_annuler</tabstop>
   <tabstop>edit_newTitre</tabstop>
-  <tabstop>textEdit</tabstop>
+  <tabstop>textEdit_description</tabstop>
  </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>pushButton_3</sender>
-   <signal>clicked()</signal>
-   <receiver>ModifInformations</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>628</x>
-     <y>524</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>551</x>
-     <y>334</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_4</sender>
-   <signal>clicked()</signal>
-   <receiver>ModifInformations</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>732</x>
-     <y>519</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>647</x>
-     <y>334</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>valider_tag()</slot>
  </slots>
