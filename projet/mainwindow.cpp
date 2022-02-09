@@ -141,7 +141,7 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
 
     std::vector<QStandardItem*> items;
 
-    QStandardItem* itemRoot = new QStandardItem(QIcon("icon_folder.ico"),root);
+    QStandardItem* itemRoot = new QStandardItem(QIcon("../projet/icon/icon_folder.ico"),root);
     itemRoot->setAccessibleDescription(root);
     items.push_back(itemRoot);
     itemRoot->setEditable(false);
@@ -157,7 +157,7 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
         int index = 0;
         while(!condition){
             if(splitList.length() == 1){
-                QStandardItem* item = new QStandardItem(QIcon("icon_file.ico"),splitList[0]);
+                QStandardItem* item = new QStandardItem(QIcon("../projet/icon/icon_file.ico"),splitList[0]);
                 item->setEditable(false);
                 item->setAccessibleDescription(rootLoop + splitList[0]);
                 items.at(index)->appendRow(item);
@@ -169,7 +169,7 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
             else{
                 int secondIndex = getIndexItemTreeViewModel(items,rootLoop + splitList[0]);
                 if(secondIndex == -1){
-                    QStandardItem* item = new QStandardItem(QIcon("icon_folder.ico"),splitList[0]);
+                    QStandardItem* item = new QStandardItem(QIcon("../projet/icon/icon_folder.ico"),splitList[0]);
                     item->setAccessibleDescription(rootLoop + splitList[0]);
                     item->setEditable(false);
                     items.push_back(item);
@@ -190,12 +190,6 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
     treeView->header()->setSortIndicator(0,Qt::AscendingOrder);
     treeView->header()->setSortIndicatorShown(true);
 
-    /*for(int i = 0; i < items.size(); i++){
-        QModelIndex index = model->indexFromItem(items.at(i));
-        QIcon icon = items.at(i)->icon();
-        //icon.paint()
-    }*/
-
     const QModelIndex index = model->indexFromItem(items.at(0));
 
     treeView->expand(index);
@@ -204,9 +198,7 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
     treeView->resizeColumnToContents(0);
     treeView->setHeaderHidden(true);
     treeView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    treeView->setColumnWidth(0, maxSize);
-
-    qDebug() << "max size = " << maxSize;
+    treeView->setColumnWidth(0, maxSize+20);
 }
 
 
