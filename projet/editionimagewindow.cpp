@@ -50,7 +50,7 @@ void EditionImageWindow::on_btn_img_clicked()
 
 void EditionImageWindow::on_resize_btn_clicked()
 {
-    ResizeWindow r;
+    ResizeWindow r(this);
     QImage resized_img = edit_image;
     if(r.exec()){
         ui_edit->edit_label->setFixedSize(r.getL(),r.getH());
