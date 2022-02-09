@@ -148,10 +148,13 @@ int view()
 }
 
 // Albums (id , title varchar )
-void createAlbum(std::string title){
+int createAlbum(std::string title){
     QSqlQuery query;
     QString request = QString::fromStdString(title);
-    query.exec("insert into Albums ('title') values('"+request+"')");
+    query.prepare("insert into Albums ('title') values('"+request+"')");
+    query.exec();
+    qDebug ("index %d",query.lastInsertId().toInt());
+    return query.lastInsertId().toInt();
 }
 
 void editAlbum(int id, std::string newTitle){
@@ -307,4 +310,19 @@ void removeImagesTagsByTags(int id){
     QSqlQuery query;
     QString idQ = QString::number(id);
     query.exec("DELETE FROM ImagesTags WHERE tag='"+idQ+"';");
+}
+
+std::vector<int> getAllImages(int id){
+    QSqlQuery query;
+    query.exec("select id from Albums");
+
+    //int * indexs = new int[query.size()];
+    std::vector<int> indexs;
+    int field = query.record().indexOf("id");
+    while(query.next()){
+        std::string idString = query.value(field).toString().toStdString();
+        int intIndex = std::stoi(idString);
+        indexs.push_back(intIndex);
+    }
+    return indexs;
 }

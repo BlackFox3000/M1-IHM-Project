@@ -9,6 +9,7 @@
 #include "modifinformations.h"
 #include "creationalbumwindow.h"
 #include "ui_mainwindow.h"
+#include "album.h"
 #include <QDebug>
 #include <QDirModel>
 #include <vector>
@@ -24,11 +25,19 @@ MainWindow::MainWindow(QWidget *parent)
     connect(actionCr_er_un_album, SIGNAL(triggered()), this, SLOT(on_actionCreer_nouvel_album_triggered()));
     connect(actionOuvrir_un_album,SIGNAL(triggered()), this, SLOT(viewAbumsFunctionSQL));
     connect(actionCr_er_un_album,SIGNAL(triggered()), this, SLOT(insertAlbumFunctionSQL));
+    connect(test,&QPushButton::clicked, this, &MainWindow::testFunctionSQL);
 
 
     treeWidget->setHeaderHidden(true);
 }
 
+
+void MainWindow::testFunctionSQL(){
+    Album album = Album("Le premier");
+    createAlbum("monsecond albumm");
+    createImage(1, "premiere image", "c/path","descrrription", 1, 0,0, 0, 0);
+    view();
+}
 
 void MainWindow::actionFindFile()
 {

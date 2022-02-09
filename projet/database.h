@@ -13,7 +13,7 @@ int view();
 bool createConnection();
 
 // Albums
-void createAlbum(std::string title);
+int createAlbum(std::string title);
 
 void editAlbum(int id, std::string newTitle);
 
@@ -56,5 +56,6 @@ void createImagesTags(int idImage, int idTag);
 void removeImagesTagsByImage(int idImage);
 
 void removeImagesTagsByTags(int idTag);
+std::vector<int> getAllImages(int id);
 
 #endif // DATABASE_H

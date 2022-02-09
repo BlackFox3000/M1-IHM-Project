@@ -39,7 +39,7 @@
      </property>
     </column>
    </widget>
-   <widget class="QPushButton" name="background">
+   <widget class="QPushButton" name="test">
     <property name="geometry">
      <rect>
       <x>210</x>
