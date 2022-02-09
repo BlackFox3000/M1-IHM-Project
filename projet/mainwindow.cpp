@@ -298,6 +298,7 @@ void MainWindow::updateListWidget(){
 void MainWindow::updateNavigation()
 {
     //btn slider
+    this->addBtn->setVisible(false);
     if(album_img->count() == 0){
         this->Next->setEnabled(false);
         this->Prec->setEnabled(false);
