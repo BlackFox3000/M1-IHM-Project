@@ -135,15 +135,14 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
          bool condition = false;
          int index = 0;
          int maxSize = 0;
-         QString maxSizeValue = splitList[0];
         while(!condition){
             if(splitList.length() == 1){
                 QStandardItem* item = new QStandardItem(QIcon("../projet/icon/icon_file.ico"),splitList[0]);
                 item->setEditable(false);
                 item->setAccessibleDescription(rootLoop + splitList[0]);
                 items.at(index)->appendRow(item);
-                if(maxSizeValue.length() > maxSize){
-                    maxSize = maxSizeValue.length();
+               if(((rootLoop + splitList[0]).length() + (indent * 4)) > maxSize){
+                    maxSize = (rootLoop + splitList[0]).length() + (indent * 4);
                 }
                 condition = true;
             }
@@ -162,7 +161,6 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
                 }
                 rootLoop = rootLoop + splitList[0] + "/";
                 splitList = file.split(rootLoop)[1].split('/');
-                maxSizeValue = rootLoop + splitList[0];
             }
         }
     }
