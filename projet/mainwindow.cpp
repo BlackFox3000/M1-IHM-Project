@@ -324,7 +324,9 @@ void MainWindow::updateNavigation()
 void MainWindow::on_actionCreer_nouvel_album_triggered()
 {
 
-
+    album_img->clear();
+    c.ui_creationAlbum->images_list->clear();
+    c.img_paths.clear();
     for(int i=0; i<filesFind.size(); i++){
         QListWidgetItem * itm = new QListWidgetItem();
         QString itmPath = filesFind.at(i);
@@ -380,6 +382,7 @@ void MainWindow::supprimer(){
     qDebug() << "supp test";
     int itmIndex = c.ui_creationAlbum->images_list->selectionModel()->currentIndex().row();
     c.ui_creationAlbum->images_list->model()->removeRow(itmIndex);
+    c.img_paths.removeAt(itmIndex);
 
 }
 void MainWindow::on_button_creer_album_clicked()
