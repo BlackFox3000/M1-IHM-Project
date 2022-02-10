@@ -99,7 +99,7 @@ void ModifInformations::on_button_valider_clicked()
     }
     else{
         //label_titre->setText(edit_newTitre->text());
-        setTitle(idImage,edit_newTitre->text().toStdString());
+        setTitleImage(idImage,edit_newTitre->text().toStdString());
         setDescriptionImage(idImage,textEdit_description->toPlainText().toStdString());
         qDebug() << "cool";
     }
