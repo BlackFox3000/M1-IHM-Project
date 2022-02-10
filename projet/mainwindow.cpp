@@ -138,7 +138,9 @@ void MainWindow::updateFolderRoot(QString folderRoot)
 void MainWindow::updateTreeView(QString root,QStringList filesFind)
 {
     model = new QStandardItemModel();
-
+    treeView->setIconSize(QSize(20,20));
+    int sizeChar = 7;
+    
     std::vector<QStandardItem*> items;
 
     QStandardItem* itemRoot = new QStandardItem(QIcon("../projet/icon/icon_folder.ico"),root);
@@ -147,22 +149,23 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
     itemRoot->setEditable(false);
     model->appendRow(itemRoot);
 
-    int maxSize = 0;
-    int indent = 0;
+    int maxSize = root.length() * sizeChar;
 
     for(QString file : filesFind){
         QStringList splitList = file.split(root)[1].split('/');
         QString rootLoop = root;
         bool condition = false;
         int index = 0;
+        int indent = 0;
+        QString maxSizeValue = splitList[0];
         while(!condition){
             if(splitList.length() == 1){
                 QStandardItem* item = new QStandardItem(QIcon("../projet/icon/icon_file.ico"),splitList[0]);
                 item->setEditable(false);
                 item->setAccessibleDescription(rootLoop + splitList[0]);
                 items.at(index)->appendRow(item);
-                if(((rootLoop + splitList[0]).length() + (indent * 4)) > maxSize){
-                    maxSize = (rootLoop + splitList[0]).length() + (indent * 4);
+                if(((maxSizeValue.length() + indent ) * sizeChar) > maxSize){
+                    maxSize = (maxSizeValue.length() + indent) * sizeChar;
                 }
                 condition = true;
             }
@@ -181,7 +184,8 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
                 }
                 rootLoop = rootLoop + splitList[0] + "/";
                 splitList = file.split(rootLoop)[1].split('/');
-                indent ++;
+                maxSizeValue = splitList[0];
+                indent += 4;
             }
         }
     }
@@ -198,7 +202,7 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
     treeView->resizeColumnToContents(0);
     treeView->setHeaderHidden(true);
     treeView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    treeView->setColumnWidth(0, maxSize+20);
+    treeView->setColumnWidth(0, maxSize);
 }
 
 
