@@ -4,6 +4,7 @@
 #include "database.h"
 #include <iostream>
 #include <string>
+#include <stdio.h>
 #include <memory>
 
 void initializeModelImages(QSqlRelationalTableModel *model)
@@ -14,15 +15,15 @@ void initializeModelImages(QSqlRelationalTableModel *model)
 
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
 //! [1]
-    model->setRelation(5, QSqlRelation("album", "id", "title"));
+ //   model->setRelation(5, QSqlRelation("album", "id", "title"));
 
 //! [3]
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("title"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("position"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("album"));
-    model->setHeaderData(4, Qt::Horizontal, QObject::tr("path"));
-    model->setHeaderData(5, Qt::Horizontal, QObject::tr("description"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("path"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("title"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("description"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("position"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("album"));
 //! [3]
 
     model->select();
@@ -36,9 +37,9 @@ void initializeModelImagesTags(QSqlRelationalTableModel *model)
 
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
 //! [1]
-    model->setRelation(2, QSqlRelation("Images", "id", "title"));
+//   model->setRelation(2, QSqlRelation("Images", "id", "id"));
 //! [1] //! [2]
-    model->setRelation(3, QSqlRelation("Tags", "id", "name"));
+//    model->setRelation(3, QSqlRelation("Tags", "id", "id"));
 //! [2]
 
 //! [3]
@@ -60,7 +61,7 @@ void initializeModelAlbums(QSqlRelationalTableModel *model)
 //! [1]
 //    model->setRelation(2, QSqlRelation("Id", "id", "title"));
 //! [1] //! [2]
-//    model->setRelation(3, QSqlRelation("Titre", "id", "name"));
+//    model->setRelation(3, QSqlRelation("Titre", "id", "title"));
 //! [2]
 
 //! [3]
@@ -71,6 +72,26 @@ void initializeModelAlbums(QSqlRelationalTableModel *model)
     model->select();
 }
 
+void initializeModelTags(QSqlRelationalTableModel *model)
+{
+//! [0]
+    model->setTable("Tags");
+//! [0]
+
+    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+//! [1]
+//    model->setRelation(2, QSqlRelation("Id", "id", "title"));
+//! [1] //! [2]
+//    model->setRelation(3, QSqlRelation("Titre", "id", "title"));
+//! [2]
+
+//! [3]
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("title"));
+//! [3]
+
+    model->select();
+}
 std::unique_ptr<QTableView> createView(const QString &title, QSqlTableModel *model)
 {
 //! [4]
@@ -98,12 +119,13 @@ bool createConnection()
     }
 
     QSqlQuery query;
+
     query.exec("create table Images ("
                "id INTEGER PRIMARY KEY, "
                "path varchar(100),"
-               " title varchar(20),"
-               " description varchar(100)"
-               ", position int,"
+               "title varchar(20),"
+               "description varchar(100),"
+               "position int,"
                "album int,"
                "width int,"
                "height int,"
@@ -111,8 +133,7 @@ bool createConnection()
                "pos_y int,"
                "informations varchar(100)"
                ")");
-
-    query.exec("create table Tags (id INTEGER PRIMARY KEY, name varchar(20))");
+    if(query.exec("create table Tags (id INTEGER PRIMARY KEY, title varchar(20))")){qDebug()<<"ceeate";}else{qDebug("probleme 3 ");qDebug() << query.lastError().text();};
 
     query.exec("create table ImagesTags (id INTEGER PRIMARY KEY,"
                                              "image int,"
@@ -134,12 +155,14 @@ int view()
     QSqlRelationalTableModel modelImages;
     QSqlRelationalTableModel modelImagesTags;
     QSqlRelationalTableModel modelAlbums;
+    QSqlRelationalTableModel modelTags;
 
     initializeModelImages(&modelImages);
-    initializeModelImages(&modelImagesTags);
+    initializeModelImagesTags(&modelImagesTags);
+    initializeModelTags(&modelTags);
     initializeModelAlbums(&modelAlbums);
 
-    std::unique_ptr<QTableView> view = createView(QObject::tr("My Relational Table Model"), &modelAlbums);
+    std::unique_ptr<QTableView> view = createView(QObject::tr("My Relational Table Model"), &modelImagesTags);
     QEventLoop loop;
     view->show();
     loop.exec();
@@ -148,10 +171,12 @@ int view()
 }
 
 // Albums (id , title varchar )
-void createAlbum(std::string title){
+int createAlbum(std::string title){
     QSqlQuery query;
     QString request = QString::fromStdString(title);
-    query.exec("insert into Albums ('title') values('"+request+"')");
+    query.prepare("insert into Albums ('title') values('"+request+"')");
+    query.exec();
+    return query.lastInsertId().toInt();
 }
 
 void editAlbum(int id, std::string newTitle){
@@ -176,6 +201,42 @@ std::vector<int> getAlbums(){
     return indexs;
 }
 
+std::string getTitleAlbum(int id){
+
+    QSqlQuery query;
+    query.prepare("select title from Albums where id=?");
+    query.addBindValue(id);
+    std::string titleString;
+    if( query.exec()){
+
+        int field = query.record().indexOf("title");
+        while(query.next()){
+            titleString = query.value(field).toString().toStdString();
+        }
+        qDebug ("title album %s",titleString.c_str());
+
+    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+
+    return titleString;
+}
+
+std::vector<int> getAllImages(int id){
+    QSqlQuery query;
+    query.prepare("select id from Images where album = ?");
+    query.addBindValue(id);
+
+    std::vector<int> indexs;
+    if( query.exec()){
+        int field = query.record().indexOf("id");
+        while(query.next()){
+            int intIndex = query.value(field).toInt();
+            indexs.push_back(intIndex);
+        }
+     }else{qDebug("probleme");qDebug() << query.lastError().text();}
+    return indexs;
+}
+
+
 void removeAlbum(int id){
     QSqlQuery query;
     QString idQ = QString::number(id);
@@ -184,27 +245,25 @@ void removeAlbum(int id){
 
 
 // Images ( id , path varchar, title varchar, description varchar, position int, album int, width int, height int, pos_x int,, pos_y int, information varchar )
-void createImage(int idAlbum, std::string title, std::string path, std::string description, int position, int width, int height, int pos_x, int pos_y){
+int createImage(int idAlbum, std::string title, std::string path, std::string description, int position, int width, int height, int pos_x, int pos_y){
     QSqlQuery query;
-    QString idAlbumQ      = QString::number(idAlbum);
-    QString titleQ       = QString::fromStdString(title);
-    QString pathQ        = QString::fromStdString(path);
-    QString descriptionQ = QString::fromStdString(description);
-    QString positionQ    = QString::number(position);
-    QString widthQ       = QString::number(width);
-    QString heightQ      = QString::number(height);
-    QString pos_xQ       = QString::number(pos_x);
-    QString pos_yQ       = QString::number(pos_y);
-    query.exec("insert into Images ('path','title','description','position','album','width','height','pos_x','pos_y')values('"+
-               pathQ        +"','"+
-               titleQ       +"','"+
-               descriptionQ +"','"+
-               positionQ    +"','"+
-               idAlbumQ     +"','"+
-               widthQ       +"','"+
-               heightQ      +"','"
-               +pos_xQ      +"','"
-               +pos_yQ      +"' )");
+//    QString titleQ       = QString::fromStdString(title);
+//    QString pathQ        = QString::fromStdString(path);
+//    if(query.exec("insert into Images ('path','title')values('"+pathQ +"','"+ titleQ +"')'")){
+    query.prepare("insert into Images ('path','title','description','position','album','width','height','pos_x','pos_y') values (?,?,?,?,?,?,?,?,?)");
+    query.addBindValue(path.c_str());
+    query.addBindValue(title.c_str());
+    query.addBindValue(description.c_str());
+    query.addBindValue(position);
+    query.addBindValue(idAlbum);
+    query.addBindValue(width);
+    query.addBindValue(height);
+    query.addBindValue(pos_x);
+    query.addBindValue(pos_y);
+    if( query.exec()){
+    qDebug() << "Last ID was:" << query.lastInsertId().toInt();
+     }else{qDebug("probleme");qDebug() << query.lastError().text();}
+    return query.lastInsertId().toInt();
 }
 
 void setDescriptionImage(int id, std::string description){
@@ -214,42 +273,42 @@ void setDescriptionImage(int id, std::string description){
     query.exec("UPDATE Images SET description = '"+descriptionQ+"' WHERE id="+idQ+";");
 }
 
-void setTitle(int id, std::string newTitle){
+void setTitleImage(int id, std::string newTitle){
     QSqlQuery query;
     QString idQ = QString::number(id);
     QString newTitleQ = QString::fromStdString(newTitle);
     query.exec("UPDATE Images SET title = '"+newTitleQ+"' WHERE id="+idQ+";");
 }
 
-void setPosition(int id, int position){
+void setPositionImage(int id, int position){
     QSqlQuery query;
     QString idQ = QString::number(id);
     QString positionQ = QString::number(position);
     query.exec("UPDATE Images SET position = '"+positionQ+"' WHERE id="+idQ+";");
 }
 
-void setHeight(int id, int height){
+void setHeightImage(int id, int height){
     QSqlQuery query;
     QString idQ = QString::number(id);
     QString heightQ = QString::number(height);
     query.exec("UPDATE Images SET height = '"+heightQ+"' WHERE id="+idQ+";");
 }
 
-void setWidth(int id, int width){
+void setWidthImage(int id, int width){
     QSqlQuery query;
     QString idQ = QString::number(id);
     QString widthQ = QString::number(width);
     query.exec("UPDATE Images SET width = '"+widthQ+"' WHERE id="+idQ+";");
 }
 
-void setPosX(int id, int x){
+void setPosXImage(int id, int x){
     QSqlQuery query;
     QString idQ = QString::number(id);
     QString xQ = QString::number(x);
     query.exec("UPDATE Images SET pos_x = '"+xQ+"' WHERE id="+idQ+";");
 }
 
-void setPosy(int id, int y){
+void setPosYImage(int id, int y){
     QSqlQuery query;
     QString idQ = QString::number(id);
     QString yQ = QString::number(y);
@@ -269,18 +328,212 @@ void setImageInformation(int id, std::string information){
     query.exec("UPDATE Images SET information = '"+informationQ+"' WHERE id="+idQ+";");
 }
 
-// Tags (id, name varchar)
-void createTag(std::string title){
+
+int getIdAlbumImage(int id){
+
     QSqlQuery query;
-    QString request = QString::fromStdString(title);
-    query.exec("insert into Tags ('title') values('"+request+"')");
+    query.prepare("select album from Images where id=?");
+    query.addBindValue(id);
+    int idAlbum;
+    if( query.exec()){
+
+        int field = query.record().indexOf("album");
+        while(query.next()){
+            idAlbum = query.value(field).toInt();
+        }
+        //qDebug ("idAlubm image %d",idAlbum);
+
+    }else{qDebug("probleme");qDebug() << query.lastError().text(); idAlbum = -1;}
+
+    return idAlbum;
+}
+std::string getTitleImage(int id){
+    QSqlQuery query;
+    query.prepare("select title from Images where id=?");
+    query.addBindValue(id);
+    std::string string;
+    if( query.exec()){
+
+        int field = query.record().indexOf("title");
+        while(query.next()){
+            string = query.value(field).toString().toStdString();
+        }
+       // qDebug ("title album %s",string.c_str());
+
+    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+
+    return string;
+}
+std::string getPathImage(int id){
+    QSqlQuery query;
+    query.prepare("select path from Images where id=?");
+    query.addBindValue(id);
+    std::string string;
+    if( query.exec()){
+
+        int field = query.record().indexOf("path");
+        while(query.next()){
+            string = query.value(field).toString().toStdString();
+        }
+        //qDebug ("path album %s",string.c_str());
+
+    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+
+    return string;
 }
 
+std::string getDescriptionImage(int id){
+    QSqlQuery query;
+    query.prepare("select description from Images where id=?");
+    query.addBindValue(id);
+    std::string string;
+    if( query.exec()){
+
+        int field = query.record().indexOf("description");
+        while(query.next()){
+            string = query.value(field).toString().toStdString();
+        }
+       // qDebug ("description album %s",string.c_str());
+
+    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+
+    return string;
+}
+
+int getPositionImage(int id){
+
+    QSqlQuery query;
+    query.prepare("select position from Images where id=?");
+    query.addBindValue(id);
+    int idAlbum;
+    if( query.exec()){
+
+        int field = query.record().indexOf("position");
+        while(query.next()){
+            idAlbum = query.value(field).toInt();
+        }
+        //qDebug ("Position image %d",idAlbum);
+
+    }else{qDebug("probleme");qDebug() << query.lastError().text();idAlbum = -1;}
+
+    return idAlbum;
+}
+
+int getWidthImage(int id){
+
+    QSqlQuery query;
+    query.prepare("select width from Images where id=?");
+    query.addBindValue(id);
+    int idAlbum;
+    if( query.exec()){
+
+        int field = query.record().indexOf("width");
+        while(query.next()){
+            idAlbum = query.value(field).toInt();
+        }
+        //qDebug ("width image %d",idAlbum);
+
+    }else{qDebug("probleme");qDebug() << query.lastError().text();idAlbum = -1;}
+
+    return idAlbum;
+}
+
+int getHeightImage(int id){
+
+    QSqlQuery query;
+    query.prepare("select height from Images where id=?");
+    query.addBindValue(id);
+    int idAlbum;
+    if( query.exec()){
+
+        int field = query.record().indexOf("height");
+        while(query.next()){
+            idAlbum = query.value(field).toInt();
+        }
+        //qDebug ("height image %d",idAlbum);
+
+    }else{qDebug("probleme");qDebug() << query.lastError().text();idAlbum = -1;}
+
+    return idAlbum;
+}
+
+int getPos_xImage(int id){
+
+    QSqlQuery query;
+    query.prepare("select pos_x from Images where id=?");
+    query.addBindValue(id);
+    int idAlbum;
+    if( query.exec()){
+
+        int field = query.record().indexOf("pos_x");
+        while(query.next()){
+            idAlbum = query.value(field).toInt();
+        }
+        //qDebug ("pos_x image %d",idAlbum);
+
+    }else{qDebug("probleme");qDebug() << query.lastError().text();idAlbum = -1;}
+
+    return idAlbum;
+}
+
+int getPos_yImage(int id){
+
+    QSqlQuery query;
+    query.prepare("select pos_y from Images where id=?");
+    query.addBindValue(id);
+    int idAlbum;
+    if( query.exec()){
+
+        int field = query.record().indexOf("pos_y");
+        while(query.next()){
+            idAlbum = query.value(field).toInt();
+        }
+        //qDebug ("pos_y image %d",idAlbum);
+
+    }else{qDebug("probleme");qDebug() << query.lastError().text(); idAlbum = -1;}
+
+    return idAlbum;
+}
+
+
+
+// Tags (id, title varchar)
+int createTag(std::string title){
+
+    QSqlQuery query;
+    query.prepare("insert into Tags ('title') values (?)");
+    query.addBindValue(title.c_str());
+    if( query.exec()){
+    qDebug() << "Last ID was:" << query.lastInsertId().toInt();
+     }
+    else{qDebug("probleme");qDebug() << query.lastError().text();}
+    return query.lastInsertId().toInt();
+}
+
+//@Not Use
 void editTag(int id, std::string newTitle){
     QSqlQuery query;
     QString idQ = QString::number(id);
     QString newTitleQ = QString::fromStdString(newTitle);
     query.exec("UPDATE Tags SET title = '"+newTitleQ+"' WHERE id="+idQ+";");
+}
+
+std::string getTitleTag(int id){
+    QSqlQuery query;
+    query.prepare("select title from Tags where id=?");
+    query.addBindValue(id);
+    std::string string;
+    if( query.exec()){
+
+        int field = query.record().indexOf("title");
+        while(query.next()){
+            string = query.value(field).toString().toStdString();
+        }
+        qDebug ("title album %s",string.c_str());
+
+    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+
+    return string;
 }
 
 void removeTag(int id){
@@ -292,9 +545,14 @@ void removeTag(int id){
 // ImagesTags (id, image int, tag int)
 void createImagesTags(int idImage, int idTag){
     QSqlQuery query;
-    QString idImageQ = QString::number(idImage);
-    QString idTagQ = QString::number(idTag);
-    query.exec("insert into ImagesTags ('image','tag') values('"+idImageQ+"','"+idTagQ+"')");
+    query.prepare("insert into ImagesTags ('image','tag') values (?, ?)");
+    query.addBindValue(idImage);
+    query.addBindValue(idTag);
+    if( query.exec()){
+    qDebug() << "Last ID was:" << query.lastInsertId().toInt();
+     }
+    else{qDebug("probleme");qDebug() << query.lastError().text();}
+
 }
 
 void removeImagesTagsByImage(int id){
@@ -307,4 +565,21 @@ void removeImagesTagsByTags(int id){
     QSqlQuery query;
     QString idQ = QString::number(id);
     query.exec("DELETE FROM ImagesTags WHERE tag='"+idQ+"';");
+}
+
+std::vector<int> getTagsImagesTags(int id){
+    QSqlQuery query;
+    query.prepare("select * from ImagesTags where image = ?");
+    query.addBindValue(id);
+
+
+    std::vector<int> indexs;
+    if(query.exec()){
+        int field = query.record().indexOf("tag");
+        while(query.next()){
+            int intIndex = query.value(field).toInt();
+            indexs.push_back(intIndex);
+        }
+    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+    return indexs;
 }
