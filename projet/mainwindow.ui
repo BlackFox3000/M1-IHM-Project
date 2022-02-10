@@ -436,8 +436,8 @@
     <property name="title">
      <string>Album</string>
     </property>
-    <addaction name="actionOuvrir_un_album"/>
     <addaction name="actionCr_er_un_album"/>
+    <addaction name="actionOuvrir_un_album"/>
    </widget>
    <widget class="QMenu" name="menuTh_mes">
     <property name="title">
