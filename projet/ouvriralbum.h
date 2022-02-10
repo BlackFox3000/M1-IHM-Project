@@ -12,7 +12,6 @@ public:
 private slots:
     void on_button_ouverture_clicked();
     void on_button_anuler_clicked();
-    void on_pushButton_clicked();
     void on_comboBox_albums_currentIndexChanged(int index);
     void actualiserApercu(int idAlbum);
 };
