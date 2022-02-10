@@ -220,14 +220,16 @@ MainWindow::~MainWindow()
 //======== modifier informations =========
 void MainWindow::on_button_modif_infos_clicked()
 {
-    createImage(1, "proust", "c/moi/bureau", "c'est mon chat en gros la", 1, 100, 100, 0, 0);
-    QStringList etiquettes;
-    for(int i=0; i<comboBox_listeTags->count(); i++){
-        etiquettes.append(comboBox_listeTags->itemText(i));
+    if(path_modif != ""){
+        createImage(1, "proust", "c/moi/bureau", "c'est mon chat en gros la", 1, 100, 100, 0, 0);
+        QStringList etiquettes;
+        for(int i=0; i<comboBox_listeTags->count(); i++){
+            etiquettes.append(comboBox_listeTags->itemText(i));
+        }
+        ModifInformations m(this,label_titre->text(),label_extension->text(),label_dimensions->text(),
+                            label_creation->text(),label_modif->text(),etiquettes,2,path_modif);
+        m.exec();
     }
-    ModifInformations m(this,label_titre->text(),label_extension->text(),label_dimensions->text(),
-                        label_creation->text(),label_modif->text(),etiquettes,2);
-    m.exec();
 }
 
 
@@ -261,6 +263,10 @@ void MainWindow::on_actionEditer_image_triggered()
 
     }
     e.exec();
+}
+
+void MainWindow::on_actionEditer_les_informations_triggered(){
+    on_button_modif_infos_clicked();
 }
 
 
@@ -318,6 +324,7 @@ void MainWindow::updateNavigation()
     n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
     apercu_img->setPixmap(QPixmap::fromImage(n.pix));
     apercu_img->setScaledContents(true);
+    path_modif = firstItem->text();
     }
 }
 
@@ -405,7 +412,7 @@ void MainWindow::on_treeView_doubleClicked()
     path = getElementTreeViewClicked();
     if(path != NULL){
         qDebug() << path;
-        EditionImageWindow e;
+        EditionImageWindow e(this);
         e.img_path = path;
         qDebug() << "img : "+e.img_path;
         if(QString::compare(e.img_path, QString()) != 0){
@@ -417,7 +424,6 @@ void MainWindow::on_treeView_doubleClicked()
                 e.ui_edit->edit_label->setScaledContents(true);
 
             }
-
         }
 
         if(e.exec()){}
@@ -446,6 +452,7 @@ void MainWindow::on_treeView_clicked()
         n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
         apercu_img->setText(element);
         path_img->setText(element);
+        path_modif = element;
         apercu_img->setPixmap(QPixmap::fromImage(n.pix));
         apercu_img->setScaledContents(true);
         Next->setEnabled(false);
@@ -502,6 +509,7 @@ void MainWindow::on_Next_clicked()
     n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
     apercu_img->setPixmap(QPixmap::fromImage(n.pix));
     apercu_img->setScaledContents(true);
+    path_modif = album_img->item(num)->text();
 
 }
 
@@ -517,6 +525,7 @@ void MainWindow::on_Prec_clicked()
     n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
     apercu_img->setPixmap(QPixmap::fromImage(n.pix));
     apercu_img->setScaledContents(true);
+    path_modif = album_img->item(num)->text();
 
 }
 

@@ -9,10 +9,11 @@ class ModifInformations : public QDialog, private Ui::ModifInformations
 
 public:
     explicit ModifInformations(QWidget *parent = nullptr,QString titre = nullptr,QString extension = nullptr,QString dimensions = nullptr,
-                               QString creation = nullptr,QString modification = nullptr,QStringList etiquettes = {""},int idImage = -1);
+                               QString creation = nullptr,QString modification = nullptr,QStringList etiquettes = {""},int idImage = -1,QString img_path = nullptr);
 
 public:
     int idImage;
+    QImage imageModif;
 
 private slots:
     void on_button_valider_Tag_clicked();

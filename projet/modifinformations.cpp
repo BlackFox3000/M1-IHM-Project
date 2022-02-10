@@ -3,7 +3,7 @@
 #include <QDebug>
 
 ModifInformations::ModifInformations(QWidget *parent,QString titre,QString extension,QString dimensions,
-                                     QString creation,QString modification,QStringList etiquettes, int idImage) :
+                                     QString creation,QString modification,QStringList etiquettes, int idImage,QString img_path) :
     QDialog(parent)
 {
     setupUi(this);
@@ -16,13 +16,20 @@ ModifInformations::ModifInformations(QWidget *parent,QString titre,QString exten
     this->comboBox_listeTags->addItems(etiquettes);
     this->edit_newTitre->setText(titre);
     //this->label_feedback->setText("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-
     for(int i=0; i<etiquettes.count(); i++){
         //etiquettes.append(comboBox_listeTags->itemText(i));
         if(comboBox_Tags->findText(etiquettes[i]) == -1){
             comboBox_Tags->addItem(etiquettes[i]);
         }
     }
+    //QPixmap pixmap(img_path);
+    //label_apercu->setPixmap(pixmap);
+    //label_apercu->setMask(pixmap.mask());
+    //imageModif.load(img_path);
+    imageModif.load(img_path);
+    this->label_apercu->setPixmap(QPixmap::fromImage(imageModif).scaled(frame_apercu->width(),frame_apercu->height(),Qt::KeepAspectRatio));
+    this->label_apercu->setScaledContents(true);
+
     this->styleSheet() = parent->styleSheet();
     //this->setStyleSheet("QDialog {background : #5b0e2d;}  QTextEdit{border: 2px solid black; width : 16px; height: 12px;} QLabel{color: white;} QPushButton{ background: white; border: 2px solid black; border-radius: 5px; height: 25px; width: 50px;color: black;font-size: 15px;} ");
 }

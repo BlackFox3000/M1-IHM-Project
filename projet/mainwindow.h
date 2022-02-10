@@ -25,6 +25,7 @@ public:
     CreationAlbumWindow c;
     Ui::MainWindow ui;
     navigation n;
+    QString path_modif;
 
 
 private:
@@ -53,6 +54,7 @@ protected slots:
     void on_actionClassique_triggered();
     void on_actionSombre_triggered();
     void on_actionBordeaux_triggered();
+    void on_actionEditer_les_informations_triggered();
 
 private slots:
     void on_button_ouvrir_album_clicked();
