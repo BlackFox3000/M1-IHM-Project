@@ -401,7 +401,8 @@ void MainWindow::on_button_creer_album_clicked()
 QString MainWindow::getElementTreeViewClicked()
 {
     QString element = model->itemFromIndex(treeView->selectionModel()->selectedIndexes().at(0))->accessibleDescription();
-         if(element.split('.').size() > 1){
+    QFileInfo fi(element);
+         if(fi.isFile()){
              return element;
          }
    return NULL;
@@ -435,8 +436,8 @@ void MainWindow::on_treeView_doubleClicked()
 void MainWindow::on_treeView_clicked()
 {
     QString element = getElementTreeViewClicked();
-    editBtn->setVisible(true);
     if(element != NULL){
+        editBtn->setVisible(true);
         QList<QString> paths;
         for(int i=0; i <album_img->count(); i++){
             paths.append(album_img->model()->index(i,0).data(Qt::DisplayRole).toString());
