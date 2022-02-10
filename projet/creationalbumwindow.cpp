@@ -22,13 +22,15 @@ void CreationAlbumWindow::on_create_album_btn_clicked()
    name = ui_creationAlbum->album_name->toPlainText();
    int id_album = createAlbum(name.toStdString());
    int nbrOfItems = ui_creationAlbum->images_list->count();
-   qDebug() << name;
-   qDebug() << nbrOfItems;
+   QString img_name;
    for(int i=0; i<nbrOfItems; i++){
         img_paths.append(ui_creationAlbum->images_list->item(i)->text());
-        createImage(id_album,"",img_paths.at(i).toStdString(),"",0,0,0,0,0);
+        img_name = img_paths.at(i).split("/").last().split(".").first();
+        qDebug() << "===>nom image<===";
+        qDebug() << img_name;
+        qDebug() << "====><=====";
+        createImage(id_album,img_name.toStdString(),img_paths.at(i).toStdString(),"",0,0,0,0,0);
    }
-   qDebug() << img_paths;
    qDebug() << "======================================================";
    qDebug() << "les albums : ";
    qDebug() << getAlbums();
