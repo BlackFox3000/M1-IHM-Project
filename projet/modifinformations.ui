@@ -10,6 +10,18 @@
     <height>550</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>550</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>550</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Modifier informations</string>
   </property>
@@ -307,14 +319,14 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QLabel" name="label_12">
          <property name="text">
-          <string>Creer etiquette :</string>
+          <string>Creer un étiquette :</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLineEdit" name="editNewTag">
          <property name="text">
-          <string>nouveau tag</string>
+          <string>nouvelle étiquette</string>
          </property>
         </widget>
        </item>
