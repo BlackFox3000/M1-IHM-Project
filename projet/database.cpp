@@ -583,3 +583,16 @@ std::vector<int> getTagsImagesTags(int id){
     }else{qDebug("probleme");qDebug() << query.lastError().text();}
     return indexs;
 }
+
+std::vector<int> getAllTags(){
+    QSqlQuery query;
+    std::vector<int> indexs;
+    if(query.exec("select * from Tags")){
+    int field = query.record().indexOf("id");
+    while(query.next()){
+        int intIndex = query.value(field).toInt();
+        indexs.push_back(intIndex);
+    }
+    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+    return indexs;
+}

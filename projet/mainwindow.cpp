@@ -225,13 +225,14 @@ MainWindow::~MainWindow()
 void MainWindow::on_button_modif_infos_clicked()
 {
     if(path_modif != ""){
-        createImage(1, "proust", "c/moi/bureau", "c'est mon chat en gros la", 1, 100, 100, 0, 0);
         QStringList etiquettes;
         for(int i=0; i<comboBox_listeTags->count(); i++){
             etiquettes.append(comboBox_listeTags->itemText(i));
         }
-        ModifInformations m(this,label_titre->text(),label_extension->text(),label_dimensions->text(),
-                            label_creation->text(),label_modif->text(),etiquettes,2,path_modif);
+        //ModifInformations m(this,label_titre->text(),label_extension->text(),label_dimensions->text(),
+                            //label_creation->text(),label_modif->text(),etiquettes,2,path_modif);
+        ModifInformations m(this,1);
+        qDebug() << getPathImage(1).c_str();
         m.exec();
     }
 }

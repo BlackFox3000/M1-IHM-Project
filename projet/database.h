@@ -79,5 +79,6 @@ std::vector<int> getAllImages(int id);
 
 std::vector<int> getTagsImagesTags(int id);
 
+std::vector<int> getAllTags();
 
 #endif // DATABASE_H
