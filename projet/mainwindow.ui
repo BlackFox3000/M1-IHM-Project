@@ -442,7 +442,7 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
     <property name="text">
-     <string>Selectionner un repertoire</string>
+     <string>Selectionner des images</string>
     </property>
    </widget>
   </widget>
@@ -542,7 +542,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionAjouter_Fichier">
    <property name="text">
-    <string>Selectionner un repertoire</string>
+    <string>Selectionner des images</string>
    </property>
   </action>
   <action name="actionOuvrir_un_album">

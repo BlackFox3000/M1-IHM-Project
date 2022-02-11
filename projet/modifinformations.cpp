@@ -3,8 +3,6 @@
 #include "mainwindow.h"
 #include <QDebug>
 
-//ModifInformations::ModifInformations(QWidget *parent,QString titre,QString extension,QString dimensions,
-                                     //QString creation,QString modification,QStringList etiquettes, int idImage,QString img_path) :
 ModifInformations::ModifInformations(QWidget *parent,int id_Image):
     QDialog(parent)
 {
@@ -12,7 +10,8 @@ ModifInformations::ModifInformations(QWidget *parent,int id_Image):
     this->id_Image = id_Image;
     this->label_titre->setText(getTitleImage(id_Image).c_str());
     this->label_extension->setText("extension");
-    this->label_dimensions->setText(getHeightImage(id_Image) + "x" + getWidthImage(id_Image));
+    //this->label_dimensions->setText(getHeightImage(id_Image) + "x" + getWidthImage(id_Image));
+    //this->label_dimensions->setText(strcat(getHeightImage(id_Image),"x"));
     this->label_creation->setText("date creation");
     this->label_modif->setText("date modification");
     this->edit_newTitre->setText(getTitleImage(id_Image).c_str());
@@ -34,11 +33,12 @@ void ModifInformations::on_button_valider_Tag_clicked()
         label_feedback->setText("tag deja existant");
     }
     else{
-        comboBox_Tags->addItem(editNewTag->text());
         label_feedback->setText("creation d'un nouveau tag");
+        comboBox_Tags->addItem(editNewTag->text());
         std::string str = editNewTag->text().toStdString();
         createTag(str);
         actualiserTagsDispos();
+        editNewTag->clear();
     }
 }
 

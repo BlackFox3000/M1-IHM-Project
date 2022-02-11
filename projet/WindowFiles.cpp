@@ -18,11 +18,13 @@ Window::Window(QWidget *parent)
     : QDialog(parent)
 {
 
-    setWindowTitle(tr("Ajouter des images"));
-    QPushButton *browseButton = new QPushButton(tr("&Parcourir..."), this);
+    setWindowTitle(tr("Aperçut des répertoires"));
+    QPushButton *browseButton = new QPushButton(tr("&Selectionner des images"), this);
     connect(browseButton, &QAbstractButton::clicked, this, &Window::browse);
 
     findButton = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    findButton->button(QDialogButtonBox::Ok)->setText("Ajouter");
+    findButton->button(QDialogButtonBox::Cancel)->setText("Annuler");
     connect(findButton, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(findButton, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
@@ -114,7 +116,7 @@ QStringList Window::findFiles(const QStringList &files, const QString &text)
     QProgressDialog progressDialog(this);
     progressDialog.setCancelButtonText(tr("&Annuler"));
     progressDialog.setRange(0, files.size());
-    progressDialog.setWindowTitle(tr("Ajouter des images"));
+    progressDialog.setWindowTitle(tr("Selectionner des images"));
 
     QMimeDatabase mimeDatabase;
     QStringList foundFiles;
@@ -195,7 +197,7 @@ void Window::createFilesTable()
     filesTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     QStringList labels;
-    labels << tr("Nom d'une image") << tr("Taille");
+    labels << tr("Nom de l'image") << tr("Taille");
     filesTable->setHorizontalHeaderLabels(labels);
     filesTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     filesTable->verticalHeader()->hide();

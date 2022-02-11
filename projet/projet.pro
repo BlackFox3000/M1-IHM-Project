@@ -45,7 +45,6 @@ HEADERS += \
 FORMS += \
     creationalbumwindow.ui \
     editionimagewindow.ui \
-    WindowFiles.ui \
     mainwindow.ui \
     navigation.ui \
     ouvriralbum.ui \
