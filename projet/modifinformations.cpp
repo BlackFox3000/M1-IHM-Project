@@ -10,8 +10,6 @@ ModifInformations::ModifInformations(QWidget *parent,int id_Image):
     this->id_Image = id_Image;
     this->label_titre->setText(getTitleImage(id_Image).c_str());
     this->label_extension->setText("extension");
-    //this->label_dimensions->setText(getHeightImage(id_Image) + "x" + getWidthImage(id_Image));
-    //this->label_dimensions->setText(strcat(getHeightImage(id_Image),"x"));
     this->label_creation->setText("date creation");
     this->label_modif->setText("date modification");
     this->edit_newTitre->setText(getTitleImage(id_Image).c_str());
@@ -24,6 +22,7 @@ ModifInformations::ModifInformations(QWidget *parent,int id_Image):
     this->styleSheet() = parent->styleSheet();
 }
 
+/* ================ Valider un nouveau tag ================== */
 void ModifInformations::on_button_valider_Tag_clicked()
 {
     if(editNewTag->text().trimmed() == ""){
@@ -43,7 +42,7 @@ void ModifInformations::on_button_valider_Tag_clicked()
 }
 
 
-
+/* ================ Ajouter un tag sur une image ================== */
 void ModifInformations::on_button_ajouterTag_clicked()
 {
     if(comboBox_TagsImage->findText(comboBox_Tags->currentText()) == -1){
@@ -57,7 +56,7 @@ void ModifInformations::on_button_ajouterTag_clicked()
 
 }
 
-
+/* ================ Retirer un tag sur une image ================== */
 void ModifInformations::on_button_retirerTag_clicked()
 {
     if(comboBox_TagsImage->findText(comboBox_Tags->currentText()) != -1){
@@ -70,7 +69,7 @@ void ModifInformations::on_button_retirerTag_clicked()
 
 }
 
-
+/* ================ Valider les modifications ================== */
 void ModifInformations::on_button_valider_clicked()
 {
     if(edit_newTitre->text().trimmed() == ""){
@@ -85,11 +84,13 @@ void ModifInformations::on_button_valider_clicked()
     accept();
 }
 
+/* ================ Annuler les modifications ================== */
 void ModifInformations::on_button_annuler_clicked()
 {
     reject();
 }
 
+/* ================ Actualiser la liste des etiquettes disponibles selon la bdd ================== */
 void ModifInformations::actualiserTagsDispos()
 {
     comboBox_Tags->clear();
@@ -98,6 +99,7 @@ void ModifInformations::actualiserTagsDispos()
     }
 }
 
+/* ================ Ajouter les tags sur l'image au niveau de la bdd ================== */
 void ModifInformations::validerTagsImage(){
     removeImagesTagsByImage(id_Image);
     std::vector<int> ids = getTagsImagesTags(id_Image);
@@ -107,6 +109,7 @@ void ModifInformations::validerTagsImage(){
     }
 }
 
+/* ================ Actualiser la liste des etiquettes de l'image selon la bdd ================== */
 void ModifInformations::actualiserTagsImage()
 {
     for(int i : getTagsImagesTags(id_Image)){
