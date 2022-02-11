@@ -34,11 +34,18 @@ void CreationAlbumWindow::on_create_album_btn_clicked()
 
 void CreationAlbumWindow::checkAlbumNameNotEmpty()
 {
-    if(ui_creationAlbum->album_name->toPlainText() == ""){
+    QString field = ui_creationAlbum->album_name->toPlainText();
+    QStringList str = field.split("\n");
+    if(field == ""){
          ui_creationAlbum->create_album_btn->setEnabled(false);
     }
     else{
-        ui_creationAlbum->create_album_btn->setEnabled(true);
+        if(str.length() >= 0 && str[0] == ""){
+            ui_creationAlbum->create_album_btn->setEnabled(false);
+        }
+        else{
+            ui_creationAlbum->create_album_btn->setEnabled(true);
+        }
     }
 }
 
