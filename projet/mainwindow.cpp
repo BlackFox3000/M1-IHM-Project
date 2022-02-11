@@ -14,6 +14,7 @@
 #include <vector>
 #include "database.h"
 #include "navigation.h"
+#include "supprimeralbumwindow.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -507,6 +508,38 @@ void MainWindow::on_editBtn_clicked()
     e.ui_edit->edit_label->setScaledContents(true);
 
     e.exec();
+}
+
+void MainWindow::on_button_supprimer_album_clicked()
+{
+    labelGalerie->setVisible(false);
+    Supprimeralbumwindow s(this);
+    if(s.exec()){
+        album_img->clear();
+        album_img->setIconSize(QSize(150,150));
+
+        QListWidgetItem *itm;
+        for(int i=0; i< s.img_paths.size(); i++){
+            itm = new QListWidgetItem();
+            QPushButton * button = new QPushButton("X");
+            connect(button, &QPushButton::clicked, this, &MainWindow::deletePictureGalerie);
+            button->setMinimumSize(QSize(22, 22));
+            button->setMaximumSize(QSize(22,22));
+            QString itmPath = s.img_paths.at(i);
+            itm->setText(itmPath);
+            itm->setTextColor(QColor(255,255,255));
+            itm->setIcon(QIcon(s.img_paths.at(i)));
+            album_img->addItem(itm);
+            album_img->setItemWidget(itm,button);
+        }
+        s.img_paths.clear();
+
+        this->editBtn->setVisible(true);
+
+        titreAlbum->setText("Titre album : "+s.name);
+        currentIdAlbum = s.idalbum;
+        updateNavigation();
+    }
 }
 
 void MainWindow::on_actionClassique_triggered()

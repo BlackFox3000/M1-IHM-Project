@@ -67,5 +67,6 @@ private slots:
     void on_Prec_clicked();
     void on_addBtn_clicked();
     void on_editBtn_clicked();
+    void on_button_supprimer_album_clicked();
 };
 #endif // MAINWINDOW_H

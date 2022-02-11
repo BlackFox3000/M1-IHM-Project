@@ -32,7 +32,7 @@
       <x>10</x>
       <y>10</y>
       <width>191</width>
-      <height>561</height>
+      <height>541</height>
      </rect>
     </property>
    </widget>
@@ -188,9 +188,9 @@
    <widget class="QListWidget" name="album_img">
     <property name="geometry">
      <rect>
-      <x>990</x>
+      <x>1080</x>
       <y>40</y>
-      <width>271</width>
+      <width>181</width>
       <height>371</height>
      </rect>
     </property>
@@ -201,7 +201,7 @@
    <widget class="QLabel" name="titreAlbum">
     <property name="geometry">
      <rect>
-      <x>1000</x>
+      <x>1050</x>
       <y>10</y>
       <width>111</width>
       <height>20</height>
@@ -351,9 +351,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>580</y>
+      <y>560</y>
       <width>191</width>
-      <height>81</height>
+      <height>101</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -368,7 +368,7 @@
        <x>0</x>
        <y>0</y>
        <width>191</width>
-       <height>81</height>
+       <height>103</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -383,6 +383,13 @@
        <widget class="QPushButton" name="button_ouvrir_album">
         <property name="text">
          <string>Ouvrir un Album</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="button_supprimer_album">
+        <property name="text">
+         <string>Supprimer un Album</string>
         </property>
        </widget>
       </item>
@@ -422,8 +429,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="labelGalerie">
     <property name="geometry">
      <rect>
-      <x>1040</x>
-      <y>170</y>
+      <x>1080</x>
+      <y>160</y>
       <width>181</width>
       <height>81</height>
      </rect>
