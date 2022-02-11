@@ -18,7 +18,7 @@ Window::Window(QWidget *parent)
     : QDialog(parent)
 {
 
-    setWindowTitle(tr("Ajouter des fichiers"));
+    setWindowTitle(tr("Ajouter des images"));
     QPushButton *browseButton = new QPushButton(tr("&Parcourir..."), this);
     connect(browseButton, &QAbstractButton::clicked, this, &Window::browse);
 
@@ -52,15 +52,15 @@ void Window::browse()
 {
     QString directory;
     if(directoryComboBox->currentText().isEmpty()){
-        directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des fichiers"), QDir::drives().at(0).absoluteFilePath()));
+        directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des images"), QDir::drives().at(0).absoluteFilePath()));
     }
     else{
         QDir pathDir(directoryComboBox->currentText());
         if(!pathDir.exists()){
-            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des fichiers"), QDir::drives().at(0).absoluteFilePath()));
+            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des images"), QDir::drives().at(0).absoluteFilePath()));
         }
         else{
-            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des fichiers"), directoryComboBox->currentText()));
+            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des images"), directoryComboBox->currentText()));
         }
     }
 
@@ -114,14 +114,14 @@ QStringList Window::findFiles(const QStringList &files, const QString &text)
     QProgressDialog progressDialog(this);
     progressDialog.setCancelButtonText(tr("&Annuler"));
     progressDialog.setRange(0, files.size());
-    progressDialog.setWindowTitle(tr("Ajouter des fichiers"));
+    progressDialog.setWindowTitle(tr("Ajouter des images"));
 
     QMimeDatabase mimeDatabase;
     QStringList foundFiles;
 
     for (int i = 0; i < files.size(); ++i) {
         progressDialog.setValue(i);
-        progressDialog.setLabelText(tr("Recherche des fichiers : %1 sur %n...", 0, files.size()).arg(i));
+        progressDialog.setLabelText(tr("Recherche des images : %1 sur %n...", 0, files.size()).arg(i));
         QCoreApplication::processEvents();
 
         if (progressDialog.wasCanceled())
@@ -130,7 +130,7 @@ QStringList Window::findFiles(const QStringList &files, const QString &text)
         const QString fileName = files.at(i);
         const QMimeType mimeType = mimeDatabase.mimeTypeForFile(fileName);
         if (mimeType.isValid() && !mimeType.inherits(QStringLiteral("text/plain"))) {
-            qWarning() << "Ne recherche pas les fichiers binaires " << QDir::toNativeSeparators(fileName);
+            qWarning() << "Ne recherche pas les images binaires " << QDir::toNativeSeparators(fileName);
             continue;
         }
         QFile file(fileName);
@@ -176,7 +176,7 @@ void Window::showFiles(const QStringList &paths)
             filesTable->setItem(row, 1, sizeItem);
         }
     }
-    filesFoundLabel->setText(tr("%n Fichier(s) trouvé (Cliquez deux fois sur un fichier pour l'ouvrir)", 0, paths.size()));
+    filesFoundLabel->setText(tr("%n Image(s) trouvé (Cliquez deux fois sur une image pour l'ouvrir)", 0, paths.size()));
     filesFoundLabel->setWordWrap(true);
 }
 
@@ -195,7 +195,7 @@ void Window::createFilesTable()
     filesTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     QStringList labels;
-    labels << tr("Nom de fichier") << tr("Taille");
+    labels << tr("Nom d'une image") << tr("Taille");
     filesTable->setHorizontalHeaderLabels(labels);
     filesTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     filesTable->verticalHeader()->hide();

@@ -22,14 +22,10 @@ MainWindow::MainWindow(QWidget *parent)
     setupUi(this);
     setWindowIcon(QIcon(":icon/album.png"));
     connect(actionAjouter_Fichier, SIGNAL(triggered()), this, SLOT(actionFindFile()));
+    connect(buttonAddFile,SIGNAL(clicked()),this, SLOT(actionFindFile()));
     connect(actionEditer_l_image, SIGNAL(triggered()), this, SLOT(on_actionEditer_image_triggered()));
     connect(actionCr_er_un_album, SIGNAL(triggered()), this, SLOT(on_actionCreer_nouvel_album_triggered()));
     connect(actionCr_er_un_album,SIGNAL(triggered()), this, SLOT(insertAlbumFunctionSQL));
-
-    treeView->setHeaderHidden(true);
-    QStandardItemModel* model = new QStandardItemModel();
-    model->appendRow(new QStandardItem("Arborescence vide"));
-    treeView->setModel(model);
 
     album_img->setSelectionMode(QAbstractItemView::SingleSelection);
     album_img->setDragEnabled(true);
@@ -179,6 +175,9 @@ void MainWindow::updateTreeView(QString root,QStringList filesFind)
         }
     }
 
+    buttonAddFile->setVisible(false);
+    labelTreeView->setVisible(false);
+
     treeView->setModel(model);
     treeView->header()->setSortIndicator(0,Qt::AscendingOrder);
     treeView->header()->setSortIndicatorShown(true);
@@ -243,6 +242,7 @@ void MainWindow::actualiserInfos(int id_Image){
 
 void MainWindow::on_button_ouvrir_album_clicked()
 {
+    labelGalerie->setVisible(false);
     OuvrirAlbum o(this);
     if(o.exec()){
         album_img->clear();
@@ -392,7 +392,7 @@ void MainWindow::on_actionCreer_nouvel_album_triggered()
         }
         currentIdAlbum = c.id_album;
         c.ui_creationAlbum->img_show->clear();
-
+        labelGalerie->setVisible(false);
 }
 void MainWindow::ajouter(){
     int itmIndex = c.ui_creationAlbum->img_show->selectionModel()->currentIndex().row();
