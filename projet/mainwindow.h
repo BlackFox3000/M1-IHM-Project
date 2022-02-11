@@ -17,7 +17,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    int currentIdAlbum;
+    int currentIdAlbum = 0;
 
 
 public:
@@ -27,6 +27,7 @@ public:
     Ui::MainWindow ui;
     navigation n;
     QString path_modif;
+    void actualiserInfos(int id_Image);
 
 
 private:
@@ -37,6 +38,8 @@ private:
     void updateFilesFind(QStringList filesFind);
     void updateFolderRoot(QString folderRoot);
     void deletePictureGalerie();
+    int getIdFromPath(QString path);
+
 
     QString folderRoot;
     QStringList filesFind;

@@ -224,24 +224,39 @@ MainWindow::~MainWindow()
 //======== modifier informations =========
 void MainWindow::on_button_modif_infos_clicked()
 {
-    if(path_modif != ""){
-        QStringList etiquettes;
-        for(int i=0; i<comboBox_listeTags->count(); i++){
-            etiquettes.append(comboBox_listeTags->itemText(i));
-        }
-        //ModifInformations m(this,label_titre->text(),label_extension->text(),label_dimensions->text(),
-                            //label_creation->text(),label_modif->text(),etiquettes,2,path_modif);
-        ModifInformations m(this,1);
-        qDebug() << getPathImage(1).c_str();
+    if(path_modif != "" && currentIdAlbum != 0){
+        int id_modif =getIdFromPath(path_img->text());
+        ModifInformations m(this,id_modif);
         m.exec();
+        actualiserInfos(id_modif);
     }
+}
+
+int MainWindow::getIdFromPath(QString path){
+    int id_searched = 0;
+    for(int i : getAllImages(currentIdAlbum)){
+        if(QString::compare(getPathImage(i).c_str(),path) == 0){
+            id_searched = i;
+        }
+    }
+    return id_searched;
+}
+
+void MainWindow::actualiserInfos(int id_Image){
+    qDebug() << "salut";
+    this->label_titre->setText(getTitleImage(id_Image).c_str());
+    this->comboBox_listeTags->clear();
+    for(int i : getTagsImagesTags(id_Image)){
+        this->comboBox_listeTags->addItem(getTitleTag(i).c_str());
+    }
+    this->textBrowser_description->setText(getDescriptionImage(id_Image).c_str());
 }
 
 
 void MainWindow::on_button_ouvrir_album_clicked()
 {
     OuvrirAlbum o(this);
-    album_img->clear();
+    //album_img->clear();
     if(o.exec()){
         album_img->clear();
         album_img->setIconSize(QSize(150,150));
@@ -268,7 +283,6 @@ void MainWindow::on_button_ouvrir_album_clicked()
         titreAlbum->setText("Titre album : "+o.name);
         currentIdAlbum = o.idalbum;
         updateNavigation();
-
     }
 }
 
@@ -368,6 +382,7 @@ void MainWindow::updateNavigation()
     apercu_img->setPixmap(QPixmap::fromImage(n.pix));
     apercu_img->setScaledContents(true);
     path_modif = firstItem->text();
+    actualiserInfos(getIdFromPath(path_modif));
     }
 }
 
@@ -376,6 +391,7 @@ void MainWindow::on_actionCreer_nouvel_album_triggered()
 
     album_img->clear();
     c.ui_creationAlbum->images_list->clear();
+    c.ui_creationAlbum->album_name->clear();
     c.img_paths.clear();
     for(int i=0; i<filesFind.size(); i++){
         QListWidgetItem * itm = new QListWidgetItem();
@@ -388,14 +404,12 @@ void MainWindow::on_actionCreer_nouvel_album_triggered()
         c.ui_creationAlbum->img_show->setIconSize(QSize(200,200));
         c.ui_creationAlbum->img_show->addItem(itm);
         c.ui_creationAlbum->img_show->setItemWidget(itm,ajouter);
-
         connect(ajouter,SIGNAL(clicked()),this,SLOT(ajouter()));
     }
         if(c.exec()){
             updateListWidget();
             // add to navigation
             updateNavigation();
-
         }
         currentIdAlbum = c.id_album;
         c.ui_creationAlbum->img_show->clear();
@@ -557,6 +571,7 @@ void MainWindow::on_Next_clicked()
     apercu_img->setPixmap(QPixmap::fromImage(n.pix));
     apercu_img->setScaledContents(true);
     path_modif = album_img->item(num)->text();
+    actualiserInfos(getIdFromPath(path_modif));
 
 }
 
@@ -573,6 +588,7 @@ void MainWindow::on_Prec_clicked()
     apercu_img->setPixmap(QPixmap::fromImage(n.pix));
     apercu_img->setScaledContents(true);
     path_modif = album_img->item(num)->text();
+    actualiserInfos(getIdFromPath(path_modif));
 
 }
 
