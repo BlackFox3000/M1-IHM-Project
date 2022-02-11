@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(buttonAddFile,SIGNAL(clicked()),this, SLOT(actionFindFile()));
     connect(actionEditer_l_image, SIGNAL(triggered()), this, SLOT(on_actionEditer_image_triggered()));
     connect(actionCr_er_un_album, SIGNAL(triggered()), this, SLOT(on_actionCreer_nouvel_album_triggered()));
-    connect(actionCr_er_un_album,SIGNAL(triggered()), this, SLOT(insertAlbumFunctionSQL));
+    connect(actionCr_er_un_album,SIGNAL(triggered()), this, SLOT(insertAlbumFunctionSQL()));
 
     album_img->setSelectionMode(QAbstractItemView::SingleSelection);
     album_img->setDragEnabled(true);
