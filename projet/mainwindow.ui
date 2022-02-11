@@ -201,7 +201,7 @@
    <widget class="QLabel" name="titreAlbum">
     <property name="geometry">
      <rect>
-      <x>1050</x>
+      <x>1080</x>
       <y>10</y>
       <width>111</width>
       <height>20</height>
