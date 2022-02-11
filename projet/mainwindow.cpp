@@ -518,6 +518,7 @@ void MainWindow::on_addBtn_clicked()
     button->setMinimumSize(QSize(22, 22));
     button->setMaximumSize(QSize(22,22));
     QString itmPath = element;
+    QString img_name = itmPath.split("/").last().split(".").first();
     itm->setText(itmPath);
     itm->setTextColor(QColor(255,255,255));
     album_img->setIconSize(QSize(200,200));
@@ -526,6 +527,7 @@ void MainWindow::on_addBtn_clicked()
     addBtn->setVisible(false);
     Next->setEnabled(true);
     Prec->setEnabled(true);
+    createImage(currentIdAlbum,img_name.toStdString(),itmPath.toStdString(),"",0,0,0,0,0);
 
 
 }
