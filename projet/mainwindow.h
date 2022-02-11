@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    int currentIdAlbum;
 
 
 public:

@@ -13,6 +13,7 @@ public:
     QImage selectedImg;
     QList<QString> img_paths;
     QString name;
+    int id_album;
 
 private slots:
     void on_create_album_btn_clicked();

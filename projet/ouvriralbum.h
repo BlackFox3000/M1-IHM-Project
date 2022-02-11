@@ -9,6 +9,11 @@ class OuvrirAlbum : public QDialog, private Ui::OuvrirAlbum
 
 public:
     explicit OuvrirAlbum(QWidget *parent = nullptr);
+    Ui::OuvrirAlbum *ui_ouvrirAlbum;
+    QString name;
+    QList<QString> img_paths;
+    int idalbum;
+
 private slots:
     void on_button_ouverture_clicked();
     void on_button_anuler_clicked();

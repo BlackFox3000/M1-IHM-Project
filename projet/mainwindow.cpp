@@ -241,7 +241,35 @@ void MainWindow::on_button_modif_infos_clicked()
 void MainWindow::on_button_ouvrir_album_clicked()
 {
     OuvrirAlbum o(this);
-    o.exec();
+    album_img->clear();
+    if(o.exec()){
+        album_img->clear();
+        album_img->setIconSize(QSize(150,150));
+        //album_img->addItem(new QListWidgetItem("Titre album"));
+
+        QListWidgetItem *itm;
+        for(int i=0; i< o.img_paths.size(); i++){
+            itm = new QListWidgetItem();
+            QPushButton * button = new QPushButton("X");
+            connect(button, &QPushButton::clicked, this, &MainWindow::deletePictureGalerie);
+            button->setMinimumSize(QSize(22, 22));
+            button->setMaximumSize(QSize(22,22));
+            QString itmPath = o.img_paths.at(i);
+            itm->setText(itmPath);
+            itm->setTextColor(QColor(255,255,255));
+            itm->setIcon(QIcon(o.img_paths.at(i)));
+            album_img->addItem(itm);
+            album_img->setItemWidget(itm,button);
+        }
+        o.img_paths.clear();
+
+        this->editBtn->setVisible(true);
+
+        titreAlbum->setText("Titre album : "+o.name);
+        currentIdAlbum = o.idalbum;
+        updateNavigation();
+
+    }
 }
 
 void MainWindow::on_actionOuvrir_un_album_triggered()
@@ -283,6 +311,11 @@ void MainWindow::on_actionEditer_les_informations_triggered(){
 void MainWindow::deletePictureGalerie()
 {
     album_img->takeItem(album_img->currentRow());
+    if(album_img->currentRow() == album_img->count()-1){
+        removeImage(getAllImages(currentIdAlbum)[album_img->currentRow()+1]);
+    }else{
+        removeImage(getAllImages(currentIdAlbum)[album_img->currentRow()]);
+    }
     if(album_img->count() <= 1){
         Next->setEnabled(false);
         Prec->setEnabled(false);
@@ -364,6 +397,7 @@ void MainWindow::on_actionCreer_nouvel_album_triggered()
             updateNavigation();
 
         }
+        currentIdAlbum = c.id_album;
         c.ui_creationAlbum->img_show->clear();
 
 }

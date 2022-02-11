@@ -119,5 +119,38 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>button_ouverture</sender>
+   <signal>clicked()</signal>
+   <receiver>OuvrirAlbum</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>465</x>
+     <y>662</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>298</x>
+     <y>656</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>button_anuler</sender>
+   <signal>clicked()</signal>
+   <receiver>OuvrirAlbum</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>845</x>
+     <y>661</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1036</x>
+     <y>657</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

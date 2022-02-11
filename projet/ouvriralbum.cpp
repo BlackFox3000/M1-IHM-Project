@@ -2,10 +2,12 @@
 #include <QDebug>
 #include <iostream>
 #include "database.h"
+#include "mainwindow.h"
+
 using namespace std;
 
 OuvrirAlbum::OuvrirAlbum(QWidget *parent) :
-    QDialog(parent)
+    QDialog(parent), ui_ouvrirAlbum(new Ui::OuvrirAlbum)
 {
     setupUi(this);
     this->styleSheet() = parent->styleSheet();
@@ -17,7 +19,16 @@ OuvrirAlbum::OuvrirAlbum(QWidget *parent) :
 
 void OuvrirAlbum::on_button_ouverture_clicked()
 {
-    qDebug() << "-----------------pour ouvir----------------";
+    qDebug() << "-----------------pour ouvrir----------------";
+    name = this->comboBox_albums->currentText();
+    idalbum = this->comboBox_albums->currentIndex()+1;
+    int nbrOfItems = this->listWidget_apercualbum->count();
+    for(int i=0; i<nbrOfItems; i++){
+         img_paths.append(this->listWidget_apercualbum->item(i)->text());
+    }
+    qDebug() << img_paths;
+
+
 }
 
 void OuvrirAlbum::on_button_anuler_clicked()
