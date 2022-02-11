@@ -57,6 +57,7 @@ protected slots:
     void on_actionBordeaux_triggered();
     void on_actionEditer_les_informations_triggered();
     void on_actionOuvrir_un_album_triggered();
+    void on_actionSupprimer_un_album_triggered();
 
 private slots:
     void on_button_ouvrir_album_clicked();

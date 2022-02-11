@@ -31,6 +31,8 @@ private slots:
     void mouseMoveEvent(QMouseEvent* event) override;
     void on_pivoter_btn_clicked();
 
+    void on_button_save_clicked();
+
 private:
     QRubberBand* rubberBand = nullptr;
     QPoint origin;

@@ -214,28 +214,34 @@ void MainWindow::on_actionOuvrir_un_album_triggered()
     on_button_ouvrir_album_clicked();
 }
 
+void MainWindow::on_actionSupprimer_un_album_triggered()
+{
+    on_button_supprimer_album_clicked();
+}
 
 void MainWindow::on_actionEditer_image_triggered()
 {
-    EditionImageWindow e(this);
-    e.img_path = path;
-    if(QString::compare(e.img_path, QString()) != 0){
-        bool valid = e.edit_image.load(e.img_path);
-        if(valid){
+    if(editBtn->isVisible()){
+        EditionImageWindow e(this);
+        e.img_path = path;
+        if(QString::compare(e.img_path, QString()) != 0){
+            bool valid = e.edit_image.load(e.img_path);
+            if(valid){
+                e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
+                e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
+                e.ui_edit->edit_label->setScaledContents(true);
+
+            }else{
+            }
+        }else{
+            e.edit_image.load(path_img->text());
             e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
             e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
             e.ui_edit->edit_label->setScaledContents(true);
 
-        }else{
         }
-    }else{
-        e.edit_image.load(path_img->text());
-        e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
-        e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
-        e.ui_edit->edit_label->setScaledContents(true);
-
+        e.exec();
     }
-    e.exec();
 }
 
 void MainWindow::on_actionEditer_les_informations_triggered(){

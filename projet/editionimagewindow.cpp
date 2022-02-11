@@ -130,3 +130,9 @@ void EditionImageWindow::on_pivoter_btn_clicked()
     edit_image = edit_image.transformed(t.rotate(0));
 }
 
+
+void EditionImageWindow::on_button_save_clicked()
+{
+    label_feedback->setText("La sauvegarde n'est pas implémentée dans cette version du logiciel");
+}
+
