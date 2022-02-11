@@ -50,77 +50,11 @@ void MainWindow::actionFindFile()
     if(window.exec()){
         filesFind = window.getFiles();
         folderRoot = window.getFolder();
-        /*if(filesFind.size() == 0){
-            filesFind = window.getFiles();
-            folderRoot = window.getFolder();
-        }
-        else{
-            updateFilesFind(window.getFiles());
-            updateFolderRoot(window.getFolder());
-        }*/
         filesFind.sort();
         updateTreeView(folderRoot + "/",filesFind);
     }
 }
 
-void MainWindow::updateFilesFind(QStringList filesFind)
-{
-    int index = this->filesFind.size();
-    filesFind.sort();
-    for(QString fileFind : filesFind){
-        bool dupli = false;
-        for(int i = 0;i < index; i++){
-            if(this->filesFind.at(i) == fileFind){
-                dupli = true;
-            }
-        }
-        if(!dupli){
-            this->filesFind.append(fileFind);
-        }
-    }
-}
-
-void MainWindow::updateFolderRoot(QString folderRoot)
-{
-    if(this->folderRoot != folderRoot){
-        QStringList folderRootSplit = this->folderRoot.split('/');
-        QStringList newFolderRootSplit = folderRoot.split('/');
-        int index = 0;
-        bool loop = true;
-        while(loop){
-            if(folderRootSplit.at(index) == newFolderRootSplit.at(index)){
-                index ++;
-                if(newFolderRootSplit.size() <= index){
-                    if(folderRootSplit.size() <= index){
-                        this->folderRoot = folderRoot;
-                    }
-                   loop = false;
-                }
-                else{
-                    if(folderRootSplit.size() <= index){
-                        loop = false;
-                    }
-                }
-            }
-            else{
-                if(index == 0){
-                    this->folderRoot = "/";
-                }
-                else{
-                    QString newRoot;
-                    for(int i = 0; i < index; i++){
-                        newRoot += folderRootSplit.at(i);
-                        if(i < index - 1){
-                            newRoot += "/";
-                        }
-                    }
-                    this->folderRoot = newRoot;
-                }
-                loop = false;
-            }
-        }
-    }
-}
 
 void MainWindow::updateTreeView(QString root,QStringList filesFind)
 {

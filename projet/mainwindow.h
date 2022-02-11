@@ -34,8 +34,6 @@ private:
     void updateListWidget();
     void updateNavigation();
     int getIndexItemTreeViewModel(std::vector<QStandardItem*> items,QString file);
-    void updateFilesFind(QStringList filesFind);
-    void updateFolderRoot(QString folderRoot);
     void deletePictureGalerie();
     int getIdFromPath(QString path);
 
