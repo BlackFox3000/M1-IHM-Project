@@ -37,7 +37,7 @@ Window::Window(QWidget *parent)
     createFilesTable();
 
     QGridLayout *mainLayout = new QGridLayout(this);
-    mainLayout->addWidget(new QLabel(tr("Répertoir:")), 2, 0);
+    mainLayout->addWidget(new QLabel(tr("Répertoire:")), 2, 0);
     mainLayout->addWidget(directoryComboBox, 2, 1);
     mainLayout->addWidget(browseButton, 2, 2);
     mainLayout->addWidget(filesTable, 3, 0, 1, 3);
