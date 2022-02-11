@@ -11,15 +11,20 @@ OuvrirAlbum::OuvrirAlbum(QWidget *parent) :
 {
     setupUi(this);
     this->styleSheet() = parent->styleSheet();
-    for(int i=1; i<getAlbums().size()+1;i++){
+    for(int i : getAlbums()){
         this->comboBox_albums->addItem(QString::fromUtf8(getTitleAlbum(i).c_str()));
     }
-    actualiserApercu(comboBox_albums->currentIndex()+1);
+    actualiserApercu(comboBox_albums->currentText());
 }
 
 void OuvrirAlbum::on_button_ouverture_clicked()
 {
     name = this->comboBox_albums->currentText();
+    for(int i : getAlbums()){
+        if(getTitleAlbum(i).c_str() == name){
+            idalbum = i;
+        }
+    }
     idalbum = this->comboBox_albums->currentIndex()+1;
     int nbrOfItems = this->listWidget_apercualbum->count();
     for(int i=0; i<nbrOfItems; i++){
@@ -36,13 +41,19 @@ void OuvrirAlbum::on_button_anuler_clicked()
 
 void OuvrirAlbum::on_comboBox_albums_currentIndexChanged(int index)
 {
-    actualiserApercu(index+1);
+    actualiserApercu(comboBox_albums->currentText());
 }
 
-void OuvrirAlbum::actualiserApercu(int idAlbum)
+void OuvrirAlbum::actualiserApercu(QString name)
 {
+    int id_search;
+    for(int i : getAlbums()){
+        if(getTitleAlbum(i).c_str() == name){
+            id_search = i;
+        }
+    }
     listWidget_apercualbum->clear();
-    std::vector<int> images = getAllImages(idAlbum);
+    std::vector<int> images = getAllImages(id_search);
     for(int i : images){
         QImage image;
         image.load(getPathImage(i).c_str());
