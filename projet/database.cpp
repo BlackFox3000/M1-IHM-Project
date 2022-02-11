@@ -14,8 +14,6 @@ void initializeModelImages(QSqlRelationalTableModel *model)
 //! [0]
 
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-//! [1]
- //   model->setRelation(5, QSqlRelation("album", "id", "title"));
 
 //! [3]
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
@@ -36,10 +34,6 @@ void initializeModelImagesTags(QSqlRelationalTableModel *model)
 //! [0]
 
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-//! [1]
-//   model->setRelation(2, QSqlRelation("Images", "id", "id"));
-//! [1] //! [2]
-//    model->setRelation(3, QSqlRelation("Tags", "id", "id"));
 //! [2]
 
 //! [3]
@@ -58,10 +52,6 @@ void initializeModelAlbums(QSqlRelationalTableModel *model)
 //! [0]
 
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-//! [1]
-//    model->setRelation(2, QSqlRelation("Id", "id", "title"));
-//! [1] //! [2]
-//    model->setRelation(3, QSqlRelation("Titre", "id", "title"));
 //! [2]
 
 //! [3]
@@ -79,10 +69,6 @@ void initializeModelTags(QSqlRelationalTableModel *model)
 //! [0]
 
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-//! [1]
-//    model->setRelation(2, QSqlRelation("Id", "id", "title"));
-//! [1] //! [2]
-//    model->setRelation(3, QSqlRelation("Titre", "id", "title"));
 //! [2]
 
 //! [3]
@@ -146,12 +132,6 @@ bool createConnection()
 
 int view()
 {
-    //Qapp(argc, argv);
-//    if (!createConnection())
-//        return EXIT_FAILURE;
-
-    //createRelationalTables();
-
     QSqlRelationalTableModel modelImages;
     QSqlRelationalTableModel modelImagesTags;
     QSqlRelationalTableModel modelAlbums;
@@ -167,7 +147,7 @@ int view()
     view->show();
     loop.exec();
 
-    return 1;//app.exec();
+    return 1;
 }
 
 // Albums (id , title varchar )
@@ -190,7 +170,6 @@ std::vector<int> getAlbums(){
     QSqlQuery query;
     query.exec("select id from Albums");
 
-    //int * indexs = new int[query.size()];
     std::vector<int> indexs;
     int field = query.record().indexOf("id");
     while(query.next()){
@@ -213,9 +192,8 @@ std::string getTitleAlbum(int id){
         while(query.next()){
             titleString = query.value(field).toString().toStdString();
         }
-        qDebug ("title album %s",titleString.c_str());
 
-    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+    }
 
     return titleString;
 }
@@ -232,7 +210,7 @@ std::vector<int> getAllImages(int id){
             int intIndex = query.value(field).toInt();
             indexs.push_back(intIndex);
         }
-     }else{qDebug("probleme");qDebug() << query.lastError().text();}
+     }
     return indexs;
 }
 
@@ -247,9 +225,7 @@ void removeAlbum(int id){
 // Images ( id , path varchar, title varchar, description varchar, position int, album int, width int, height int, pos_x int,, pos_y int, information varchar )
 int createImage(int idAlbum, std::string title, std::string path, std::string description, int position, int width, int height, int pos_x, int pos_y){
     QSqlQuery query;
-//    QString titleQ       = QString::fromStdString(title);
-//    QString pathQ        = QString::fromStdString(path);
-//    if(query.exec("insert into Images ('path','title')values('"+pathQ +"','"+ titleQ +"')'")){
+
     query.prepare("insert into Images ('path','title','description','position','album','width','height','pos_x','pos_y') values (?,?,?,?,?,?,?,?,?)");
     query.addBindValue(path.c_str());
     query.addBindValue(title.c_str());
@@ -260,9 +236,7 @@ int createImage(int idAlbum, std::string title, std::string path, std::string de
     query.addBindValue(height);
     query.addBindValue(pos_x);
     query.addBindValue(pos_y);
-    if( query.exec()){
-    qDebug() << "Last ID was:" << query.lastInsertId().toInt();
-     }else{qDebug("probleme");qDebug() << query.lastError().text();}
+    query.exec();
     return query.lastInsertId().toInt();
 }
 
@@ -336,15 +310,11 @@ int getIdAlbumImage(int id){
     query.addBindValue(id);
     int idAlbum;
     if( query.exec()){
-
         int field = query.record().indexOf("album");
         while(query.next()){
             idAlbum = query.value(field).toInt();
         }
-        //qDebug ("idAlubm image %d",idAlbum);
-
-    }else{qDebug("probleme");qDebug() << query.lastError().text(); idAlbum = -1;}
-
+    }
     return idAlbum;
 }
 std::string getTitleImage(int id){
@@ -353,14 +323,11 @@ std::string getTitleImage(int id){
     query.addBindValue(id);
     std::string string;
     if( query.exec()){
-
         int field = query.record().indexOf("title");
         while(query.next()){
             string = query.value(field).toString().toStdString();
         }
-       // qDebug ("title album %s",string.c_str());
-
-    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+    }
 
     return string;
 }
@@ -370,14 +337,11 @@ std::string getPathImage(int id){
     query.addBindValue(id);
     std::string string;
     if( query.exec()){
-
         int field = query.record().indexOf("path");
         while(query.next()){
             string = query.value(field).toString().toStdString();
         }
-        //qDebug ("path album %s",string.c_str());
-
-    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+    }
 
     return string;
 }
@@ -388,14 +352,11 @@ std::string getDescriptionImage(int id){
     query.addBindValue(id);
     std::string string;
     if( query.exec()){
-
         int field = query.record().indexOf("description");
         while(query.next()){
             string = query.value(field).toString().toStdString();
         }
-       // qDebug ("description album %s",string.c_str());
-
-    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+    }
 
     return string;
 }
@@ -407,14 +368,11 @@ int getPositionImage(int id){
     query.addBindValue(id);
     int idAlbum;
     if( query.exec()){
-
         int field = query.record().indexOf("position");
         while(query.next()){
             idAlbum = query.value(field).toInt();
         }
-        //qDebug ("Position image %d",idAlbum);
-
-    }else{qDebug("probleme");qDebug() << query.lastError().text();idAlbum = -1;}
+    }
 
     return idAlbum;
 }
@@ -426,14 +384,11 @@ int getWidthImage(int id){
     query.addBindValue(id);
     int idAlbum;
     if( query.exec()){
-
         int field = query.record().indexOf("width");
         while(query.next()){
             idAlbum = query.value(field).toInt();
         }
-        //qDebug ("width image %d",idAlbum);
-
-    }else{qDebug("probleme");qDebug() << query.lastError().text();idAlbum = -1;}
+    }
 
     return idAlbum;
 }
@@ -445,14 +400,11 @@ int getHeightImage(int id){
     query.addBindValue(id);
     int idAlbum;
     if( query.exec()){
-
         int field = query.record().indexOf("height");
         while(query.next()){
             idAlbum = query.value(field).toInt();
         }
-        //qDebug ("height image %d",idAlbum);
-
-    }else{qDebug("probleme");qDebug() << query.lastError().text();idAlbum = -1;}
+    }
 
     return idAlbum;
 }
@@ -464,14 +416,11 @@ int getPos_xImage(int id){
     query.addBindValue(id);
     int idAlbum;
     if( query.exec()){
-
         int field = query.record().indexOf("pos_x");
         while(query.next()){
             idAlbum = query.value(field).toInt();
         }
-        //qDebug ("pos_x image %d",idAlbum);
-
-    }else{qDebug("probleme");qDebug() << query.lastError().text();idAlbum = -1;}
+    }
 
     return idAlbum;
 }
@@ -483,15 +432,11 @@ int getPos_yImage(int id){
     query.addBindValue(id);
     int idAlbum;
     if( query.exec()){
-
         int field = query.record().indexOf("pos_y");
         while(query.next()){
             idAlbum = query.value(field).toInt();
         }
-        //qDebug ("pos_y image %d",idAlbum);
-
-    }else{qDebug("probleme");qDebug() << query.lastError().text(); idAlbum = -1;}
-
+    }
     return idAlbum;
 }
 
@@ -503,10 +448,7 @@ int createTag(std::string title){
     QSqlQuery query;
     query.prepare("insert into Tags ('title') values (?)");
     query.addBindValue(title.c_str());
-    if( query.exec()){
-    qDebug() << "Last ID was:" << query.lastInsertId().toInt();
-     }
-    else{qDebug("probleme");qDebug() << query.lastError().text();}
+    query.exec();
     return query.lastInsertId().toInt();
 }
 
@@ -529,9 +471,7 @@ std::string getTitleTag(int id){
         while(query.next()){
             string = query.value(field).toString().toStdString();
         }
-        qDebug ("title album %s",string.c_str());
-
-    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+    }
 
     return string;
 }
@@ -548,10 +488,7 @@ void createImagesTags(int idImage, int idTag){
     query.prepare("insert into ImagesTags ('image','tag') values (?, ?)");
     query.addBindValue(idImage);
     query.addBindValue(idTag);
-    if( query.exec()){
-    qDebug() << "Last ID was:" << query.lastInsertId().toInt();
-     }
-    else{qDebug("probleme");qDebug() << query.lastError().text();}
+    query.exec();
 
 }
 
@@ -580,7 +517,7 @@ std::vector<int> getTagsImagesTags(int id){
             int intIndex = query.value(field).toInt();
             indexs.push_back(intIndex);
         }
-    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+    }
     return indexs;
 }
 
@@ -593,6 +530,6 @@ std::vector<int> getAllTags(){
         int intIndex = query.value(field).toInt();
         indexs.push_back(intIndex);
     }
-    }else{qDebug("probleme");qDebug() << query.lastError().text();}
+    }
     return indexs;
 }

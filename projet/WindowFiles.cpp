@@ -86,10 +86,6 @@ void Window::find()
     QString path = QDir::cleanPath(directoryComboBox->currentText());
     currentDir = QDir(path);
 
-    //updateComboBox(fileComboBox);
-    //updateComboBox(textComboBox);
-    //updateComboBox(directoryComboBox);
-
     QStringList filter = {"*.JPG","*.APNG","*.AVIF","*.GIF","*.PNG","*.SVG","*.WebP"};
 
     QDirIterator it(path, filter, QDir::AllEntries | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);

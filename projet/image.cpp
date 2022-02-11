@@ -3,7 +3,7 @@
 #include "tag.h"
 #include <iostream>
 
-// ??
+
 Image::Image(int idAlbum_v, std::string title_v, std::string path_v, std::string description_v, int position_v, int width_v, int height_v, int pos_x_v, int pos_y_v)
 {
     id = createImage(idAlbum_v, title_v, path_v, description_v, position_v, width_v, height_v, pos_x_v, pos_y_v);

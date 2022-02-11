@@ -19,16 +19,12 @@ OuvrirAlbum::OuvrirAlbum(QWidget *parent) :
 
 void OuvrirAlbum::on_button_ouverture_clicked()
 {
-    qDebug() << "-----------------pour ouvrir----------------";
     name = this->comboBox_albums->currentText();
     idalbum = this->comboBox_albums->currentIndex()+1;
     int nbrOfItems = this->listWidget_apercualbum->count();
     for(int i=0; i<nbrOfItems; i++){
          img_paths.append(this->listWidget_apercualbum->item(i)->text());
     }
-    qDebug() << img_paths;
-
-
 }
 
 void OuvrirAlbum::on_button_anuler_clicked()
@@ -43,7 +39,8 @@ void OuvrirAlbum::on_comboBox_albums_currentIndexChanged(int index)
     actualiserApercu(index+1);
 }
 
-void OuvrirAlbum::actualiserApercu(int idAlbum){
+void OuvrirAlbum::actualiserApercu(int idAlbum)
+{
     listWidget_apercualbum->clear();
     std::vector<int> images = getAllImages(idAlbum);
     for(int i : images){

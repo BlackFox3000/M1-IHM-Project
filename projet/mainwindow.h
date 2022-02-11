@@ -21,7 +21,6 @@ public:
 
 
 public:
-    QList<QStandardItem*> findItemsRecurse( QStandardItemModel* model, const QString &text, int column, const QModelIndex& modelIndex = QModelIndex());
     QString path;
     CreationAlbumWindow c;
     Ui::MainWindow ui;

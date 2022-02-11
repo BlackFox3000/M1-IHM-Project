@@ -24,14 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(actionAjouter_Fichier, SIGNAL(triggered()), this, SLOT(actionFindFile()));
     connect(actionEditer_l_image, SIGNAL(triggered()), this, SLOT(on_actionEditer_image_triggered()));
     connect(actionCr_er_un_album, SIGNAL(triggered()), this, SLOT(on_actionCreer_nouvel_album_triggered()));
-    //connect(actionOuvrir_un_album,SIGNAL(triggered()), this, SLOT(viewAbumsFunctionSQL));
     connect(actionCr_er_un_album,SIGNAL(triggered()), this, SLOT(insertAlbumFunctionSQL));
-    //connect(actionClassique,SIGNAL(triggered()),this,SLOT(on_actionClassiquetriggered));
-    //connect(actionSombre,SIGNAL(triggered()),this,SLOT(on_actionSombretriggered));
-    //connect(actionBordeaux,SIGNAL(triggered()),this,SLOT(on_actionBordeauxtriggered));
-
-
-
 
     treeView->setHeaderHidden(true);
     QStandardItemModel* model = new QStandardItemModel();
@@ -52,9 +45,6 @@ MainWindow::MainWindow(QWidget *parent)
     this->addBtn->setVisible(false);
     //btn edit image
     this->editBtn->setVisible(false);
-
-    //this->setStyleSheet("QMainWindow {background : #5b0e2d;} QDialog {background : #5b0e2d;}  QTextEdit{border: 2px solid black; width : 16px; height: 12px;} QLabel{color: white;} ");
-    //this->setStyleSheet("QMainWindow {background : #5b0e2d;} QDialog{background : #5b0e2d;} QPushButton{ background: black; color: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;font-size: 15px; } QPushButton:hover{ background: #3A3A3A;} QLabel{color: white;} ");
 }
 
 
@@ -73,7 +63,6 @@ void MainWindow::actionFindFile()
         filesFind.sort();
         updateTreeView(folderRoot + "/",filesFind);
     }
-
 }
 
 void MainWindow::updateFilesFind(QStringList filesFind)
@@ -243,7 +232,6 @@ int MainWindow::getIdFromPath(QString path){
 }
 
 void MainWindow::actualiserInfos(int id_Image){
-    qDebug() << "salut";
     this->label_titre->setText(getTitleImage(id_Image).c_str());
     this->comboBox_listeTags->clear();
     for(int i : getTagsImagesTags(id_Image)){
@@ -256,11 +244,9 @@ void MainWindow::actualiserInfos(int id_Image){
 void MainWindow::on_button_ouvrir_album_clicked()
 {
     OuvrirAlbum o(this);
-    //album_img->clear();
     if(o.exec()){
         album_img->clear();
         album_img->setIconSize(QSize(150,150));
-        //album_img->addItem(new QListWidgetItem("Titre album"));
 
         QListWidgetItem *itm;
         for(int i=0; i< o.img_paths.size(); i++){
@@ -296,7 +282,6 @@ void MainWindow::on_actionEditer_image_triggered()
 {
     EditionImageWindow e(this);
     e.img_path = path;
-    qDebug() << "img : "+e.img_path;
     if(QString::compare(e.img_path, QString()) != 0){
         bool valid = e.edit_image.load(e.img_path);
         if(valid){
@@ -308,7 +293,6 @@ void MainWindow::on_actionEditer_image_triggered()
         }
     }else{
         e.edit_image.load(path_img->text());
-        qDebug() << "=>"+path_img->text();
         e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
         e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
         e.ui_edit->edit_label->setScaledContents(true);
@@ -336,10 +320,8 @@ void MainWindow::deletePictureGalerie()
     }
 }
 void MainWindow::updateListWidget(){
-    qDebug() << c.img_paths;
     album_img->clear();
     album_img->setIconSize(QSize(150,150));
-    //album_img->addItem(new QListWidgetItem("Titre album"));
     QListWidgetItem *itm;
     for(int i=0; i< c.img_paths.size(); i++){
         itm = new QListWidgetItem();
@@ -373,9 +355,6 @@ void MainWindow::updateNavigation()
     this->editBtn->setVisible(true);
 
     QListWidgetItem *firstItem = album_img->item(0);
-    qDebug() << firstItem->text();
-    qDebug() << "affichage des info sur navigation";
-    qDebug() << n.listpix;
     path_img->setText(album_img->item(0)->text());
     n.pix.load(firstItem->text());
     n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
@@ -416,17 +395,12 @@ void MainWindow::on_actionCreer_nouvel_album_triggered()
 
 }
 void MainWindow::ajouter(){
-    qDebug() << "ajouter test";
     int itmIndex = c.ui_creationAlbum->img_show->selectionModel()->currentIndex().row();
     QList<QString> texts;
     for(int i=0; i < c.ui_creationAlbum->images_list->count(); i++){
         texts.append(c.ui_creationAlbum->images_list->model()->index(i,0).data(Qt::DisplayRole).toString());
     }
-    qDebug() << texts;
-    qDebug() << itmIndex;
-    if(texts.contains(filesFind.at(itmIndex))){
-        qDebug() << "item exist déja";
-    }else{
+    if(!texts.contains(filesFind.at(itmIndex))){
         QListWidgetItem *itm = new QListWidgetItem();
         QString itmPath = filesFind.at(itmIndex);
         itm->setText(itmPath);
@@ -439,12 +413,9 @@ void MainWindow::ajouter(){
         c.ui_creationAlbum->images_list->setItemWidget(itm,supprimer);
         connect(supprimer,SIGNAL(clicked()),this,SLOT(supprimer()));
     }
-
-
-
 }
+
 void MainWindow::supprimer(){
-    qDebug() << "supp test";
     int itmIndex = c.ui_creationAlbum->images_list->selectionModel()->currentIndex().row();
     c.ui_creationAlbum->images_list->model()->removeRow(itmIndex);
     c.img_paths.removeAt(itmIndex);
@@ -453,9 +424,8 @@ void MainWindow::supprimer(){
 void MainWindow::on_button_creer_album_clicked()
 {
     on_actionCreer_nouvel_album_triggered();
-    //CreationAlbumWindow c;
-    //c.exec();
 }
+
 QString MainWindow::getElementTreeViewClicked()
 {
     QString element = model->itemFromIndex(treeView->selectionModel()->selectedIndexes().at(0))->accessibleDescription();
@@ -470,22 +440,17 @@ void MainWindow::on_treeView_doubleClicked()
 {
     path = getElementTreeViewClicked();
     if(path != NULL){
-        qDebug() << path;
         EditionImageWindow e(this);
         e.img_path = path;
-        qDebug() << "img : "+e.img_path;
         if(QString::compare(e.img_path, QString()) != 0){
             bool valid = e.edit_image.load(e.img_path);
             if(valid){
-
                 e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
                 e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
                 e.ui_edit->edit_label->setScaledContents(true);
-
             }
         }
-
-        if(e.exec()){}
+        e.exec();
     }
 }
 
@@ -506,17 +471,16 @@ void MainWindow::on_treeView_clicked()
             Next->setEnabled(true);
             Prec->setEnabled(true);
         }else{
-        qDebug() << "file cliked : " << element;
-        n.pix.load(element);
-        n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
-        apercu_img->setText(element);
-        path_img->setText(element);
-        path_modif = element;
-        apercu_img->setPixmap(QPixmap::fromImage(n.pix));
-        apercu_img->setScaledContents(true);
-        Next->setEnabled(false);
-        Prec->setEnabled(false);
-        addBtn->setVisible(true);
+            n.pix.load(element);
+            n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
+            apercu_img->setText(element);
+            path_img->setText(element);
+            path_modif = element;
+            apercu_img->setPixmap(QPixmap::fromImage(n.pix));
+            apercu_img->setScaledContents(true);
+            Next->setEnabled(false);
+            Prec->setEnabled(false);
+            addBtn->setVisible(true);
         }
     }
 }
@@ -547,7 +511,6 @@ void MainWindow::on_addBtn_clicked()
 }
 //SQL
 void MainWindow::viewAbumsFunctionSQL(){
-    //createImage(1, "premiere image", "c/path","descrrription", 1, 0,0, 0, 0);
     view();
 }
 
@@ -565,14 +528,12 @@ void MainWindow::on_Next_clicked()
         num=0;
     }
     n.pix.load(album_img->item(num)->text());
-    qDebug() << album_img->item(num)->text();
     path_img->setText(album_img->item(num)->text());
     n.pix = n.pix.scaledToWidth(apercu_img->width(), Qt::SmoothTransformation);
     apercu_img->setPixmap(QPixmap::fromImage(n.pix));
     apercu_img->setScaledContents(true);
     path_modif = album_img->item(num)->text();
     actualiserInfos(getIdFromPath(path_modif));
-
 }
 
 
@@ -589,7 +550,6 @@ void MainWindow::on_Prec_clicked()
     apercu_img->setScaledContents(true);
     path_modif = album_img->item(num)->text();
     actualiserInfos(getIdFromPath(path_modif));
-
 }
 
 
@@ -597,33 +557,28 @@ void MainWindow::on_editBtn_clicked()
 {
     EditionImageWindow e(this);
 
-        e.edit_image.load(path_img->text());
-        qDebug() << "=>"+path_img->text();
-        e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
-        e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
-        e.ui_edit->edit_label->setScaledContents(true);
-
+    e.edit_image.load(path_img->text());
+    e.edit_image = e.edit_image.scaledToWidth(e.ui_edit->edit_label->width(), Qt::SmoothTransformation);
+    e.ui_edit->edit_label->setPixmap(QPixmap::fromImage(e.edit_image));
+    e.ui_edit->edit_label->setScaledContents(true);
 
     e.exec();
 }
 
 void MainWindow::on_actionClassique_triggered()
 {
-    qDebug() << "classique";
     this->setStyleSheet("");
     c.setStyleSheet(this->styleSheet());
 }
 
 void MainWindow::on_actionSombre_triggered()
 {
-    qDebug() << "sombre";
     this->setStyleSheet("QMainWindow {background : #202124;} QDialog{background : #202124;} QPushButton{ background: black; color: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;font-size: 15px; } QPushButton:hover{ background: #3A3A3A;} QLabel{color: white;} ");
     c.setStyleSheet(this->styleSheet());
 }
 
 void MainWindow::on_actionBordeaux_triggered()
 {
-    qDebug() << "bordeaux";
     this->setStyleSheet("QMainWindow {background : #5b0e2d;} QDialog{background : #5b0e2d;} QPushButton{ background: black; color: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;font-size: 15px; } QPushButton:hover{ background: #3A3A3A;} QLabel{color: white;} ");
     c.setStyleSheet(this->styleSheet());
 
