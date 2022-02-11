@@ -18,7 +18,7 @@ Window::Window(QWidget *parent)
     : QDialog(parent)
 {
 
-    setWindowTitle(tr("Aperçut des répertoires"));
+    setWindowTitle(tr("Aperçu des répertoires"));
     QPushButton *browseButton = new QPushButton(tr("&Selectionner des images"), this);
     connect(browseButton, &QAbstractButton::clicked, this, &Window::browse);
 
@@ -54,15 +54,15 @@ void Window::browse()
 {
     QString directory;
     if(directoryComboBox->currentText().isEmpty()){
-        directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Selectionner des images"), QDir::drives().at(0).absoluteFilePath()));
+        directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Sélectionner des images"), QDir::drives().at(0).absoluteFilePath()));
     }
     else{
         QDir pathDir(directoryComboBox->currentText());
         if(!pathDir.exists()){
-            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Selectionner des images"), QDir::drives().at(0).absoluteFilePath()));
+            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Sélectionner des images"), QDir::drives().at(0).absoluteFilePath()));
         }
         else{
-            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Selectionner des images"), directoryComboBox->currentText()));
+            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Sélectionner des images"), directoryComboBox->currentText()));
         }
     }
 

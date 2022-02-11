@@ -573,14 +573,13 @@ void MainWindow::on_actionClassique_triggered()
 
 void MainWindow::on_actionSombre_triggered()
 {
-    this->setStyleSheet("QMainWindow {background : #202124;} QDialog{background : #202124;} QPushButton{ background: black; color: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;font-size: 15px; } QPushButton:hover{ background: #3A3A3A;} QLabel{color: white;} ");
+    this->setStyleSheet("QMainWindow {background : #202124;} QDialog{background : #202124;} QTextBrowser{background : #202124; color: white;} QTextEdit{background : #202124; color: white;} QListWidget{background: #202124; color: white} QTreeView{background: #202124; color: white;} QPushButton{ background: black; color: white; } QPushButton:hover{ background: #3A3A3A;} QLabel{color: white;} ");
     c.setStyleSheet(this->styleSheet());
 }
 
 void MainWindow::on_actionBordeaux_triggered()
 {
-    this->setStyleSheet("QMainWindow {background : #5b0e2d;} QDialog{background : #5b0e2d;} QPushButton{ background: black; color: white; border: 2px solid black; border-radius: 12px; height: 25px; width: 50px;font-size: 15px; } QPushButton:hover{ background: #3A3A3A;} QLabel{color: white;} ");
+    this->setStyleSheet("QMainWindow {background : #5b0e2d;} QDialog{background : #5b0e2d;} QTextBrowser{background : #5b0e2d; color: white;} QTextEdit{background : #5b0e2d; color: white;} QListWidget{background: #5b0e2d; color: white} QTreeView{background: #5b0e2d; color: white;} QPushButton{ background: black; color: white; } QPushButton:hover{ background: #3A3A3A;} QLabel{color: white;} ");
     c.setStyleSheet(this->styleSheet());
 
 }
-
