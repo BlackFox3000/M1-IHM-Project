@@ -9,6 +9,5 @@ int main(int argc, char *argv[])
     createConnection();
     MainWindow w;
     w.show();
-    qDebug() << getAlbums()[3];
     return a.exec();
 }
