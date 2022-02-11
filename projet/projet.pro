@@ -25,6 +25,7 @@ SOURCES += \
     resizewindow.cpp \
     modifinformations.cpp \
     database.cpp \
+    supprimeralbumwindow.cpp \
     tag.cpp
 
 HEADERS += \
@@ -39,6 +40,7 @@ HEADERS += \
     resizewindow.h \
     modifinformations.h \
     database.h \
+    supprimeralbumwindow.h \
     tag.h
 
 
@@ -49,7 +51,8 @@ FORMS += \
     navigation.ui \
     ouvriralbum.ui \
     resizewindow.ui \
-    modifinformations.ui
+    modifinformations.ui \
+    supprimeralbumwindow.ui
 
 
 
