@@ -11,13 +11,15 @@ CreationAlbumWindow::CreationAlbumWindow(QWidget *parent) :
     ui_creationAlbum->setupUi(this);
     this->setWindowTitle("Créer un album");
     setWindowIcon(QIcon(":icon/add-album.png"));
+    connect(ui_creationAlbum->album_name,SIGNAL(textChanged()),this,SLOT(checkAlbumNameNotEmpty()));
+    ui_creationAlbum->create_album_btn->setEnabled(false);
 }
 
 
 void CreationAlbumWindow::on_create_album_btn_clicked()
 {
-
    name = ui_creationAlbum->album_name->toPlainText();
+
    id_album = createAlbum(name.toStdString());
    int nbrOfItems = ui_creationAlbum->images_list->count();
    QString img_name;
@@ -29,4 +31,15 @@ void CreationAlbumWindow::on_create_album_btn_clicked()
    cout << getTitleAlbum(id_album);
    std::vector<int> images = getAllImages(id_album);
 }
+
+void CreationAlbumWindow::checkAlbumNameNotEmpty()
+{
+    if(ui_creationAlbum->album_name->toPlainText() == ""){
+         ui_creationAlbum->create_album_btn->setEnabled(false);
+    }
+    else{
+        ui_creationAlbum->create_album_btn->setEnabled(true);
+    }
+}
+
 

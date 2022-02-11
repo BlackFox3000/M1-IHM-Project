@@ -17,6 +17,7 @@ public:
 
 private slots:
     void on_create_album_btn_clicked();
+    void checkAlbumNameNotEmpty();
 };
 
 #endif // CREATIONALBUMWINDOW_H
