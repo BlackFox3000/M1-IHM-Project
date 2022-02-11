@@ -425,7 +425,9 @@ void MainWindow::on_treeView_clicked()
             apercu_img->setScaledContents(true);
             Next->setEnabled(false);
             Prec->setEnabled(false);
-            addBtn->setVisible(true);
+            if(album_img->count() > 0 || titreAlbum->text().size() > 13){
+                addBtn->setVisible(true);
+            }
         }
     }
 }
