@@ -54,15 +54,15 @@ void Window::browse()
 {
     QString directory;
     if(directoryComboBox->currentText().isEmpty()){
-        directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des images"), QDir::drives().at(0).absoluteFilePath()));
+        directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Selectionner des images"), QDir::drives().at(0).absoluteFilePath()));
     }
     else{
         QDir pathDir(directoryComboBox->currentText());
         if(!pathDir.exists()){
-            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des images"), QDir::drives().at(0).absoluteFilePath()));
+            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Selectionner des images"), QDir::drives().at(0).absoluteFilePath()));
         }
         else{
-            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des images"), directoryComboBox->currentText()));
+            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Selectionner des images"), directoryComboBox->currentText()));
         }
     }
 
