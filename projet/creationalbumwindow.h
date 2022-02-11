@@ -12,12 +12,11 @@ public:
     Ui::CreationAlbumWindow *ui_creationAlbum;
     QImage selectedImg;
     QList<QString> img_paths;
-    QString name;
-    int id_album;
+    QString name = "";
+    int id_album = 0;
 
 private slots:
     void on_create_album_btn_clicked();
-    void checkAlbumNameNotEmpty();
 };
 
 #endif // CREATIONALBUMWINDOW_H

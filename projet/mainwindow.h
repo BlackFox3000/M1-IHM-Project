@@ -17,16 +17,16 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    int currentIdAlbum = 0;
+    int currentIdAlbum;
 
 
 public:
+    QList<QStandardItem*> findItemsRecurse( QStandardItemModel* model, const QString &text, int column, const QModelIndex& modelIndex = QModelIndex());
     QString path;
     CreationAlbumWindow c;
     Ui::MainWindow ui;
     navigation n;
     QString path_modif;
-    void actualiserInfos(int id_Image);
 
 
 private:
@@ -34,9 +34,9 @@ private:
     void updateListWidget();
     void updateNavigation();
     int getIndexItemTreeViewModel(std::vector<QStandardItem*> items,QString file);
+    void updateFilesFind(QStringList filesFind);
+    void updateFolderRoot(QString folderRoot);
     void deletePictureGalerie();
-    int getIdFromPath(QString path);
-
 
     QString folderRoot;
     QStringList filesFind;
@@ -57,7 +57,6 @@ protected slots:
     void on_actionBordeaux_triggered();
     void on_actionEditer_les_informations_triggered();
     void on_actionOuvrir_un_album_triggered();
-    void on_actionSupprimer_un_album_triggered();
 
 private slots:
     void on_button_ouvrir_album_clicked();
@@ -68,6 +67,5 @@ private slots:
     void on_Prec_clicked();
     void on_addBtn_clicked();
     void on_editBtn_clicked();
-    void on_button_supprimer_album_clicked();
 };
 #endif // MAINWINDOW_H

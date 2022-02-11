@@ -32,7 +32,7 @@
       <x>10</x>
       <y>10</y>
       <width>191</width>
-      <height>541</height>
+      <height>561</height>
      </rect>
     </property>
    </widget>
@@ -67,14 +67,14 @@
       <item row="0" column="1">
        <widget class="QLabel" name="label_titre">
         <property name="text">
-         <string/>
+         <string>un chat</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
        <widget class="QLabel" name="label_dimensions">
         <property name="text">
-         <string>non implémenté</string>
+         <string>1920x1080</string>
         </property>
        </widget>
       </item>
@@ -112,6 +112,16 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <item>
+         <property name="text">
+          <string>un tag</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>un autre tag</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="3" column="0">
@@ -138,7 +148,7 @@
       <item row="1" column="1">
        <widget class="QLabel" name="label_extension">
         <property name="text">
-         <string>non implémenté</string>
+         <string>PNG</string>
         </property>
        </widget>
       </item>
@@ -152,14 +162,14 @@
       <item row="3" column="1">
        <widget class="QLabel" name="label_creation">
         <property name="text">
-         <string>non implémenté</string>
+         <string>01/01/2022</string>
         </property>
        </widget>
       </item>
       <item row="4" column="1">
        <widget class="QLabel" name="label_modif">
         <property name="text">
-         <string>non implémenté</string>
+         <string>23/01/2022</string>
         </property>
        </widget>
       </item>
@@ -188,14 +198,27 @@
    <widget class="QListWidget" name="album_img">
     <property name="geometry">
      <rect>
-      <x>1080</x>
+      <x>1000</x>
       <y>40</y>
-      <width>181</width>
+      <width>261</width>
       <height>371</height>
      </rect>
     </property>
     <property name="horizontalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="titreAlbum">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>10</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Titre album :</string>
     </property>
    </widget>
    <widget class="QLabel" name="path_img">
@@ -338,9 +361,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>560</y>
+      <y>580</y>
       <width>191</width>
-      <height>101</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -355,7 +378,7 @@
        <x>0</x>
        <y>0</y>
        <width>191</width>
-       <height>103</height>
+       <height>81</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -373,103 +396,8 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="button_supprimer_album">
-        <property name="text">
-         <string>Supprimer un Album</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
-   </widget>
-   <widget class="QTextBrowser" name="textBrowser_description">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>470</y>
-      <width>301</width>
-      <height>192</height>
-     </rect>
-    </property>
-    <property name="html">
-     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelTreeView">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>220</y>
-      <width>161</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Veuillez importer des images</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelGalerie">
-    <property name="geometry">
-     <rect>
-      <x>1080</x>
-      <y>160</y>
-      <width>181</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Veuillez créer&lt;/p&gt;&lt;p align=&quot;center&quot;&gt; ou ouvrir un album&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="buttonAddFile">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>20</y>
-      <width>151</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Selectionner des images</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>830</x>
-      <y>10</y>
-      <width>431</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="titreAlbum">
-       <property name="text">
-        <string>Titre de l'album :</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -510,7 +438,6 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="actionCr_er_un_album"/>
     <addaction name="actionOuvrir_un_album"/>
-    <addaction name="actionSupprimer_un_album"/>
    </widget>
    <widget class="QMenu" name="menuTh_mes">
     <property name="title">
@@ -569,7 +496,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionAjouter_Fichier">
    <property name="text">
-    <string>Selectionner des images</string>
+    <string>Ajouter Fichier</string>
    </property>
   </action>
   <action name="actionOuvrir_un_album">
@@ -620,11 +547,6 @@ p, li { white-space: pre-wrap; }
   <action name="actionTest">
    <property name="text">
     <string>Test</string>
-   </property>
-  </action>
-  <action name="actionSupprimer_un_album">
-   <property name="text">
-    <string>Supprimer un album</string>
    </property>
   </action>
  </widget>

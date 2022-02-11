@@ -18,13 +18,11 @@ Window::Window(QWidget *parent)
     : QDialog(parent)
 {
 
-    setWindowTitle(tr("Aperçu d'un répertoire"));
-    QPushButton *browseButton = new QPushButton(tr("&Selection d'un répertoire"), this);
+    setWindowTitle(tr("Ajouter des fichiers"));
+    QPushButton *browseButton = new QPushButton(tr("&Parcourir..."), this);
     connect(browseButton, &QAbstractButton::clicked, this, &Window::browse);
 
     findButton = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    findButton->button(QDialogButtonBox::Ok)->setText("Ajouter");
-    findButton->button(QDialogButtonBox::Cancel)->setText("Annuler");
     connect(findButton, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(findButton, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
@@ -37,7 +35,7 @@ Window::Window(QWidget *parent)
     createFilesTable();
 
     QGridLayout *mainLayout = new QGridLayout(this);
-    mainLayout->addWidget(new QLabel(tr("Répertoire:")), 2, 0);
+    mainLayout->addWidget(new QLabel(tr("Répertoir:")), 2, 0);
     mainLayout->addWidget(directoryComboBox, 2, 1);
     mainLayout->addWidget(browseButton, 2, 2);
     mainLayout->addWidget(filesTable, 3, 0, 1, 3);
@@ -54,15 +52,15 @@ void Window::browse()
 {
     QString directory;
     if(directoryComboBox->currentText().isEmpty()){
-        directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Selection d'un répertoire"), QDir::drives().at(0).absoluteFilePath()));
+        directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des fichiers"), QDir::drives().at(0).absoluteFilePath()));
     }
     else{
         QDir pathDir(directoryComboBox->currentText());
         if(!pathDir.exists()){
-            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Selection d'un répertoire"), QDir::drives().at(0).absoluteFilePath()));
+            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des fichiers"), QDir::drives().at(0).absoluteFilePath()));
         }
         else{
-            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Selection d'un répertoire"), directoryComboBox->currentText()));
+            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("AJouter des fichiers"), directoryComboBox->currentText()));
         }
     }
 
@@ -87,6 +85,10 @@ void Window::find()
     QString text = textComboBox->currentText();
     QString path = QDir::cleanPath(directoryComboBox->currentText());
     currentDir = QDir(path);
+
+    //updateComboBox(fileComboBox);
+    //updateComboBox(textComboBox);
+    //updateComboBox(directoryComboBox);
 
     QStringList filter = {"*.JPG","*.APNG","*.AVIF","*.GIF","*.PNG","*.SVG","*.WebP"};
 
@@ -116,14 +118,14 @@ QStringList Window::findFiles(const QStringList &files, const QString &text)
     QProgressDialog progressDialog(this);
     progressDialog.setCancelButtonText(tr("&Annuler"));
     progressDialog.setRange(0, files.size());
-    progressDialog.setWindowTitle(tr("Selection d'un répertoire"));
+    progressDialog.setWindowTitle(tr("Ajouter des fichiers"));
 
     QMimeDatabase mimeDatabase;
     QStringList foundFiles;
 
     for (int i = 0; i < files.size(); ++i) {
         progressDialog.setValue(i);
-        progressDialog.setLabelText(tr("Recherche des images : %1 sur %n...", 0, files.size()).arg(i));
+        progressDialog.setLabelText(tr("Recherche des fichiers : %1 sur %n...", 0, files.size()).arg(i));
         QCoreApplication::processEvents();
 
         if (progressDialog.wasCanceled())
@@ -132,7 +134,7 @@ QStringList Window::findFiles(const QStringList &files, const QString &text)
         const QString fileName = files.at(i);
         const QMimeType mimeType = mimeDatabase.mimeTypeForFile(fileName);
         if (mimeType.isValid() && !mimeType.inherits(QStringLiteral("text/plain"))) {
-            qWarning() << "Ne recherche pas les images binaires " << QDir::toNativeSeparators(fileName);
+            qWarning() << "Ne recherche pas les fichiers binaires " << QDir::toNativeSeparators(fileName);
             continue;
         }
         QFile file(fileName);
@@ -178,7 +180,7 @@ void Window::showFiles(const QStringList &paths)
             filesTable->setItem(row, 1, sizeItem);
         }
     }
-    filesFoundLabel->setText(tr("%n Image(s) trouvé (Cliquez deux fois sur une image pour l'ouvrir)", 0, paths.size()));
+    filesFoundLabel->setText(tr("%n Fichier(s) trouvé (Cliquez deux fois sur un fichier pour l'ouvrir)", 0, paths.size()));
     filesFoundLabel->setWordWrap(true);
 }
 
@@ -197,7 +199,7 @@ void Window::createFilesTable()
     filesTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     QStringList labels;
-    labels << tr("Nom de l'image") << tr("Taille");
+    labels << tr("Nom de fichier") << tr("Taille");
     filesTable->setHorizontalHeaderLabels(labels);
     filesTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     filesTable->verticalHeader()->hide();
