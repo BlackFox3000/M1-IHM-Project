@@ -48,14 +48,16 @@ void MainWindow::actionFindFile()
 {
     Window window(this);
     if(window.exec()){
-        if(filesFind.size() == 0){
+        filesFind = window.getFiles();
+        folderRoot = window.getFolder();
+        /*if(filesFind.size() == 0){
             filesFind = window.getFiles();
             folderRoot = window.getFolder();
         }
         else{
             updateFilesFind(window.getFiles());
             updateFolderRoot(window.getFolder());
-        }
+        }*/
         filesFind.sort();
         updateTreeView(folderRoot + "/",filesFind);
     }
@@ -372,6 +374,9 @@ void MainWindow::on_actionCreer_nouvel_album_triggered()
     c.ui_creationAlbum->images_list->clear();
     c.ui_creationAlbum->album_name->clear();
     c.img_paths.clear();
+    if(filesFind.size() > 0){
+        c.ui_creationAlbum->labelImageImporte->setVisible(false);
+    }
     for(int i=0; i<filesFind.size(); i++){
         QListWidgetItem * itm = new QListWidgetItem();
         QString itmPath = filesFind.at(i);
@@ -395,6 +400,7 @@ void MainWindow::on_actionCreer_nouvel_album_triggered()
         labelGalerie->setVisible(false);
 }
 void MainWindow::ajouter(){
+    c.ui_creationAlbum->labelImageSelectionne->setVisible(false);
     int itmIndex = c.ui_creationAlbum->img_show->selectionModel()->currentIndex().row();
     QList<QString> texts;
     for(int i=0; i < c.ui_creationAlbum->images_list->count(); i++){
@@ -418,8 +424,12 @@ void MainWindow::ajouter(){
 void MainWindow::supprimer(){
     int itmIndex = c.ui_creationAlbum->images_list->selectionModel()->currentIndex().row();
     c.ui_creationAlbum->images_list->model()->removeRow(itmIndex);
-    c.img_paths.removeAt(itmIndex);
-
+    if(c.img_paths.size() > 0){
+        c.img_paths.removeAt(itmIndex);
+    }
+    if(c.img_paths.size() == 0){
+        c.ui_creationAlbum->labelImageSelectionne->setVisible(true);
+    }
 }
 void MainWindow::on_button_creer_album_clicked()
 {

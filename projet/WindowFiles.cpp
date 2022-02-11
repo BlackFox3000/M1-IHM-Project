@@ -18,8 +18,8 @@ Window::Window(QWidget *parent)
     : QDialog(parent)
 {
 
-    setWindowTitle(tr("Aperçu des répertoires"));
-    QPushButton *browseButton = new QPushButton(tr("&Selectionner des images"), this);
+    setWindowTitle(tr("Aperçu d'un répertoire"));
+    QPushButton *browseButton = new QPushButton(tr("&Selection d'un répertoire"), this);
     connect(browseButton, &QAbstractButton::clicked, this, &Window::browse);
 
     findButton = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -54,15 +54,15 @@ void Window::browse()
 {
     QString directory;
     if(directoryComboBox->currentText().isEmpty()){
-        directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Sélectionner des images"), QDir::drives().at(0).absoluteFilePath()));
+        directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Selection d'un répertoire"), QDir::drives().at(0).absoluteFilePath()));
     }
     else{
         QDir pathDir(directoryComboBox->currentText());
         if(!pathDir.exists()){
-            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Sélectionner des images"), QDir::drives().at(0).absoluteFilePath()));
+            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Selection d'un répertoire"), QDir::drives().at(0).absoluteFilePath()));
         }
         else{
-            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Sélectionner des images"), directoryComboBox->currentText()));
+            directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Selection d'un répertoire"), directoryComboBox->currentText()));
         }
     }
 
@@ -116,7 +116,7 @@ QStringList Window::findFiles(const QStringList &files, const QString &text)
     QProgressDialog progressDialog(this);
     progressDialog.setCancelButtonText(tr("&Annuler"));
     progressDialog.setRange(0, files.size());
-    progressDialog.setWindowTitle(tr("Selectionner des images"));
+    progressDialog.setWindowTitle(tr("Selection d'un répertoire"));
 
     QMimeDatabase mimeDatabase;
     QStringList foundFiles;
